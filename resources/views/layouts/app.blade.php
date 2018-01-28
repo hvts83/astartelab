@@ -6,6 +6,8 @@
     <title>LABORATORIO ... - @yield('title') </title>
     <link rel="stylesheet" href="{!! asset('css/vendor.css') !!}" />
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
+    <link href="{{ asset('backoffice/css/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
+    @yield('css')
 </head>
 <body class="md-skin">
 
@@ -21,6 +23,18 @@
             <!-- Page wrapper -->
             @include('layouts.topnavbar')
 
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>@yield('title') </h2>
+                    <ol class="breadcrumb">
+                        <li><a href="{{ url('/') }}">Inicio</a></li>
+                        @yield('breadcrumb')
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
             <!-- Main view  -->
             @yield('content')
 
@@ -34,9 +48,11 @@
     <!-- End wrapper-->
 
 <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
-
-@section('scripts')
-@show
+<script src="{{ asset('js/jasny/jasny-bootstrap.min.js')}}"></script>
+<script type="text/javascript">
+    var APP_URL = {!! json_encode(url('/')) !!};
+</script>
+@yield('scripts')
 
 </body>
 </html>

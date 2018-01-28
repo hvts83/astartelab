@@ -20,10 +20,10 @@
           <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Pacientes</span> </a>
           <ul class="nav nav-second-level collapse">
             <li class="<?php echo e(isActiveRoute('pacientes')); ?>">
-                <a href="<?php echo e(url('/paciente')); ?>">ver pacientes</a>
+                <a href="<?php echo e(url('/pacientes')); ?>">ver pacientes</a>
             </li>
             <li class="<?php echo e(isActiveRoute('paciente_add')); ?>">
-                <a href="<?php echo e(url('/paciente/create')); ?>">Nuevo paciente</a>
+                <a href="<?php echo e(url('/pacientes/create')); ?>">Nuevo paciente</a>
             </li>
           </ul>
         </li>

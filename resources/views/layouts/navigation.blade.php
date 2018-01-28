@@ -20,10 +20,10 @@
           <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Pacientes</span> </a>
           <ul class="nav nav-second-level collapse">
             <li class="{{ isActiveRoute('pacientes') }}">
-                <a href="{{ url('/paciente') }}">ver pacientes</a>
+                <a href="{{ url('/pacientes') }}">ver pacientes</a>
             </li>
             <li class="{{ isActiveRoute('paciente_add') }}">
-                <a href="{{ url('/paciente/create') }}">Nuevo paciente</a>
+                <a href="{{ url('/pacientes/create') }}">Nuevo paciente</a>
             </li>
           </ul>
         </li>

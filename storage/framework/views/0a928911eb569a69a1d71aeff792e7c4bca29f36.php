@@ -6,6 +6,8 @@
     <title>LABORATORIO ... - <?php echo $__env->yieldContent('title'); ?> </title>
     <link rel="stylesheet" href="<?php echo asset('css/vendor.css'); ?>" />
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" />
+    <link href="<?php echo e(asset('backoffice/css/jasny/jasny-bootstrap.min.css')); ?>" rel="stylesheet">
+    <?php echo $__env->yieldContent('css'); ?>
 </head>
 <body class="md-skin">
 
@@ -21,6 +23,18 @@
             <!-- Page wrapper -->
             <?php echo $__env->make('layouts.topnavbar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2><?php echo $__env->yieldContent('title'); ?> </h2>
+                    <ol class="breadcrumb">
+                        <li><a href="<?php echo e(url('/')); ?>">Inicio</a></li>
+                        <?php echo $__env->yieldContent('breadcrumb'); ?>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
             <!-- Main view  -->
             <?php echo $__env->yieldContent('content'); ?>
 
@@ -34,9 +48,11 @@
     <!-- End wrapper-->
 
 <script src="<?php echo asset('js/app.js'); ?>" type="text/javascript"></script>
-
-<?php $__env->startSection('scripts'); ?>
-<?php echo $__env->yieldSection(); ?>
+<script src="<?php echo e(asset('js/jasny/jasny-bootstrap.min.js')); ?>"></script>
+<script type="text/javascript">
+    var APP_URL = <?php echo json_encode(url('/')); ?>;
+</script>
+<?php echo $__env->yieldContent('scripts'); ?>
 
 </body>
 </html>
