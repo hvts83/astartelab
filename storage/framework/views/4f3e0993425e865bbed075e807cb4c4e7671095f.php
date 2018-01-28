@@ -1,8 +1,6 @@
-@extends('layouts.sessionsLayout')
+<?php $__env->startSection('title'); ?> Recuperar contraseña <?php $__env->stopSection(); ?>
 
-@section ('title') Recuperar contraseña @stop
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="passwordBox animated fadeInDown">
     <div class="row">
         <div class="col-md-12">
@@ -14,26 +12,28 @@
                   <div class="row">
 
                     <div class="col-lg-12">
-                    @if (session('status'))
+                    <?php if(session('status')): ?>
                         <div class="alert alert-success">
-                            {{ session('status') }}
+                            <?php echo e(session('status')); ?>
+
                         </div>
-                    @endif
+                    <?php endif; ?>
 
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
+                    <form class="form-horizontal" method="POST" action="<?php echo e(route('password.email')); ?>">
+                        <?php echo e(csrf_field()); ?>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+
+                        <div class="form-group<?php echo e($errors->has('email') ? ' has-error' : ''); ?>">
                             <label for="email" class="col-md-4 control-label">Correo</label>
 
                             <div class="col-md-8">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>" required>
 
-                                @if ($errors->has('email'))
+                                <?php if($errors->has('email')): ?>
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong><?php echo e($errors->first('email')); ?></strong>
                                     </span>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -60,4 +60,6 @@
       </div>
   </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.sessionsLayout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
