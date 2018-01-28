@@ -4,18 +4,23 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="clear">
-                            <span class="block m-t-xs">
-                                <strong class="font-bold">Example user</strong>
-                            </span> <span class="text-muted text-xs block">Example menu <b class="caret"></b></span>
-                        </span>
+                      <span class="clear">
+                          <span class="block m-t-xs">
+                              <strong class="font-bold">{{ Auth::user()->nombre . " " .  Auth::user()->apellido }}</strong>
+                          </span> <span class="text-muted text-xs block">Opciones <b class="caret"></b></span>
+                      </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="#">Logout</a></li>
+                      <li><a href="{{ url('/profile') }}" >Perfil</a></li>
+                      <li><a href="#" onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">Logout</a></li>
                     </ul>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </div>
                 <div class="logo-element">
-                    IN+
+                    L
                 </div>
             </li>
             <li class="{{ isActiveRoute('main') }}">

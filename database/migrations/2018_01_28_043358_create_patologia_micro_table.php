@@ -17,7 +17,7 @@ class CreatePatologiaMicroTable extends Migration
           $table->increments('id');
           $table->integer('patologia_id');
           $table->integer('frase_id');
-          $table->text('detalle');
+          $table->text('detalle')->nullable();
           $table->timestamps();
         });
     }

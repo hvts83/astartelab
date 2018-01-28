@@ -17,7 +17,7 @@ class CreateDiagnosticosTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->char('tipo', 1);
-            $table->text('detalle');
+            $table->text('detalle')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

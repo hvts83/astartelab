@@ -17,7 +17,7 @@ class CreateBiopsiaInmunohistoquimicaTable extends Migration
           $table->increments('id');
           $table->integer('biopsia_id');
           $table->string('resultado');
-          $table->text('detalle');
+          $table->text('detalle')->nullable();
           $table->timestamps();
         });
     }

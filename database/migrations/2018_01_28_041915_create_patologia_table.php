@@ -19,8 +19,8 @@ class CreatePatologiaTable extends Migration
             $table->integer('paciente_id');
             $table->integer('grupo_id');
             $table->integer('diagnostico_id');
-            $table->date('recibido');
-            $table->date('entregado');
+            $table->date('recibido')->nullable();
+            $table->date('entregado')->nullable();
             $table->string('informe')->unique();
             $table->softDeletes();
             $table->timestamps();

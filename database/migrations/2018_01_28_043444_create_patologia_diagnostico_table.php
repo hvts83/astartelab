@@ -17,8 +17,8 @@ class CreatePatologiaDiagnosticoTable extends Migration
             $table->increments('id');
             $table->integer('patologia_id');
             $table->integer('diagnostico_id');
-            $table->text('detalle');
-            $table->string('informe_preeliminar');
+            $table->text('detalle')->nullable();
+            $table->string('informe_preliminar')->nullable();
             $table->timestamps();
         });
     }

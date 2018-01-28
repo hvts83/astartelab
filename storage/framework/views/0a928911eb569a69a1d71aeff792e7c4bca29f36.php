@@ -3,14 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSPINIA - <?php echo $__env->yieldContent('title'); ?> </title>
-
-
+    <title>LABORATORIO ... - <?php echo $__env->yieldContent('title'); ?> </title>
     <link rel="stylesheet" href="<?php echo asset('css/vendor.css'); ?>" />
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" />
-
 </head>
-<body>
+<body class="md-skin">
 
   <!-- Wrapper-->
     <div id="wrapper">
