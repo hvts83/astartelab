@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Astarté - @yield('title') </title>
+  <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}"/>
+  <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}"/>
+  <title>Astarté </title>
   <link rel="stylesheet" href="{!! asset('css/vendor.css') !!}" />
   <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
 </head>

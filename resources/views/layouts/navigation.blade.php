@@ -60,7 +60,7 @@
         ">
           <a href="#"><i class="fa fa-medkit"></i> <span class="nav-label">Biopsias</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="{{ isActiveRoute('biopsias.index') }}">
+            <li class="{{ isActiveRoute('biopsia.index') }}">
                 <a href="{{ url('/biopsia') }}">Ver biopsias</a>
             </li>
             <li class="{{ isActiveRoute('biopsia.create') }}">

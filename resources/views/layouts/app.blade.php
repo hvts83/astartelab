@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astarté - @yield('title') </title>
-    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}"/>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}"/>
     <link rel="stylesheet" href="{!! asset('css/vendor.css') !!}" />
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
     <link href="{{ asset('backoffice/css/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">

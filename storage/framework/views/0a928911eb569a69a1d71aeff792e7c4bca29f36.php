@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astarté - <?php echo $__env->yieldContent('title'); ?> </title>
-    <link rel="shortcut icon" href="<?php echo e(asset('img/favicon.ico')); ?>">
+    <link rel="shortcut icon" type="image/png" href="<?php echo e(asset('img/favicon.ico')); ?>"/>
+    <link rel="shortcut icon" type="image/png" href="<?php echo e(asset('img/favicon.ico')); ?>"/>
     <link rel="stylesheet" href="<?php echo asset('css/vendor.css'); ?>" />
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" />
     <link href="<?php echo e(asset('backoffice/css/jasny/jasny-bootstrap.min.css')); ?>" rel="stylesheet">

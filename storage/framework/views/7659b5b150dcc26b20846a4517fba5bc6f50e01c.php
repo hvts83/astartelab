@@ -67,7 +67,7 @@
         ">
           <a href="#"><i class="fa fa-medkit"></i> <span class="nav-label">Biopsias</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="<?php echo e(isActiveRoute('biopsias.index')); ?>">
+            <li class="<?php echo e(isActiveRoute('biopsia.index')); ?>">
                 <a href="<?php echo e(url('/biopsia')); ?>">Ver biopsias</a>
             </li>
             <li class="<?php echo e(isActiveRoute('biopsia.create')); ?>">
