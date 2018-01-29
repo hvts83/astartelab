@@ -24,7 +24,11 @@
         <li class="{{ isActiveRoute('main') }}">
             <a href="{{ url('/') }}"><i class="fa fa-home"></i> <span class="nav-label">Inicio</span></a>
         </li>
-        <li>
+        <li
+          class="
+            {{ isActiveRoute('pacientes.index') }}
+            {{ isActiveRoute('pacientes.create') }}
+          ">
           <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Pacientes</span> </a>
           <ul class="nav nav-second-level collapse">
             <li class="{{ isActiveRoute('pacientes.index') }}">
@@ -35,10 +39,13 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li class="
+          {{ isActiveRoute('doctores.index') }}
+          {{ isActiveRoute('doctores.create') }}
+        ">
           <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label">Doctores</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="{{ isActiveRoute('doctores') }}">
+            <li class="{{ isActiveRoute('doctores.index') }}">
                 <a href="{{ url('/doctores') }}">Ver doctores</a>
             </li>
             <li class="{{ isActiveRoute('doctores.create') }}">
@@ -46,35 +53,48 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li class="
+          {{ isActiveRoute('biopsia.index') }}
+          {{ isActiveRoute('biopsia.create') }}
+          {{ isActiveRoute('biopsia_report.index') }}
+        ">
           <a href="#"><i class="fa fa-medkit"></i> <span class="nav-label">Biopsias</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="{{ isActiveRoute('biopsias') }}">
+            <li class="{{ isActiveRoute('biopsias.index') }}">
                 <a href="{{ url('/biopsia') }}">Ver biopsias</a>
             </li>
-            <li class="{{ isActiveRoute('biopsia_add') }}">
+            <li class="{{ isActiveRoute('biopsia.create') }}">
                 <a href="{{ url('/biopsia/create') }}">Solicitud biopsia</a>
             </li>
-            <li class="{{ isActiveRoute('biopsia_report') }}">
+            <li class="{{ isActiveRoute('biopsia_report.index') }}">
                 <a href="{{ url('/biopsia-report') }}">Reportes biopsia</a>
             </li>
           </ul>
         </li>
-        <li>
+        <li class="
+          {{ isActiveRoute('citologia.index') }}
+          {{ isActiveRoute('citologia.create') }}
+          {{ isActiveRoute('citologia_report.index') }}
+        ">
           <a href="#"><i class="fa fa-heartbeat"></i> <span class="nav-label">Citologias</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="{{ isActiveRoute('citologias') }}">
+            <li class="{{ isActiveRoute('citologia.index') }}">
                 <a href="{{ url('/citologia') }}">Ver citologías</a>
             </li>
-            <li class="{{ isActiveRoute('citologia_add') }}">
+            <li class="{{ isActiveRoute('citologia.create') }}">
                 <a href="{{ url('/citologia/create') }}">Solicitud citología</a>
             </li>
-            <li class="{{ isActiveRoute('citologia_report') }}">
+            <li class="{{ isActiveRoute('citologia_report.index') }}">
                 <a href="{{ url('/citologia-report') }}">Reportes citología</a>
             </li>
           </ul>
         </li>
-        <li>
+        <li class="
+          {{ isActiveRoute('grupos.index') }}
+          {{ isActiveRoute('grupos.create') }}
+          {{ isActiveRoute('grupo_biopsia.index') }}
+          {{ isActiveRoute('grupo_citologia.index') }}
+        ">
           <a href="#"><i class="fa fa-industry"></i> <span class="nav-label">Grupos</span> </a>
           <ul class="nav nav-second-level collapse">
             <li class="{{ isActiveRoute('grupos') }}">
@@ -105,7 +125,7 @@
                   <a href="{{ url('/diagnosticos') }}">lista de diagnósticos</a>
               </li>
               <li class="{{ isActiveRoute('diagnosticos.create') }}">
-                  <a href="{{ url('/diagnosticos.create') }}">Nuevo diagnóstico</a>
+                  <a href="{{ url('/diagnosticos/create') }}">Nuevo diagnóstico</a>
               </li>
               <li class="{{ isActiveRoute('frases') }}">
                   <a href="{{ url('/frases') }}">lista de frases</a>

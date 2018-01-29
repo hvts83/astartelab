@@ -24,7 +24,13 @@
         <li class="<?php echo e(isActiveRoute('main')); ?>">
             <a href="<?php echo e(url('/')); ?>"><i class="fa fa-home"></i> <span class="nav-label">Inicio</span></a>
         </li>
-        <li>
+        <li
+          class="
+            <?php echo e(isActiveRoute('pacientes.index')); ?>
+
+            <?php echo e(isActiveRoute('pacientes.create')); ?>
+
+          ">
           <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Pacientes</span> </a>
           <ul class="nav nav-second-level collapse">
             <li class="<?php echo e(isActiveRoute('pacientes.index')); ?>">
@@ -35,10 +41,15 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li class="
+          <?php echo e(isActiveRoute('doctores.index')); ?>
+
+          <?php echo e(isActiveRoute('doctores.create')); ?>
+
+        ">
           <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label">Doctores</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="<?php echo e(isActiveRoute('doctores')); ?>">
+            <li class="<?php echo e(isActiveRoute('doctores.index')); ?>">
                 <a href="<?php echo e(url('/doctores')); ?>">Ver doctores</a>
             </li>
             <li class="<?php echo e(isActiveRoute('doctores.create')); ?>">
@@ -46,35 +57,58 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li class="
+          <?php echo e(isActiveRoute('biopsia.index')); ?>
+
+          <?php echo e(isActiveRoute('biopsia.create')); ?>
+
+          <?php echo e(isActiveRoute('biopsia_report.index')); ?>
+
+        ">
           <a href="#"><i class="fa fa-medkit"></i> <span class="nav-label">Biopsias</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="<?php echo e(isActiveRoute('biopsias')); ?>">
+            <li class="<?php echo e(isActiveRoute('biopsias.index')); ?>">
                 <a href="<?php echo e(url('/biopsia')); ?>">Ver biopsias</a>
             </li>
-            <li class="<?php echo e(isActiveRoute('biopsia_add')); ?>">
+            <li class="<?php echo e(isActiveRoute('biopsia.create')); ?>">
                 <a href="<?php echo e(url('/biopsia/create')); ?>">Solicitud biopsia</a>
             </li>
-            <li class="<?php echo e(isActiveRoute('biopsia_report')); ?>">
+            <li class="<?php echo e(isActiveRoute('biopsia_report.index')); ?>">
                 <a href="<?php echo e(url('/biopsia-report')); ?>">Reportes biopsia</a>
             </li>
           </ul>
         </li>
-        <li>
+        <li class="
+          <?php echo e(isActiveRoute('citologia.index')); ?>
+
+          <?php echo e(isActiveRoute('citologia.create')); ?>
+
+          <?php echo e(isActiveRoute('citologia_report.index')); ?>
+
+        ">
           <a href="#"><i class="fa fa-heartbeat"></i> <span class="nav-label">Citologias</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="<?php echo e(isActiveRoute('citologias')); ?>">
+            <li class="<?php echo e(isActiveRoute('citologia.index')); ?>">
                 <a href="<?php echo e(url('/citologia')); ?>">Ver citologías</a>
             </li>
-            <li class="<?php echo e(isActiveRoute('citologia_add')); ?>">
+            <li class="<?php echo e(isActiveRoute('citologia.create')); ?>">
                 <a href="<?php echo e(url('/citologia/create')); ?>">Solicitud citología</a>
             </li>
-            <li class="<?php echo e(isActiveRoute('citologia_report')); ?>">
+            <li class="<?php echo e(isActiveRoute('citologia_report.index')); ?>">
                 <a href="<?php echo e(url('/citologia-report')); ?>">Reportes citología</a>
             </li>
           </ul>
         </li>
-        <li>
+        <li class="
+          <?php echo e(isActiveRoute('grupos.index')); ?>
+
+          <?php echo e(isActiveRoute('grupos.create')); ?>
+
+          <?php echo e(isActiveRoute('grupo_biopsia.index')); ?>
+
+          <?php echo e(isActiveRoute('grupo_citologia.index')); ?>
+
+        ">
           <a href="#"><i class="fa fa-industry"></i> <span class="nav-label">Grupos</span> </a>
           <ul class="nav nav-second-level collapse">
             <li class="<?php echo e(isActiveRoute('grupos')); ?>">
@@ -105,7 +139,7 @@
                   <a href="<?php echo e(url('/diagnosticos')); ?>">lista de diagnósticos</a>
               </li>
               <li class="<?php echo e(isActiveRoute('diagnosticos.create')); ?>">
-                  <a href="<?php echo e(url('/diagnosticos.create')); ?>">Nuevo diagnóstico</a>
+                  <a href="<?php echo e(url('/diagnosticos/create')); ?>">Nuevo diagnóstico</a>
               </li>
               <li class="<?php echo e(isActiveRoute('frases')); ?>">
                   <a href="<?php echo e(url('/frases')); ?>">lista de frases</a>

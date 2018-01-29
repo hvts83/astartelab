@@ -27,7 +27,7 @@ class FraseController extends Controller
       $data['page_title'] = "Ver frases";
       $data['frases'] = Frase::all();
       $data['tipos'] = General::getTipoFrases();
-      return view('frases.index')->with($data);
+      return view('frase.index')->with($data);
   }
 
   /**
@@ -39,7 +39,7 @@ class FraseController extends Controller
   {
     $data['page_title'] = "Nuevo frase";
     $data['tipos'] = General::getTipoFrases();
-    return view('frases.create', $data);
+    return view('frase.create', $data);
   }
 
   /**
@@ -60,7 +60,6 @@ class FraseController extends Controller
           $frase = new Frase();
           $frase->nombre = $request->nombre;
           $frase->tipo = $request->tipo;
-          $frase->detalle = $request->detalle;
           $frase->save();
       } catch (\Exception $e) {
         DB::rollback();
@@ -78,10 +77,10 @@ class FraseController extends Controller
    */
   public function edit($id)
   {
-    $data['page_title']  = "Editar Diagnóstico";
+    $data['page_title']  = "Editar frase";
     $data['frase'] =  Frase::find($id);
     if ($data['frase']  == null) { return redirect('frases'); } //Verificación para evitar errores
-    $data['tipos'] = General::getTipoFrase();
+    $data['tipos'] = General::getTipoFrases();
     return view('frase.edit', $data);
   }
 
@@ -105,7 +104,6 @@ class FraseController extends Controller
       try {
         $frase->nombre = $request->nombre;
         $frase->tipo = $request->tipo;
-        $frase->detalle = $request->detalle;
         $frase->save();
     } catch (\Exception $e) {
       DB::rollback();

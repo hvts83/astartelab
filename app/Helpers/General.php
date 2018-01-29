@@ -63,8 +63,8 @@
 
     public static function getTipoDiagnostico(){
       $tipo = array(
-        array("value" => "B", "text" => "Biopsia"),
-        array("value" => "C", "text" => "Citología")
+        array("value" => "B", "text" => "Diagnóstico de Biopsia"),
+        array("value" => "C", "text" => "Diagnóstico de Citología")
       );
       return $tipo;
     }
