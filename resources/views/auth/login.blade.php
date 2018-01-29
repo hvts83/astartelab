@@ -7,9 +7,9 @@
 <div class="middle-box text-center loginscreen animated fadeInDown">
     <div>
         <div>
-          <h1 class="logo-name">L</h1>
+          <img alt="image" class="img-circle" src="{{ asset('img/astartelogo.png') }}" style="width:  200px; height: auto;">
           </div>
-          <h3>Bienvenido</h3>
+          <h3>Astarté</h3>
           <p>Inicie sesión con sus credenciales.</p>
         <form class="form-horizontal" method="POST" action="{{ route('login') }}">
           {{ csrf_field() }}

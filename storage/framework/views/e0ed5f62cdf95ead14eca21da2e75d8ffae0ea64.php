@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>LABORATORIO ... - <?php echo $__env->yieldContent('title'); ?> </title>
+  <title>Astarté - <?php echo $__env->yieldContent('title'); ?> </title>
   <link rel="stylesheet" href="<?php echo asset('css/vendor.css'); ?>" />
   <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" />
 </head>

@@ -28,7 +28,7 @@
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/doctores/' .  $doctor->id . "/edit" )); ?>">Editar</a>
                   <a class="btn btn-default" href="<?php echo e(url('/doctor-biopsias/' .  $doctor->id )); ?>">Biopsias</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/doctor-citologia/' .  $doctor->id )); ?>">Citologias</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/doctor-citologia/' .  $doctor->id )); ?>">Citologías</a>
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

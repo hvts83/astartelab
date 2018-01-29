@@ -3,15 +3,15 @@
       <ul class="nav metismenu" id="side-menu">
         <li class="nav-header">
           <div class="dropdown profile-element"> <span>
-            <img alt="image" class="img-circle" src="https://picsum.photos/60/60/">
+            <img alt="image" class="img-circle" src="{{ asset('img/astartelogo.png') }}" style="width:  64px; height:  auto;">
            </span>
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
             <span class="clear">
               <span class="block m-t-xs">
-                <strong class="font-bold">Astarté Laboratorio de Patología</strong>
+                <strong class="font-bold">Astarté</strong>
               </span>
               <span class="text-muted text-xs block">
-                {{ Auth::user()->name }}
+                Laboratorio de Patología
               </span>
             </span>
           </a>
@@ -107,11 +107,11 @@
               <li class="{{ isActiveRoute('diagnosticos.create') }}">
                   <a href="{{ url('/diagnosticos.create') }}">Nuevo diagnóstico</a>
               </li>
-              <li class="{{ isActiveRoute('frase') }}">
-                  <a href="{{ url('/frase') }}">lista de frases</a>
+              <li class="{{ isActiveRoute('frases') }}">
+                  <a href="{{ url('/frases') }}">lista de frases</a>
               </li>
-              <li class="{{ isActiveRoute('frase_add') }}">
-                  <a href="{{ url('/frase/create') }}">Nueva frase</a>
+              <li class="{{ isActiveRoute('frases.create') }}">
+                  <a href="{{ url('/frases/create') }}">Nueva frase</a>
               </li>
             </ul>
           </li>

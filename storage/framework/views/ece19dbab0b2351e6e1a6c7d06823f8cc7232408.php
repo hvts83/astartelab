@@ -1,7 +1,7 @@
 <?php $__env->startSection('title'); ?> <?php echo e($page_title); ?> <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
-  <li class="active">Marcas</li>
+  <li class="active">Pacientes</li>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -28,7 +28,7 @@
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/pacientes/' .  $paciente->id . "/edit" )); ?>">Editar</a>
                   <a class="btn btn-default" href="<?php echo e(url('/paciente-biopsias/' .  $paciente->id )); ?>">Biopsias</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/paciente-citologia/' .  $paciente->id )); ?>">Citologias</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/paciente-citologia/' .  $paciente->id )); ?>">Citologías</a>
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

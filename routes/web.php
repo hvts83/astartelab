@@ -19,3 +19,4 @@ Route::resource('/pacientes', 'PacienteController');
 Route::resource('/doctores', 'DoctorController');
 Route::resource('/grupos', 'GrupoController');
 Route::resource('/diagnosticos', 'DiagnosticoController');
+Route::resource('/frases', 'FraseController');

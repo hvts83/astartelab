@@ -3,16 +3,15 @@
       <ul class="nav metismenu" id="side-menu">
         <li class="nav-header">
           <div class="dropdown profile-element"> <span>
-            <img alt="image" class="img-circle" src="https://picsum.photos/60/60/">
+            <img alt="image" class="img-circle" src="<?php echo e(asset('img/astartelogo.png')); ?>" style="width:  64px; height:  auto;">
            </span>
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
             <span class="clear">
               <span class="block m-t-xs">
-                <strong class="font-bold">Astarté Laboratorio de Patología</strong>
+                <strong class="font-bold">Astarté</strong>
               </span>
               <span class="text-muted text-xs block">
-                <?php echo e(Auth::user()->name); ?>
-
+                Laboratorio de Patología
               </span>
             </span>
           </a>
@@ -108,11 +107,11 @@
               <li class="<?php echo e(isActiveRoute('diagnosticos.create')); ?>">
                   <a href="<?php echo e(url('/diagnosticos.create')); ?>">Nuevo diagnóstico</a>
               </li>
-              <li class="<?php echo e(isActiveRoute('frase')); ?>">
-                  <a href="<?php echo e(url('/frase')); ?>">lista de frases</a>
+              <li class="<?php echo e(isActiveRoute('frases')); ?>">
+                  <a href="<?php echo e(url('/frases')); ?>">lista de frases</a>
               </li>
-              <li class="<?php echo e(isActiveRoute('frase_add')); ?>">
-                  <a href="<?php echo e(url('/frase/create')); ?>">Nueva frase</a>
+              <li class="<?php echo e(isActiveRoute('frases.create')); ?>">
+                  <a href="<?php echo e(url('/frases/create')); ?>">Nueva frase</a>
               </li>
             </ul>
           </li>

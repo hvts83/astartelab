@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>LABORATORIO ... - @yield('title') </title>
+  <title>Astarté - @yield('title') </title>
   <link rel="stylesheet" href="{!! asset('css/vendor.css') !!}" />
   <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
 </head>

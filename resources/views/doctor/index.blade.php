@@ -30,7 +30,7 @@
                 <td>
                   <a class="btn btn-default" href="{{ url('/doctores/' .  $doctor->id . "/edit" ) }}">Editar</a>
                   <a class="btn btn-default" href="{{ url('/doctor-biopsias/' .  $doctor->id ) }}">Biopsias</a>
-                  <a class="btn btn-default" href="{{ url('/doctor-citologia/' .  $doctor->id ) }}">Citologias</a>
+                  <a class="btn btn-default" href="{{ url('/doctor-citologia/' .  $doctor->id ) }}">Citologías</a>
                 </td>
               </tr>
             @endforeach
