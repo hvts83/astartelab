@@ -26,13 +26,13 @@
                 <td><?php echo e($biopsia->paciente_id); ?></td>
                 <td><?php echo e($biopsia->recibido); ?></td>
                 <td>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsias/' .  $biopsia->id . "/edit" )); ?>">Editar</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Editar</a>
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </tbody>
         </table>
-        <a href="<?php echo e(url('/biopsias/create')); ?>" class="btn btn-default">Nueva biopsia</a>
+        <a href="<?php echo e(url('/biopsia/create')); ?>" class="btn btn-default">Nueva biopsia</a>
       </div>
     </div>
   </div>

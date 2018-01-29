@@ -13,6 +13,7 @@ use App\Helpers\General;
 use App\Models\Doctor;
 use App\Models\Paciente;
 use App\Models\Grupo;
+use App\Models\Diagnostico;
 use App\Models\Biopsia;
 
 class BiopsiaController extends Controller
@@ -22,5 +23,16 @@ class BiopsiaController extends Controller
       $data['page_title'] = "Ver biopsias";
       $data['biopsias'] = Biopsia::all();
       return view('biopsia.index')->with($data);
+  }
+
+  public function create()
+  {
+    $data['page_title'] = "Solicitud biopsia";
+    $data['doctores'] = Doctor::all();
+    $data['pacientes'] = Paciente::all();
+    $data['grupos'] = Grupo::all();
+    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
+
+    return view('biopsia.create', $data);
   }
 }

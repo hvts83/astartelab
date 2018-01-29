@@ -28,13 +28,13 @@
                 <td>{{ $biopsia->paciente_id }}</td>
                 <td>{{ $biopsia->recibido }}</td>
                 <td>
-                  <a class="btn btn-default" href="{{ url('/biopsias/' .  $biopsia->id . "/edit" ) }}">Editar</a>
+                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/edit" ) }}">Editar</a>
                 </td>
               </tr>
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/biopsias/create') }}" class="btn btn-default">Nueva biopsia</a>
+        <a href="{{ url('/biopsia/create') }}" class="btn btn-default">Nueva biopsia</a>
       </div>
     </div>
   </div>
