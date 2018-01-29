@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePatologiaTable extends Migration
+class CreateCitologiaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePatologiaTable extends Migration
      */
     public function up()
     {
-        Schema::create('patologia', function (Blueprint $table) {
+        Schema::create('citologia', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('doctor_id');
             $table->integer('paciente_id');
@@ -34,6 +34,6 @@ class CreatePatologiaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('patologia');
+        Schema::dropIfExists('citologia');
     }
 }

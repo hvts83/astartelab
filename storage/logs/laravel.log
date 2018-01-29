@@ -5167,3 +5167,19 @@ esbot\\carbon\\src\\Carbon\\Carbon.php:582)
 #41 C:\\xampp\\htdocs\\astartelab\\public\\index.php(53): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #42 {main}
 "} 
+[2018-01-29 07:15:19] environment.ERROR: There are no commands defined in the "migrate:" namespace.
+
+Did you mean this?
+    migrate {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): There are no commands defined in the \"migrate:\" namespace.
+
+Did you mean this?
+    migrate at C:\\xampp\\htdocs\\astartelab\\vendor\\symfony\\console\\Application.php:556)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\astartelab\\vendor\\symfony\\console\\Application.php(596): Symfony\\Component\\Console\\Application->findNamespace('migrate:')
+#1 C:\\xampp\\htdocs\\astartelab\\vendor\\symfony\\console\\Application.php(221): Symfony\\Component\\Console\\Application->find('migrate::rollba...')
+#2 C:\\xampp\\htdocs\\astartelab\\vendor\\symfony\\console\\Application.php(148): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 C:\\xampp\\htdocs\\astartelab\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(88): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 C:\\xampp\\htdocs\\astartelab\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(121): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#5 C:\\xampp\\htdocs\\astartelab\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#6 {main}
+"} 

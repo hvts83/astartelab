@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePatologiaDiagnosticoTable extends Migration
+class CreateCitologiaDiagnosticoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreatePatologiaDiagnosticoTable extends Migration
      */
     public function up()
     {
-        Schema::create('patologia_diagnostico', function (Blueprint $table) {
+        Schema::create('citologia_diagnostico', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('patologia_id');
+            $table->integer('citologia_id');
             $table->integer('diagnostico_id');
             $table->text('detalle')->nullable();
             $table->string('informe_preliminar')->nullable();
@@ -30,6 +30,6 @@ class CreatePatologiaDiagnosticoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('patologia_diagnostico');
+        Schema::dropIfExists('citologia_diagnostico');
     }
 }

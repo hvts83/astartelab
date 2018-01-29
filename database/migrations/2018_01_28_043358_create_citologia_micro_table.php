@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePatologiaMicroTable extends Migration
+class CreateCitologiaMicroTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreatePatologiaMicroTable extends Migration
      */
     public function up()
     {
-        Schema::create('patologia_micro', function (Blueprint $table) {
+        Schema::create('citologia_micro', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('patologia_id');
+          $table->integer('citologia_id');
           $table->integer('frase_id');
           $table->text('detalle')->nullable();
           $table->timestamps();
@@ -29,6 +29,6 @@ class CreatePatologiaMicroTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('patologia_micro');
+        Schema::dropIfExists('citologia_micro');
     }
 }
