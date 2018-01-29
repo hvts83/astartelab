@@ -3,7 +3,7 @@
 @section ('title') {{ $page_title }} @stop
 
 @section('breadcrumb')
-  <li class="active">Pacientes</li>
+  <li class="active">Grupos</li>
 @endsection
 
 @section ('content')
@@ -12,31 +12,25 @@
   <div class="row">
     <div class="ibox-content">
       <div class="table-responsive">
-        <table id="tblpaciente" class="table table-bordered table-striped">
+        <table id="tblgrupo" class="table table-bordered table-striped">
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Correo</th>
-              <th>Teléfono</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($pacientes as $key => $paciente)
+            @foreach ($grupos as $key => $grupo)
               <tr>
-                <td>{{ $paciente->name }}</td>
-                <td>{{ $paciente->email }}</td>
-                <td>{{ $paciente->telefono }}</td>
+                <td>{{ $grupo->nombre }}</td>
                 <td>
-                  <a class="btn btn-default" href="{{ url('/pacientes/' .  $paciente->id . "/edit" ) }}">Editar</a>
-                  <a class="btn btn-default" href="{{ url('/paciente-biopsias/' .  $paciente->id ) }}">Biopsias</a>
-                  <a class="btn btn-default" href="{{ url('/paciente-citologia/' .  $paciente->id ) }}">Citologias</a>
+                  <a class="btn btn-default" href="{{ url('/grupos/' .  $grupo->id . "/edit" ) }}">Editar</a>
                 </td>
               </tr>
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/pacientes/create') }}" class="btn btn-default">Nuevo paciente</a>
+        <a href="{{ url('/grupos/create') }}" class="btn btn-default">Nuevo grupo</a>
       </div>
     </div>
   </div>
@@ -51,7 +45,7 @@
 	<script src="{{ asset('js/dataTables/datatables.min.js')}}"></script>
 	<script>
     //Datatable
-    var tabla = $('#tblpaciente').DataTable({
+    var tabla = $('#tblgrupo').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": true,

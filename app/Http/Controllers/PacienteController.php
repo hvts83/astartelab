@@ -50,7 +50,7 @@ class PacienteController extends Controller
     public function store(Request $request)
     {
       $this->validate($request, [
-        'name' => 'max:64|required|regex:/^[A-Za-z ñáéíóú\s]+$/',
+        'name' => 'max:64|required',
         'email'    => 'required|email|max:64',
         'sexo' => 'required',
         'fecha_nacimiento' => 'required',
@@ -99,7 +99,7 @@ class PacienteController extends Controller
     {
       $paciente = Paciente::find($id);
       $this->validate($request, [
-        'name' => 'max:64|required|regex:/^[A-Za-z ñáéíóú\s]+$/',
+        'name' => 'max:64|required',
         'email'    => 'required|email|max:64',
         'sexo' => 'required',
         'fecha_nacimiento' => 'required',

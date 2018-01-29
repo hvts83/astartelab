@@ -3,7 +3,7 @@
 @section ('title') {{ $page_title }} @stop
 
 @section('breadcrumb')
-  <li class="active">Pacientes</li>
+  <li class="active">Diagnóstico</li>
 @endsection
 
 @section ('content')
@@ -12,31 +12,33 @@
   <div class="row">
     <div class="ibox-content">
       <div class="table-responsive">
-        <table id="tblpaciente" class="table table-bordered table-striped">
+        <table id="tbldiagnostico" class="table table-bordered table-striped">
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Correo</th>
-              <th>Teléfono</th>
+              <th>Tipo</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($pacientes as $key => $paciente)
+            @foreach ($diagnosticos as $key => $diagnostico)
               <tr>
-                <td>{{ $paciente->name }}</td>
-                <td>{{ $paciente->email }}</td>
-                <td>{{ $paciente->telefono }}</td>
+                <td>{{ $diagnostico->nombre }}</td>
                 <td>
-                  <a class="btn btn-default" href="{{ url('/pacientes/' .  $paciente->id . "/edit" ) }}">Editar</a>
-                  <a class="btn btn-default" href="{{ url('/paciente-biopsias/' .  $paciente->id ) }}">Biopsias</a>
-                  <a class="btn btn-default" href="{{ url('/paciente-citologia/' .  $paciente->id ) }}">Citologias</a>
+                  @foreach ($tipos as $tipo)
+                    @if ($tipo['value'] == $diagnostico->tipo)
+                      {{ $tipo['text'] }}
+                    @endif
+                  @endforeach
+                </td>
+                <td>
+                  <a class="btn btn-default" href="{{ url('/diagnosticos/' .  $diagnostico->id . "/edit" ) }}">Editar</a>
                 </td>
               </tr>
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/pacientes/create') }}" class="btn btn-default">Nuevo paciente</a>
+        <a href="{{ url('/diagnosticos/create') }}" class="btn btn-default">Nuevo diagnóstico</a>
       </div>
     </div>
   </div>
@@ -51,7 +53,7 @@
 	<script src="{{ asset('js/dataTables/datatables.min.js')}}"></script>
 	<script>
     //Datatable
-    var tabla = $('#tblpaciente').DataTable({
+    var tabla = $('#tbldiagnostico').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": true,

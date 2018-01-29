@@ -2,14 +2,23 @@
     <div class="sidebar-collapse">
       <ul class="nav metismenu" id="side-menu">
         <li class="nav-header">
-          <div class="dropdown profile-element">
-            <span>
-              <img alt="image" class="img-circle" src="https://picsum.photos/60/60/?random" />
-              <strong class="font-bold"><?php echo e(Auth::user()->name); ?></strong>
+          <div class="dropdown profile-element"> <span>
+            <img alt="image" class="img-circle" src="https://picsum.photos/60/60/">
+           </span>
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <span class="clear">
+              <span class="block m-t-xs">
+                <strong class="font-bold">Astarté Laboratorio de Patología</strong>
+              </span>
+              <span class="text-muted text-xs block">
+                <?php echo e(Auth::user()->name); ?>
+
+              </span>
             </span>
+          </a>
           </div>
             <div class="logo-element">
-                L
+                ALP
             </div>
         </li>
 
@@ -19,10 +28,10 @@
         <li>
           <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Pacientes</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="<?php echo e(isActiveRoute('pacientes')); ?>">
-                <a href="<?php echo e(url('/pacientes')); ?>">ver pacientes</a>
+            <li class="<?php echo e(isActiveRoute('pacientes.index')); ?>">
+                <a href="<?php echo e(url('/pacientes')); ?>">Ver pacientes</a>
             </li>
-            <li class="<?php echo e(isActiveRoute('paciente_add')); ?>">
+            <li class="<?php echo e(isActiveRoute('pacientes.create')); ?>">
                 <a href="<?php echo e(url('/pacientes/create')); ?>">Nuevo paciente</a>
             </li>
           </ul>
@@ -31,10 +40,10 @@
           <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label">Doctores</span> </a>
           <ul class="nav nav-second-level collapse">
             <li class="<?php echo e(isActiveRoute('doctores')); ?>">
-                <a href="<?php echo e(url('/doctor')); ?>">ver doctores</a>
+                <a href="<?php echo e(url('/doctores')); ?>">Ver doctores</a>
             </li>
-            <li class="<?php echo e(isActiveRoute('doctor_add')); ?>">
-                <a href="<?php echo e(url('/doctor/create')); ?>">Nuevo doctor</a>
+            <li class="<?php echo e(isActiveRoute('doctores.create')); ?>">
+                <a href="<?php echo e(url('/doctores/create')); ?>">Nuevo doctor</a>
             </li>
           </ul>
         </li>
@@ -42,7 +51,7 @@
           <a href="#"><i class="fa fa-medkit"></i> <span class="nav-label">Biopsias</span> </a>
           <ul class="nav nav-second-level collapse">
             <li class="<?php echo e(isActiveRoute('biopsias')); ?>">
-                <a href="<?php echo e(url('/biopsia')); ?>">ver biopsias</a>
+                <a href="<?php echo e(url('/biopsia')); ?>">Ver biopsias</a>
             </li>
             <li class="<?php echo e(isActiveRoute('biopsia_add')); ?>">
                 <a href="<?php echo e(url('/biopsia/create')); ?>">Solicitud biopsia</a>
@@ -56,30 +65,30 @@
           <a href="#"><i class="fa fa-heartbeat"></i> <span class="nav-label">Citologias</span> </a>
           <ul class="nav nav-second-level collapse">
             <li class="<?php echo e(isActiveRoute('citologias')); ?>">
-                <a href="<?php echo e(url('/citologia')); ?>">ver citologias</a>
+                <a href="<?php echo e(url('/citologia')); ?>">Ver citologías</a>
             </li>
             <li class="<?php echo e(isActiveRoute('citologia_add')); ?>">
-                <a href="<?php echo e(url('/citologia/create')); ?>">Solicitud citologia</a>
+                <a href="<?php echo e(url('/citologia/create')); ?>">Solicitud citología</a>
             </li>
             <li class="<?php echo e(isActiveRoute('citologia_report')); ?>">
-                <a href="<?php echo e(url('/citologia-report')); ?>">Reportes citologia</a>
+                <a href="<?php echo e(url('/citologia-report')); ?>">Reportes citología</a>
             </li>
           </ul>
         </li>
         <li>
           <a href="#"><i class="fa fa-industry"></i> <span class="nav-label">Grupos</span> </a>
           <ul class="nav nav-second-level collapse">
-            <li class="<?php echo e(isActiveRoute('grupo')); ?>">
-                <a href="<?php echo e(url('/grupo')); ?>">ver grupos</a>
+            <li class="<?php echo e(isActiveRoute('grupos')); ?>">
+                <a href="<?php echo e(url('/grupos')); ?>">Ver grupos</a>
             </li>
-            <li class="<?php echo e(isActiveRoute('grupo_add')); ?>">
-                <a href="<?php echo e(url('/grupo/create')); ?>">Nuevo grupo</a>
+            <li class="<?php echo e(isActiveRoute('grupos.create')); ?>">
+                <a href="<?php echo e(url('/grupos/create')); ?>">Nuevo grupo</a>
             </li>
             <li class="<?php echo e(isActiveRoute('grupo_biopsia')); ?>">
                 <a href="<?php echo e(url('/grupo-biopsia')); ?>">Biopsias de grupos</a>
             </li>
             <li class="<?php echo e(isActiveRoute('grupo_citologia')); ?>">
-                <a href="<?php echo e(url('/grupo-citologia')); ?>">Citologias de grupos</a>
+                <a href="<?php echo e(url('/grupo-citologia')); ?>">Citologías de grupos</a>
             </li>
           </ul>
         </li>
@@ -93,11 +102,11 @@
               <li class="<?php echo e(isActiveRoute('usuario_add')); ?>">
                   <a href="<?php echo e(url('/usuario/create')); ?>">Nuevo usuarios</a>
               </li>
-              <li class="<?php echo e(isActiveRoute('diagnostico')); ?>">
-                  <a href="<?php echo e(url('/diagnostico')); ?>">lista de diagnosticos</a>
+              <li class="<?php echo e(isActiveRoute('diagnosticos')); ?>">
+                  <a href="<?php echo e(url('/diagnosticos')); ?>">lista de diagnósticos</a>
               </li>
-              <li class="<?php echo e(isActiveRoute('diagnostico_add')); ?>">
-                  <a href="<?php echo e(url('/diagnostico/create')); ?>">Nuevo diagnostico</a>
+              <li class="<?php echo e(isActiveRoute('diagnosticos.create')); ?>">
+                  <a href="<?php echo e(url('/diagnosticos.create')); ?>">Nuevo diagnóstico</a>
               </li>
               <li class="<?php echo e(isActiveRoute('frase')); ?>">
                   <a href="<?php echo e(url('/frase')); ?>">lista de frases</a>

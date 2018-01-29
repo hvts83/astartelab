@@ -44,28 +44,29 @@
         return $Newdate;
     }
 
-    /**
-     * Estados civiles
-     * @return Array $estado estados civiles
-     */
-    public static function getEstadoCivil(){
-      $estado = array(
-        array("id" => "X", "nombre" => trans('general.sin_definir') ),
-        array("id" => "S", "nombre" => trans('general.soltero')),
-        array("id" => "C", "nombre" => trans('general.casado')),
-        array("id" => "U", "nombre" => trans('general.union_libre')),
-        array("id" => "V", "nombre" => trans('general.viudo')),
-        array("id" => "D", "nombre" => trans('general.divorciado'))
-      );
-      return $estado;
-    }
-
     public static function getGenero(){
       $genero = array(
         array("value" => "M", "text" => trans('general.masculino') ),
         array("value" => "F", "text" => trans('general.femenino') )
       );
       return $genero;
+    }
+
+    public static function getTipoFrases(){
+      $tipo = array(
+        array("value" => "B", "text" => "Frases Macro Biopsia"),
+        array("value" => "M", "text" => "Frases Micro Biopsia" ),
+        array("value" => "C", "text" => "Frases Micro Citología")
+      );
+      return $tipo;
+    }
+
+    public static function getTipoDiagnostico(){
+      $tipo = array(
+        array("value" => "B", "text" => "Biopsia"),
+        array("value" => "C", "text" => "Citología")
+      );
+      return $tipo;
     }
 
     public static function generar_token( $id ){

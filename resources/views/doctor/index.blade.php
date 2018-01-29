@@ -3,7 +3,7 @@
 @section ('title') {{ $page_title }} @stop
 
 @section('breadcrumb')
-  <li class="active">Pacientes</li>
+  <li class="active">Doctores</li>
 @endsection
 
 @section ('content')
@@ -12,7 +12,7 @@
   <div class="row">
     <div class="ibox-content">
       <div class="table-responsive">
-        <table id="tblpaciente" class="table table-bordered table-striped">
+        <table id="tbldoctor" class="table table-bordered table-striped">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -22,21 +22,21 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($pacientes as $key => $paciente)
+            @foreach ($doctores as $key => $doctor)
               <tr>
-                <td>{{ $paciente->name }}</td>
-                <td>{{ $paciente->email }}</td>
-                <td>{{ $paciente->telefono }}</td>
+                <td>{{ $doctor->nombre }}</td>
+                <td>{{ $doctor->email }}</td>
+                <td>{{ $doctor->telefono }}</td>
                 <td>
-                  <a class="btn btn-default" href="{{ url('/pacientes/' .  $paciente->id . "/edit" ) }}">Editar</a>
-                  <a class="btn btn-default" href="{{ url('/paciente-biopsias/' .  $paciente->id ) }}">Biopsias</a>
-                  <a class="btn btn-default" href="{{ url('/paciente-citologia/' .  $paciente->id ) }}">Citologias</a>
+                  <a class="btn btn-default" href="{{ url('/doctores/' .  $doctor->id . "/edit" ) }}">Editar</a>
+                  <a class="btn btn-default" href="{{ url('/doctor-biopsias/' .  $doctor->id ) }}">Biopsias</a>
+                  <a class="btn btn-default" href="{{ url('/doctor-citologia/' .  $doctor->id ) }}">Citologias</a>
                 </td>
               </tr>
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/pacientes/create') }}" class="btn btn-default">Nuevo paciente</a>
+        <a href="{{ url('/doctores/create') }}" class="btn btn-default">Nuevo doctor</a>
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
 	<script src="{{ asset('js/dataTables/datatables.min.js')}}"></script>
 	<script>
     //Datatable
-    var tabla = $('#tblpaciente').DataTable({
+    var tabla = $('#tbldoctor').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": true,

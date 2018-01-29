@@ -16,3 +16,6 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name("main");
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/pacientes', 'PacienteController');
+Route::resource('/doctores', 'DoctorController');
+Route::resource('/grupos', 'GrupoController');
+Route::resource('/diagnosticos', 'DiagnosticoController');
