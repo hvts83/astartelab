@@ -18,6 +18,7 @@ class CreateDoctoresTable extends Migration
             $table->string('nombre');
             $table->string('email');
             $table->string('telefono')->nullable();
+            $table->double('saldo', 8, 2);
             $table->timestamps();
             $table->softDeletes();
         });

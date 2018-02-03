@@ -46,11 +46,6 @@
                       Iniciar sesión
                   </button>
               </div>
-              <div class="col-md-12">
-                <a class="btn btn-link" href="<?php echo e(route('password.request')); ?>">
-                    <small>Recuperar contraseña</small>
-                </a>
-              </div>
           </div>
       </form>
       <p class="m-t"> <small>Laboratorios ... </small> </p>

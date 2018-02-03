@@ -47,14 +47,9 @@
                       Iniciar sesión
                   </button>
               </div>
-              <div class="col-md-12">
-                <a class="btn btn-link" href="{{ route('password.request') }}">
-                    <small>Recuperar contraseña</small>
-                </a>
-              </div>
           </div>
       </form>
-      <p class="m-t"> <small>Laboratorios ... </small> </p>
+      <p class="m-t"> <small>Astarté laboratorio de patologías</small> </p>
     </div>
     </div>
 @endsection
