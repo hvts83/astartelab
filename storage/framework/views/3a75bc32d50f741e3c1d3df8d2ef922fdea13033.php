@@ -27,8 +27,9 @@
                 <td><?php echo e($doctor->telefono); ?></td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/doctores/' .  $doctor->id . "/edit" )); ?>">Editar</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/doctor-biopsias/' .  $doctor->id )); ?>">Biopsias</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/doctor-citologia/' .  $doctor->id )); ?>">Citologías</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/doctor-account/' .  $doctor->id )); ?>">Fondos</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/reports/doctor-biopsia' .  $doctor->id )); ?>">Biopsias</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/reports/doctor-citologia' .  $doctor->id )); ?>">Citologías</a>
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

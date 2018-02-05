@@ -29,8 +29,9 @@
                 <td>{{ $doctor->telefono }}</td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/doctores/' .  $doctor->id . "/edit" ) }}">Editar</a>
-                  <a class="btn btn-default" href="{{ url('/doctor-biopsias/' .  $doctor->id ) }}">Biopsias</a>
-                  <a class="btn btn-default" href="{{ url('/doctor-citologia/' .  $doctor->id ) }}">Citologías</a>
+                  <a class="btn btn-default" href="{{ url('/doctor-account/' .  $doctor->id ) }}">Fondos</a>
+                  <a class="btn btn-default" href="{{ url('/reports/doctor-biopsia' .  $doctor->id ) }}">Biopsias</a>
+                  <a class="btn btn-default" href="{{ url('/reports/doctor-citologia' .  $doctor->id ) }}">Citologías</a>
                 </td>
               </tr>
             @endforeach

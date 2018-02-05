@@ -60,6 +60,7 @@ class DoctorController extends Controller
           $doctor->email = $request->email;
           $doctor->nombre = $request->nombre;
           $doctor->telefono = $request->telefono;
+          $doctor->saldo = 0;
           $doctor->save();
       } catch (\Exception $e) {
         DB::rollback();
