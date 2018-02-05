@@ -69,6 +69,14 @@
       return $tipo;
     }
 
+    public static function getTipoServicio(){
+      $tipo = array(
+        array("value" => "B", "text" => "Biopsia"),
+        array("value" => "C", "text" => "Citología")
+      );
+      return $tipo;
+    }
+
     public static function generar_token( $id ){
       $time = time();
       $token = sha1( sprintf("%'.07d", $id ) . str_random(20) . $time );

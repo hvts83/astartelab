@@ -20,6 +20,7 @@ Route::resource('/doctores', 'DoctorController');
 Route::resource('/grupos', 'GrupoController');
 Route::resource('/diagnosticos', 'DiagnosticoController');
 Route::resource('/frases', 'FraseController');
+Route::resource('/precios', 'PreciosController');
 Route::resource('/biopsia', 'BiopsiaController');
 Route::get('/doctor-account/{id}', "DoctorFondosController@getDoctorAccount" );
 Route::post('/doctor-account/{id}', "DoctorFondosController@postDoctorFunds");

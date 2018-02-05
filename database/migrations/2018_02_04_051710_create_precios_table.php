@@ -17,6 +17,7 @@ class CreatePreciosTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->double('monto', 8,2);
+            $table->char('tipo',1);
             $table->timestamps();
         });
     }
