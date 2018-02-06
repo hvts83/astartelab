@@ -22,7 +22,7 @@
                 </ul>
             </div>
         <?php endif; ?>
-        <form role="form" method="post" action="<?php echo e(url('/biopsias')); ?>">
+        <form role="form" method="post" action="<?php echo e(url('/biopsia')); ?>">
              <?php echo e(csrf_field()); ?>
 
              <div class="form-group">
@@ -53,11 +53,20 @@
                </select>
              </div>
              <div class="form-group">
-               <label class="control-label">Diagnósticos</label>
+               <label class="control-label">Diagnóstico</label>
                <select class="form-control m-b" name="diagnostico_id">
                  <option>Seleccione diagnóstico</option>
                  <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                    <option value="<?php echo e($diagnostico->id); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
+                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+               </select>
+             </div>
+             <div class="form-group">
+               <label class="control-label">Precio</label>
+               <select class="form-control m-b" name="precio_id">
+                 <option>Seleccione precio</option>
+                 <?php $__currentLoopData = $precios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $precio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                   <option value="<?php echo e($precio->id); ?>">$ <?php echo e($precio->monto); ?> </option>
                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                </select>
              </div>

@@ -24,7 +24,7 @@
                 </ul>
             </div>
         @endif
-        <form role="form" method="post" action="{{ url('/biopsias') }}">
+        <form role="form" method="post" action="{{ url('/biopsia') }}">
              {{ csrf_field() }}
              <div class="form-group">
                <label class="control-label">Doctor</label>
@@ -54,11 +54,20 @@
                </select>
              </div>
              <div class="form-group">
-               <label class="control-label">Diagnósticos</label>
+               <label class="control-label">Diagnóstico</label>
                <select class="form-control m-b" name="diagnostico_id">
                  <option>Seleccione diagnóstico</option>
                  @foreach ($diagnosticos as $diagnostico)
                    <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
+                 @endforeach
+               </select>
+             </div>
+             <div class="form-group">
+               <label class="control-label">Precio</label>
+               <select class="form-control m-b" name="precio_id">
+                 <option>Seleccione precio</option>
+                 @foreach ($precios as $precio)
+                   <option value="{{ $precio->id }}">$ {{  $precio->monto }} </option>
                  @endforeach
                </select>
              </div>

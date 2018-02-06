@@ -15,6 +15,9 @@ use App\Models\Doctor_transaccion;
 
 class DoctorFondosController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
 
     public function getDoctorAccount(Request $request, $id){
       $data['doctor'] =  Doctor::find($id);
