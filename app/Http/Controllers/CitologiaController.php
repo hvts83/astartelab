@@ -110,7 +110,7 @@ class CitologiaController extends Controller
               $ct->monto = $precioPagar->monto;
               $ct->saldo = 0;
               break;
-            case 'AC':
+            case 'PE':
               $ct->monto = 0;
               $ct->saldo = $precioPagar->monto;
               break;

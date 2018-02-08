@@ -71,6 +71,8 @@ class BiopsiaController extends Controller
       'grupo_id' => 'required',
       'diagnostico_id' =>'required',
       'precio_id' => 'required',
+      'estado_pago' => 'required',
+      'facturacion' => 'required',
       ]);
 
       $correlativo=  Consulta_transacciones::whereRaw('tipo = "B" AND MONTH(created_at) = MONTH(CURDATE())')->count();
@@ -86,6 +88,7 @@ class BiopsiaController extends Controller
           $biopsia->grupo_id = $request->grupo_id;
           $biopsia->precio_id = $request->precio_id;
           $biopsia->diagnostico_id = $request->diagnostico_id;
+          $biopsia->estado_pago = $request->estado_pago;
           $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
           $biopsia->informe = $informe;
           $biopsia->save();
@@ -93,8 +96,29 @@ class BiopsiaController extends Controller
           $ct = new Consulta_transacciones();
           $ct->tipo = "B";
           $ct->consulta = $biopsia->id;
+          $ct->estado_pago = $biopsia->estado_pago;
+          switch ($biopsia->estado_pago) {
+            case 'PP':
+              $this->pagoDoctor( $request->doctor_id, $precioPagar->monto);
+              $ct->monto = $precioPagar->monto;
+              $ct->saldo = 0;
+              break;
+            case 'AP':
+              $ct->monto = 0;
+              $ct->saldo = $precioPagar->monto;
+              break;
+            case 'AC':
+              $ct->monto = $precioPagar->monto;
+              $ct->saldo = 0;
+              break;
+            case 'PE':
+              $ct->monto = 0;
+              $ct->saldo = $precioPagar->monto;
+              break;
+          }
+          $ct->total = $precioPagar->monto;
           $ct->informe = $biopsia->informe;
-          $ct->monto = $precioPagar->monto;
+          $ct->facturacion = $request->facturacion;
           $ct->save();
 
       } catch (\Exception $e) {
@@ -121,6 +145,10 @@ class BiopsiaController extends Controller
     $data['inmunohistoquimica'] = Biopsia_inmunohistoquimica::where('biopsia_id', '=', $id)->first();
     $data['inmunohistoquimica_imagenes'] = Biopsia_inmunohistoquimica_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
       ->where('biopsia_id', '=', $id)->get();
+    $data['detalle_pago'] = Consulta_transacciones::where([
+      ['tipo', '=', 'B'],
+      ['consulta', '=', $id]
+    ])->get();
     $data['page_title']  = "Detalle " . $data['biopsia']->informe;
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
@@ -128,6 +156,8 @@ class BiopsiaController extends Controller
     $data['precios'] = Precio::where('tipo', '=', 'B')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
     $data['frases'] = Frase::where('tipo', '=', 'B')->get();
+    $data['pagos'] = General::getCondicionPago();
+    $data['facturacion'] = General::getFacturacion();
     $data['biopsia']->recibido = General::formatoFecha( $data['biopsia']->recibido );
     $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
 
@@ -172,5 +202,21 @@ class BiopsiaController extends Controller
     }
     DB::commit();
      return redirect('biopsia/'. $id . "/edit");
+  }
+
+  protected function pagoDoctor($doctor_id, $monto){
+    $doctor = Doctor::find($doctor_id);
+    $nuevoSaldo = $doctor->saldo - $monto;
+    //Inicio de las inserciones en la base de datos
+    $trans = new Doctor_transaccion();
+    $trans->doctor_id = $doctor->id;
+    $trans->tipo = "E";
+    $trans->monto = $monto;
+    $trans->prev = $doctor->saldo;
+    $trans->actual = $nuevoSaldo;
+    $trans->save();
+
+    $doctor->saldo = $nuevoSaldo;
+    $doctor->save();
   }
 }

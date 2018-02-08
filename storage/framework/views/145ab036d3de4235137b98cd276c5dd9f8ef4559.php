@@ -1,7 +1,7 @@
 <?php $__env->startSection('title'); ?> <?php echo e($page_title); ?> <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
-  <li><a href="<?php echo e(url('/biopsias')); ?>">Ver biopsias</a></li>
+  <li><a href="<?php echo e(url('/biopsia')); ?>">Ver biopsias</a></li>
   <li class="active">
       <strong><?php echo e($page_title); ?></strong>
   </li>
@@ -38,10 +38,11 @@
 
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#tab-1">Datos de consulta</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-2">Reporte Macro</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-3">Reporte Micro</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-4">Reporte Informe preliminar y Dx</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-5">Inmunohistoquimica</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-2">Pago</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-3">Reporte Macro</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-4">Reporte Micro</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-5">Reporte Informe preliminar y Dx</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-6">Inmunohistoquimica</a></li>
         </ul>
         <div class="tab-content">
             <div id="tab-1" class="tab-pane active">
@@ -101,22 +102,6 @@
                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                          </select>
                        </div>
-                       <div class="form-group col-md-6">
-                         <label class="control-label">Precio</label>
-                         <div class="input-group m-b">
-                           <span class="input-group-addon">$</span>
-                           <select class="chosen-select"  tabindex="2" name="precio_id">
-                             <option>Seleccione precio</option>
-                             <?php $__currentLoopData = $precios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $precio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                               <?php if($precio->id == $biopsia->precio_id): ?>
-                                 <option value="<?php echo e($precio->id); ?>" selected> <?php echo e($precio->monto); ?> </option>
-                               <?php else: ?>
-                                <option value="<?php echo e($precio->id); ?>"> <?php echo e($precio->monto); ?> </option>
-                               <?php endif; ?>
-                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                           </select>
-                         </div>
-                       </div>
                        <div class="form-group">
                          <label class="control-label">Diagnóstico</label>
                          <select class="chosen-select"  tabindex="2" name="diagnostico_id">
@@ -137,6 +122,56 @@
                 </div>
             </div>
             <div id="tab-2" class="tab-pane">
+              <div class="panel-body">
+                <div class="row">
+                  <?php
+                    foreach ($precios as $precio) {
+                      if ($precio->id == $biopsia->precio_id) {
+                        $totalPagar = $precio->monto;
+                      }
+                    }
+                  ?>
+                  <table class="table">
+                    <tr>
+                      <td><strong>Total</strong></td>
+                      <td><?php echo e($totalPagar); ?></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="row">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Fecha pago</th>
+                        <th>Facturación</th>
+                        <th>Monto pagado</th>
+                        <th>Saldo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php $__currentLoopData = $detalle_pago; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $detp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <td><?php echo e($detp->created_at); ?></td>
+                        <td>
+                          <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if($factu['value'] == $detp->facturacion): ?>
+                              <?php echo e($factu['text']); ?>
+
+                            <?php endif; ?>
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </td>
+                        <td><?php echo e($detp->monto); ?></td>
+                        <td><?php echo e($detp->saldo); ?></td>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </table>
+                </div>
+
+                <?php if($biopsia->estado_pagon == 'AP' || $biopsia->estado_pagon == 'AP'): ?>
+                    --
+                <?php endif; ?>
+
+              </div>
+            </div>
+            <div id="tab-3" class="tab-pane">
               <div class="panel-body">
                 <form role="form" method="post" action="<?php echo e(url('/biopsia-details/macro/'. $biopsia->id )); ?>">
                      <?php echo e(csrf_field()); ?>
@@ -168,7 +203,7 @@
                 </form>
               </div>
             </div>
-            <div id="tab-3" class="tab-pane">
+            <div id="tab-4" class="tab-pane">
               <div class="panel-body">
                 <form role="form" method="post" action="<?php echo e(url('/biopsia-details/micro/'. $biopsia->id )); ?>">
                      <?php echo e(csrf_field()); ?>
@@ -200,7 +235,7 @@
                 </form>
               </div>
             </div>
-            <div id="tab-4" class="tab-pane">
+            <div id="tab-5" class="tab-pane">
               <div class="panel-body">
                 <form role="form" method="post" action="<?php echo e(url('/biopsia-details/preliminar/'. $biopsia->id )); ?>">
                      <?php echo e(csrf_field()); ?>
@@ -232,7 +267,7 @@
                 </form>
               </div>
             </div>
-            <div id="tab-5" class="tab-pane">
+            <div id="tab-6" class="tab-pane">
               <div class="panel-body">
                 <div class="row">
                   <form role="form" method="post" action="<?php echo e(url('/biopsia-details/inmunohistoquimica/'. $biopsia->id )); ?>">

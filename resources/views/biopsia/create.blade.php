@@ -26,25 +26,23 @@
         @endif
         <form role="form" method="post" action="{{ url('/biopsia') }}">
              {{ csrf_field() }}
-             <div class="form-group">
+             <legend>Datos generales</legend>
+             <div class="form-group col-md-12" id="fecha_nacimiento">
+                 <label class="font-normal">Recibido</label>
+                 <div class="input-group date">
+                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="recibido" class="form-control" value="01-01-2018">
+                 </div>
+             </div>
+             <div class="form-group col-md-6">
                <label class="control-label">Doctor</label>
-               <select name="doctor_id" class="chosen-select"  tabindex="2">
+               <select class="chosen-select"  tabindex="2" name="doctor_id">
                  <option>Seleccione doctor</option>
                  @foreach ($doctores as $doctor)
                    <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
                  @endforeach
                </select>
              </div>
-             <div class="form-group">
-               <label class="control-label">Paciente</label>
-               <select class="chosen-select"  tabindex="2" name="paciente_id">
-                 <option>Seleccione paciente</option>
-                 @foreach ($pacientes as $paciente)
-                   <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
-                 @endforeach
-               </select>
-             </div>
-             <div class="form-group">
+             <div class="form-group col-md-6">
                <label class="control-label">Grupo</label>
                <select class="chosen-select"  tabindex="2" name="grupo_id">
                  <option>Seleccione grupo</option>
@@ -53,7 +51,16 @@
                  @endforeach
                </select>
              </div>
-             <div class="form-group">
+             <div class="form-group col-md-12">
+               <label class="control-label">Paciente</label>
+               <select class="chosen-select"  tabindex="2" name="paciente_id">
+                 <option>Seleccione paciente</option>
+                 @foreach ($pacientes as $paciente)
+                   <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
+                 @endforeach
+               </select>
+             </div>
+             <div class="form-group col-md-12">
                <label class="control-label">Diagnóstico</label>
                <select class="chosen-select"  tabindex="2" name="diagnostico_id">
                  <option>Seleccione diagnóstico</option>
@@ -62,7 +69,8 @@
                  @endforeach
                </select>
              </div>
-             <div class="form-group col-md-6">
+             <legend>Pago </legend>
+             <div class="form-group col-md-4">
                <label class="control-label">Precio</label>
                <div class="input-group m-b">
                  <span class="input-group-addon">$</span>
@@ -74,12 +82,24 @@
                  </select>
                </div>
              </div>
-            <div class="form-group" id="fecha_nacimiento">
-                <label class="font-normal">Recibido</label>
-                <div class="input-group date">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="recibido" class="form-control" value="01-01-2018">
-                </div>
-            </div>
+             <div class="form-group col-md-4">
+               <label class="control-label">Condición de pago</label>
+               <select class="form-control m-b" name="estado_pago">
+                 <option>Seleccione condición</option>
+                 @foreach ($pagos as $pago)
+                   <option value="{{ $pago['value'] }}"> {{  $pago['text'] }} </option>
+                 @endforeach
+               </select>
+             </div>
+             <div class="form-group col-md-4">
+               <label class="control-label">Facturación</label>
+               <select class="form-control m-b" name="facturacion">
+                 <option>Seleccione facturación</option>
+                 @foreach ($facturacion as $factu)
+                   <option value="{{ $factu['value'] }}"> {{  $factu['text'] }} </option>
+                 @endforeach
+               </select>
+             </div>
             <div>
                 <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
             </div>
