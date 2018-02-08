@@ -22,6 +22,7 @@ Route::resource('/diagnosticos', 'DiagnosticoController');
 Route::resource('/frases', 'FraseController');
 Route::resource('/precios', 'PreciosController');
 Route::resource('/biopsia', 'BiopsiaController');
+Route::resource('/citologia', 'CitologiaController');
 //Cuenta doctor
 Route::get('/doctor-account/{id}', "DoctorFondosController@getDoctorAccount" );
 Route::post('/doctor-account/{id}', "DoctorFondosController@postDoctorFunds");
@@ -31,3 +32,7 @@ Route::post('/biopsia-details/micro/{id}', 'BiopsiaDetailsController@micro');
 Route::post('/biopsia-details/preliminar/{id}', 'BiopsiaDetailsController@preliminar');
 Route::post('/biopsia-details/inmunohistoquimica/{id}', 'BiopsiaDetailsController@inmunohistoquimica');
 Route::post('/biopsia-details/inmunohistoquimica_imagen/{id}', 'BiopsiaDetailsController@inmunohistoquimica_imagen');
+//Citologia
+Route::post('/citologia-details/micro/{id}', 'CitologiaDetailsController@micro');
+Route::post('/citologia-details/preliminar/{id}', 'CitologiaDetailsController@preliminar');
+Route::post('/citologia-details/imagen/{id}', 'CitologiaDetailsController@imagen');
