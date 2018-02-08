@@ -85,6 +85,25 @@
       return $tipo;
     }
 
+    public static function getCondicionPago(){
+      $tipo = array(
+        array("value" => "PP", "text" => "Prepagado"),
+        array("value" => "AP", "text" => "Abono parcial"),
+        array("value" => "AC", "text" => "Abono cancelado"),
+        array("value" => "PE", "text" => "Pendiente de pago"),
+      );
+      return $tipo;
+    }
+
+    public static function getFacturacion(){
+      $tipo = array(
+        array("value" => "CF", "text" => "Crédito fiscal"),
+        array("value" => "TC", "text" => "Ticket"),
+        array("value" => "FA", "text" => "Factura"),
+      );
+      return $tipo;
+    }
+
     public static function generar_token( $id ){
       $time = time();
       $token = sha1( sprintf("%'.07d", $id ) . str_random(20) . $time );

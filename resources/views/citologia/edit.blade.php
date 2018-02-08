@@ -40,8 +40,10 @@
 
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#tab-1">Datos de consulta</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-2">Reporte Micro</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-3">Imágenes</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-2">Pago</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-3">Reporte Micro</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-4">Reporte preliminar</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-5">Imágenes</a></li>
         </ul>
         <div class="tab-content">
             <div id="tab-1" class="tab-pane active">
@@ -100,22 +102,6 @@
                            @endforeach
                          </select>
                        </div>
-                       <div class="form-group col-md-6">
-                         <label class="control-label">Precio</label>
-                         <div class="input-group m-b">
-                           <span class="input-group-addon">$</span>
-                           <select class="chosen-select"  tabindex="2" name="precio_id">
-                             <option>Seleccione precio</option>
-                             @foreach ($precios as $precio)
-                               @if ($precio->id == $citologia->precio_id)
-                                 <option value="{{ $precio->id }}" selected> {{  $precio->monto }} </option>
-                               @else
-                                <option value="{{ $precio->id }}"> {{  $precio->monto }} </option>
-                               @endif
-                             @endforeach
-                           </select>
-                         </div>
-                       </div>
                        <div class="form-group">
                          <label class="control-label">Diagnóstico</label>
                          <select class="chosen-select"  tabindex="2" name="diagnostico_id">
@@ -129,6 +115,7 @@
                            @endforeach
                          </select>
                        </div>
+                       <br><br>
                       <div>
                           <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                       </div>
@@ -136,6 +123,55 @@
                 </div>
             </div>
             <div id="tab-2" class="tab-pane">
+              <div class="panel-body">
+                <div class="row">
+                  @php
+                    foreach ($precios as $precio) {
+                      if ($precio->id == $citologia->precio_id) {
+                        $totalPagar = $precio->monto;
+                      }
+                    }
+                  @endphp
+                  <table class="table">
+                    <tr>
+                      <td><strong>Total</strong></td>
+                      <td>{{ $totalPagar  }}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="row">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Fecha pago</th>
+                        <th>Facturación</th>
+                        <th>Monto pagado</th>
+                        <th>Saldo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($detalle_pago as $detp)
+                        <td>{{ $detp->created_at }}</td>
+                        <td>
+                          @foreach ($facturacion as $factu)
+                            @if ($factu['value'] == $detp->facturacion)
+                              {{  $factu['text'] }}
+                            @endif
+                          @endforeach
+                        </td>
+                        <td>{{ $detp->monto }}</td>
+                        <td>{{ $detp->saldo }}</td>
+                      @endforeach
+                    </table>
+                </div>
+
+                @if ($citologia->estado_pagon == 'AP' || $citologia->estado_pagon == 'AP')
+                    --
+                @endif
+
+              </div>
+            </div>
+            <div id="tab-3" class="tab-pane">
               <div class="panel-body">
                 <form role="form" method="post" action="{{ url('/citologia-details/micro/'. $citologia->id ) }}">
                      {{ csrf_field() }}
@@ -166,7 +202,38 @@
                 </form>
               </div>
             </div>
-            <div id="tab-3" class="tab-pane">
+            <div id="tab-4" class="tab-pane">
+              <div class="panel-body">
+                <form role="form" method="post" action="{{ url('/citologia-details/preliminar/'. $citologia->id ) }}">
+                     {{ csrf_field() }}
+                     <div class="form-group">
+                       <label class="control-label">Diagnóstico</label>
+                       <select class="chosen-select"  tabindex="2" name="diagnostico_id">
+                         <option>Seleccione diagnóstico</option>
+                         @foreach ($diagnosticos as $diagnostico)
+                           @if ($preliminar != null)
+                             @if ($diagnostico->id == $preliminar->diagnostico_id)
+                               <option value="{{ $diagnostico->id }}" selected> {{  $diagnostico->nombre }} </option>
+                             @else
+                               <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
+                             @endif
+                           @else
+                             <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
+                           @endif
+                         @endforeach
+                       </select>
+                     </div>
+                     <div class="form-group">
+                         <label class="control-label">Detalle</label>
+                         <textarea name="detalle" class="form-control">@if ($preliminar != null){{ $preliminar->detalle }}@endif</textarea>
+                     </div>
+                    <div>
+                        <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+                    </div>
+                </form>
+              </div>
+            </div>
+            <div id="tab-5" class="tab-pane">
               <div class="panel-body">
                 <div class="row">
                   <fieldset>

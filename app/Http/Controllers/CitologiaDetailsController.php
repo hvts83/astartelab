@@ -15,6 +15,7 @@ use App\Models\Citologia;
 use App\Models\Imagen;
 use App\Models\Citologia_imagen;
 use App\Models\Citologia_micro;
+use App\Models\Citologia_diagnostico;
 
 class CitologiaDetailsController extends Controller
 {
@@ -40,6 +41,32 @@ class CitologiaDetailsController extends Controller
         $micro->frase_id = $request->frase_id;
         $micro->detalle = $request->detalle;
         $micro->save();
+
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
+    return redirect('citologia/'. $id . "/edit");
+  }
+
+  public function preliminar(Request $request, $id)
+  {
+    $this->validate($request, [
+      'diagnostico_id' =>'required',
+      'detalle' => 'required',
+      ]);
+
+    $preliminar = Citologia_diagnostico::where('citologia_id', '=', $id)->first();
+    if ($preliminar == null) {
+      $preliminar = new Citologia_diagnostico();
+    }
+    DB::beginTransaction();
+      try {
+        $preliminar->citologia_id = $id;
+        $preliminar->diagnostico_id = $request->diagnostico_id;
+        $preliminar->detalle = $request->detalle;
+        $preliminar->save();
 
     } catch (\Exception $e) {
       DB::rollback();

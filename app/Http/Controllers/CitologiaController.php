@@ -20,8 +20,9 @@ use App\Models\Consulta_transacciones;
 use App\Models\Imagen;
 use App\Models\Citologia_imagen;
 use App\Models\Citologia_micro;
-use App\Models\Citologia_preliminar;
+use App\Models\Citologia_diagnostico;
 use App\Models\Frase;
+use App\Models\Doctor_transaccion;
 
 
 class CitologiaController extends Controller
@@ -49,6 +50,8 @@ class CitologiaController extends Controller
     $data['grupos'] = Grupo::all();
     $data['precios'] = Precio::where('tipo', '=', 'C')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'C')->get();
+    $data['pagos'] = General::getCondicionPago();
+    $data['facturacion'] = General::getFacturacion();
 
     return view('citologia.create', $data);
   }
@@ -67,6 +70,8 @@ class CitologiaController extends Controller
       'grupo_id' => 'required',
       'diagnostico_id' =>'required',
       'precio_id' => 'required',
+      'estado_pago' => 'required',
+      'facturacion' => 'required',
       ]);
 
       $correlativo=  Consulta_transacciones::whereRaw('tipo = "C" AND MONTH(created_at) = MONTH(CURDATE())')->count();
@@ -82,6 +87,7 @@ class CitologiaController extends Controller
           $citologia->grupo_id = $request->grupo_id;
           $citologia->precio_id = $request->precio_id;
           $citologia->diagnostico_id = $request->diagnostico_id;
+          $citologia->estado_pago = $request->estado_pago;
           $citologia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
           $citologia->informe = $informe;
           $citologia->save();
@@ -89,8 +95,29 @@ class CitologiaController extends Controller
           $ct = new Consulta_transacciones();
           $ct->tipo = "C";
           $ct->consulta = $citologia->id;
+          $ct->estado_pago = $citologia->estado_pago;
+          switch ($citologia->estado_pago) {
+            case 'PP':
+              $this->pagoDoctor( $request->doctor_id, $precioPagar->monto);
+              $ct->monto = $precioPagar->monto;
+              $ct->saldo = 0;
+              break;
+            case 'AP':
+              $ct->monto = 0;
+              $ct->saldo = $precioPagar->monto;
+              break;
+            case 'AC':
+              $ct->monto = $precioPagar->monto;
+              $ct->saldo = 0;
+              break;
+            case 'AC':
+              $ct->monto = 0;
+              $ct->saldo = $precioPagar->monto;
+              break;
+          }
+          $ct->total = $precioPagar->monto;
           $ct->informe = $citologia->informe;
-          $ct->monto = $precioPagar->monto;
+          $ct->facturacion = $request->facturacion;
           $ct->save();
 
       } catch (\Exception $e) {
@@ -112,8 +139,13 @@ class CitologiaController extends Controller
     $data['citologia'] =  Citologia::find($id);
     if ($data['citologia']  == null) { return redirect('citologias'); } //Verificación para evitar errores
     $data['micro'] = Citologia_micro::where('citologia_id', '=', $id)->first();
+    $data['preliminar'] = Citologia_diagnostico::where('citologia_id', '=', $id)->first();
     $data['imagenes'] = Citologia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
       ->where('citologia_id', '=', $id)->get();
+    $data['detalle_pago'] = Consulta_transacciones::where([
+      ['tipo', '=', 'C'],
+      ['consulta', '=', $id]
+    ])->get();
     $data['page_title']  = "Detalle " . $data['citologia']->informe;
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
@@ -121,6 +153,8 @@ class CitologiaController extends Controller
     $data['precios'] = Precio::where('tipo', '=', 'C')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'C')->get();
     $data['frases'] = Frase::where('tipo', '=', 'C')->get();
+    $data['pagos'] = General::getCondicionPago();
+    $data['facturacion'] = General::getFacturacion();
     $data['citologia']->recibido = General::formatoFecha( $data['citologia']->recibido );
     $data['citologia']->entregado = General::formatoFecha( $data['citologia']->entregado );
 
@@ -142,10 +176,7 @@ class CitologiaController extends Controller
       'paciente_id' => 'required',
       'grupo_id' => 'required',
       'diagnostico_id' =>'required',
-      'precio_id' => 'required',
       ]);
-
-      $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 
     //Inicio de las inserciones en la base de datos
     DB::beginTransaction();
@@ -153,7 +184,6 @@ class CitologiaController extends Controller
         $citologia->doctor_id = $request->doctor_id;
         $citologia->paciente_id = $request->paciente_id;
         $citologia->grupo_id = $request->grupo_id;
-        $citologia->precio_id = $request->precio_id;
         $citologia->diagnostico_id = $request->diagnostico_id;
         $citologia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
         $citologia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
@@ -166,4 +196,21 @@ class CitologiaController extends Controller
     DB::commit();
      return redirect('citologia/'. $id . "/edit");
   }
+
+  protected function pagoDoctor($doctor_id, $monto){
+    $doctor = Doctor::find($doctor_id);
+    $nuevoSaldo = $doctor->saldo - $monto;
+    //Inicio de las inserciones en la base de datos
+    $trans = new Doctor_transaccion();
+    $trans->doctor_id = $doctor->id;
+    $trans->tipo = "E";
+    $trans->monto = $monto;
+    $trans->prev = $doctor->saldo;
+    $trans->actual = $nuevoSaldo;
+    $trans->save();
+
+    $doctor->saldo = $nuevoSaldo;
+    $doctor->save();
+  }
+
 }

@@ -24,6 +24,7 @@ use App\Models\Biopsia_macro;
 use App\Models\Biopsia_micro;
 use App\Models\Biopsia_preliminar;
 use App\Models\Frase;
+use App\Models\Doctor_transaccion;
 
 
 class BiopsiaController extends Controller
@@ -51,7 +52,8 @@ class BiopsiaController extends Controller
     $data['grupos'] = Grupo::all();
     $data['precios'] = Precio::where('tipo', '=', 'B')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
-
+    $data['pagos'] = General::getCondicionPago();
+    $data['facturacion'] = General::getFacturacion();
     return view('biopsia.create', $data);
   }
 

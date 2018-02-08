@@ -1,7 +1,7 @@
 <?php $__env->startSection('title'); ?> <?php echo e($page_title); ?> <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
-  <li><a href="<?php echo e(url('/citologias')); ?>">Ver citologías</a></li>
+  <li><a href="<?php echo e(url('/citologia')); ?>">Ver citologías</a></li>
   <li class="active">
       <strong><?php echo e($page_title); ?></strong>
   </li>
@@ -25,7 +25,14 @@
         <form role="form" method="post" action="<?php echo e(url('/citologia')); ?>">
              <?php echo e(csrf_field()); ?>
 
-             <div class="form-group">
+             <legend>Datos generales</legend>
+             <div class="form-group col-md-12" id="fecha_nacimiento">
+                 <label class="font-normal">Recibido</label>
+                 <div class="input-group date">
+                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="recibido" class="form-control" value="01-01-2018">
+                 </div>
+             </div>
+             <div class="form-group col-md-6">
                <label class="control-label">Doctor</label>
                <select class="chosen-select"  tabindex="2" name="doctor_id">
                  <option>Seleccione doctor</option>
@@ -34,16 +41,7 @@
                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                </select>
              </div>
-             <div class="form-group">
-               <label class="control-label">Paciente</label>
-               <select class="chosen-select"  tabindex="2" name="paciente_id">
-                 <option>Seleccione paciente</option>
-                 <?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                   <option value="<?php echo e($paciente->id); ?>"> <?php echo e($paciente->name); ?> </option>
-                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-               </select>
-             </div>
-             <div class="form-group">
+             <div class="form-group col-md-6">
                <label class="control-label">Grupo</label>
                <select class="chosen-select"  tabindex="2" name="grupo_id">
                  <option>Seleccione grupo</option>
@@ -52,7 +50,16 @@
                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                </select>
              </div>
-             <div class="form-group">
+             <div class="form-group col-md-12">
+               <label class="control-label">Paciente</label>
+               <select class="chosen-select"  tabindex="2" name="paciente_id">
+                 <option>Seleccione paciente</option>
+                 <?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                   <option value="<?php echo e($paciente->id); ?>"> <?php echo e($paciente->name); ?> </option>
+                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+               </select>
+             </div>
+             <div class="form-group col-md-12">
                <label class="control-label">Diagnóstico</label>
                <select class="chosen-select"  tabindex="2" name="diagnostico_id">
                  <option>Seleccione diagnóstico</option>
@@ -61,7 +68,8 @@
                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                </select>
              </div>
-             <div class="form-group col-md-6">
+             <legend>Pago </legend>
+             <div class="form-group col-md-4">
                <label class="control-label">Precio</label>
                <div class="input-group m-b">
                  <span class="input-group-addon">$</span>
@@ -73,12 +81,24 @@
                  </select>
                </div>
              </div>
-            <div class="form-group" id="fecha_nacimiento">
-                <label class="font-normal">Recibido</label>
-                <div class="input-group date">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="recibido" class="form-control" value="01-01-2018">
-                </div>
-            </div>
+             <div class="form-group col-md-4">
+               <label class="control-label">Condición de pago</label>
+               <select class="form-control m-b" name="estado_pago">
+                 <option>Seleccione condición</option>
+                 <?php $__currentLoopData = $pagos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pago): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                   <option value="<?php echo e($pago['value']); ?>"> <?php echo e($pago['text']); ?> </option>
+                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+               </select>
+             </div>
+             <div class="form-group col-md-4">
+               <label class="control-label">Facturación</label>
+               <select class="form-control m-b" name="facturacion">
+                 <option>Seleccione facturación</option>
+                 <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                   <option value="<?php echo e($factu['value']); ?>"> <?php echo e($factu['text']); ?> </option>
+                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+               </select>
+             </div>
             <div>
                 <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
             </div>

@@ -18,7 +18,11 @@ class CreateConsultasTransaccionesTable extends Migration
             $table->char('tipo', 1);
             $table->integer('consulta');
             $table->string('informe');
+            $table->char('estado_pago', 2);
+            $table->char('facturacion', 2);
+            $table->double('total', 8, 2);
             $table->double('monto', 8, 2);
+            $table->double('saldo', 8, 2);
             $table->timestamps();
         });
     }
