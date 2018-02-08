@@ -64,7 +64,7 @@
                        </div>
                        <div class="form-group col-md-6">
                          <label class="control-label">Doctor</label>
-                         <select class="form-control m-b" name="doctor_id">
+                         <select class="chosen-select"  tabindex="2" name="doctor_id">
                            <option>Seleccione doctor</option>
                            <?php $__currentLoopData = $doctores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                              <?php if($doctor->id == $biopsia->doctor_id): ?>
@@ -77,7 +77,7 @@
                        </div>
                        <div class="form-group col-md-6">
                          <label class="control-label">Grupo</label>
-                         <select class="form-control m-b" name="grupo_id">
+                         <select class="chosen-select"  tabindex="2" name="grupo_id">
                            <option>Seleccione grupo</option>
                            <?php $__currentLoopData = $grupos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $grupo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                              <?php if($grupo->id == $biopsia->grupo_id): ?>
@@ -90,7 +90,7 @@
                        </div>
                        <div class="form-group col-md-6">
                          <label class="control-label">Paciente</label>
-                         <select class="form-control m-b" name="paciente_id">
+                         <select class="chosen-select"  tabindex="2" name="paciente_id">
                            <option>Seleccione paciente</option>
                            <?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                              <?php if($paciente->id == $biopsia->paciente_id): ?>
@@ -105,7 +105,7 @@
                          <label class="control-label">Precio</label>
                          <div class="input-group m-b">
                            <span class="input-group-addon">$</span>
-                           <select class="form-control m-b" name="precio_id">
+                           <select class="chosen-select"  tabindex="2" name="precio_id">
                              <option>Seleccione precio</option>
                              <?php $__currentLoopData = $precios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $precio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                <?php if($precio->id == $biopsia->precio_id): ?>
@@ -119,7 +119,7 @@
                        </div>
                        <div class="form-group">
                          <label class="control-label">Diagnóstico</label>
-                         <select class="form-control m-b" name="diagnostico_id">
+                         <select class="chosen-select"  tabindex="2" name="diagnostico_id">
                            <option>Seleccione diagnóstico</option>
                            <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                              <?php if($diagnostico->id == $biopsia->diagnostico_id): ?>
@@ -143,7 +143,7 @@
 
                      <div class="form-group">
                        <label class="control-label">Frases</label>
-                       <select class="form-control m-b" name="frase_id">
+                       <select class="chosen-select"  tabindex="2" name="frase_id">
                          <option>Seleccione Frase</option>
                          <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                            <?php if($macro != null): ?>
@@ -175,7 +175,7 @@
 
                      <div class="form-group">
                        <label class="control-label">Frases</label>
-                       <select class="form-control m-b" name="frase_id">
+                       <select class="chosen-select"  tabindex="2" name="frase_id">
                          <option>Seleccione Frase</option>
                          <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                            <?php if($micro != null): ?>
@@ -207,7 +207,7 @@
 
                      <div class="form-group">
                        <label class="control-label">Diagnóstico</label>
-                       <select class="form-control m-b" name="diagnostico_id">
+                       <select class="chosen-select"  tabindex="2" name="diagnostico_id">
                          <option>Seleccione diagnóstico</option>
                          <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                            <?php if($preliminar != null): ?>
@@ -309,12 +309,14 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
+  <link href="<?php echo e(asset('css/chosen/bootstrap-chosen.css')); ?>" rel="stylesheet">
   <link href="<?php echo e(asset('css/iCheck/custom.css')); ?>" rel="stylesheet">
   <link href="<?php echo e(asset('css/datepicker/datepicker3.css')); ?>" rel="stylesheet">
   <link href="<?php echo e(asset('css/blueimp/css/blueimp-gallery.min.css')); ?>" rel="stylesheet">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
+  <script src="<?php echo e(asset('js/chosen/chosen.jquery.js')); ?>"></script>
   <script src="<?php echo e(asset('js/datepicker/bootstrap-datepicker.js')); ?>"></script>
   <script src="<?php echo e(asset('js/iCheck/icheck.min.js')); ?>"></script>
   <script src="<?php echo e(asset('js/blueimp/jquery.blueimp-gallery.min.js')); ?>"></script>
@@ -332,6 +334,7 @@
         autoclose: true,
         format: "dd-mm-yyyy"
     });
+    $('.chosen-select').chosen({width: "100%"});
     document.getElementById('list_images').onclick = function (event) {
       event = event || window.event;
       var target = event.target || event.srcElement,

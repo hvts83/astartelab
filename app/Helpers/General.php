@@ -77,6 +77,14 @@
       return $tipo;
     }
 
+    public static function getTipoUsuario(){
+      $tipo = array(
+        array("value" => "B", "text" => "Empleado tipo 1"),
+        array("value" => "C", "text" => "Empleado tipo 2"),
+      );
+      return $tipo;
+    }
+
     public static function generar_token( $id ){
       $time = time();
       $token = sha1( sprintf("%'.07d", $id ) . str_random(20) . $time );

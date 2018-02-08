@@ -15,6 +15,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name("main");
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/usuarios', 'UsuarioController');
 Route::resource('/pacientes', 'PacienteController');
 Route::resource('/doctores', 'DoctorController');
 Route::resource('/grupos', 'GrupoController');

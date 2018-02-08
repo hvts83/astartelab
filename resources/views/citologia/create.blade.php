@@ -3,7 +3,7 @@
 @section ('title') {{ $page_title }} @stop
 
 @section('breadcrumb')
-  <li><a href="{{ url('/citologias') }}">Ver citologías</a></li>
+  <li><a href="{{ url('/citologia') }}">Ver citologías</a></li>
   <li class="active">
       <strong>{{ $page_title }}</strong>
   </li>
@@ -28,7 +28,7 @@
              {{ csrf_field() }}
              <div class="form-group">
                <label class="control-label">Doctor</label>
-               <select class="form-control m-b" name="doctor_id">
+               <select class="chosen-select"  tabindex="2" name="doctor_id">
                  <option>Seleccione doctor</option>
                  @foreach ($doctores as $doctor)
                    <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
@@ -37,7 +37,7 @@
              </div>
              <div class="form-group">
                <label class="control-label">Paciente</label>
-               <select class="form-control m-b" name="paciente_id">
+               <select class="chosen-select"  tabindex="2" name="paciente_id">
                  <option>Seleccione paciente</option>
                  @foreach ($pacientes as $paciente)
                    <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
@@ -46,7 +46,7 @@
              </div>
              <div class="form-group">
                <label class="control-label">Grupo</label>
-               <select class="form-control m-b" name="grupo_id">
+               <select class="chosen-select"  tabindex="2" name="grupo_id">
                  <option>Seleccione grupo</option>
                  @foreach ($grupos as $grupo)
                    <option value="{{ $grupo->id }}"> {{  $grupo->nombre }} </option>
@@ -55,7 +55,7 @@
              </div>
              <div class="form-group">
                <label class="control-label">Diagnóstico</label>
-               <select class="form-control m-b" name="diagnostico_id">
+               <select class="chosen-select"  tabindex="2" name="diagnostico_id">
                  <option>Seleccione diagnóstico</option>
                  @foreach ($diagnosticos as $diagnostico)
                    <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
@@ -66,7 +66,7 @@
                <label class="control-label">Precio</label>
                <div class="input-group m-b">
                  <span class="input-group-addon">$</span>
-                 <select class="form-control m-b" name="precio_id">
+                 <select class="chosen-select"  tabindex="2" name="precio_id">
                    <option>Seleccione precio</option>
                     @foreach ($precios as $precio)
                       <option value="{{ $precio->id }}"> {{  $precio->monto }} </option>
@@ -90,11 +90,13 @@
 @endsection
 
 @section('css')
+  <link href="{{ asset('css/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
   <link href="{{ asset('css/iCheck/custom.css')}}" rel="stylesheet">
   <link href="{{ asset('css/datepicker/datepicker3.css')}}" rel="stylesheet">
 @endsection
 
-@section('scripts')
+@section('scripts')\
+  <script src="{{ asset('js/chosen/chosen.jquery.js')}}"></script>
   <script src="{{ asset('js/datepicker/bootstrap-datepicker.js')}}"></script>
   <script src="{{ asset('js/iCheck/icheck.min.js')}}"></script>
   <script>
@@ -111,5 +113,6 @@
         autoclose: true,
         format: "dd-mm-yyyy"
     });
+    $('.chosen-select').chosen({width: "100%"});
   </script>
 @endsection
