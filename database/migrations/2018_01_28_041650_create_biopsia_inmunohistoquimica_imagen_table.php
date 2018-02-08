@@ -15,7 +15,7 @@ class CreateBiopsiaInmunohistoquimicaImagenTable extends Migration
     {
         Schema::create('biopsia_inmunohistoquimica_imagen', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('biopsia_inmunohistoquimica_id');
+            $table->integer('biopsia_id');
             $table->integer('imagen_id');
             $table->timestamps();
         });

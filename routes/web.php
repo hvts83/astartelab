@@ -22,5 +22,12 @@ Route::resource('/diagnosticos', 'DiagnosticoController');
 Route::resource('/frases', 'FraseController');
 Route::resource('/precios', 'PreciosController');
 Route::resource('/biopsia', 'BiopsiaController');
+//Cuenta doctor
 Route::get('/doctor-account/{id}', "DoctorFondosController@getDoctorAccount" );
 Route::post('/doctor-account/{id}', "DoctorFondosController@postDoctorFunds");
+//Biopsias
+Route::post('/biopsia-details/macro/{id}', 'BiopsiaDetailsController@macro');
+Route::post('/biopsia-details/micro/{id}', 'BiopsiaDetailsController@micro');
+Route::post('/biopsia-details/preliminar/{id}', 'BiopsiaDetailsController@preliminar');
+Route::post('/biopsia-details/inmunohistoquimica/{id}', 'BiopsiaDetailsController@inmunohistoquimica');
+Route::post('/biopsia-details/inmunohistoquimica_imagen/{id}', 'BiopsiaDetailsController@inmunohistoquimica_imagen');

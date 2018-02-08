@@ -17,6 +17,14 @@ use App\Models\Diagnostico;
 use App\Models\Precio;
 use App\Models\Biopsia;
 use App\Models\Consulta_transacciones;
+use App\Models\Imagen;
+use App\Models\Biopsia_inmunohistoquimica;
+use App\Models\Biopsia_inmunohistoquimica_imagen;
+use App\Models\Biopsia_macro;
+use App\Models\Biopsia_micro;
+use App\Models\Biopsia_preliminar;
+use App\Models\Frase;
+
 
 class BiopsiaController extends Controller
 {
@@ -28,7 +36,10 @@ class BiopsiaController extends Controller
   public function index()
   {
       $data['page_title'] = "Ver biopsias";
-      $data['biopsias'] = Biopsia::all();
+      $data['biopsias'] = Biopsia::select('biopsias.*', 'doctores.nombre as doctor_name', 'pacientes.name as paciente_name')
+        ->join('doctores', 'doctores.id','=', 'doctor_id')
+        ->join('pacientes', 'pacientes.id', '=', 'paciente_id')
+        ->get();
       return view('biopsia.index')->with($data);
   }
 
@@ -71,6 +82,7 @@ class BiopsiaController extends Controller
           $biopsia->doctor_id = $request->doctor_id;
           $biopsia->paciente_id = $request->paciente_id;
           $biopsia->grupo_id = $request->grupo_id;
+          $biopsia->precio_id = $request->precio_id;
           $biopsia->diagnostico_id = $request->diagnostico_id;
           $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
           $biopsia->informe = $informe;
@@ -99,11 +111,25 @@ class BiopsiaController extends Controller
    */
   public function edit($id)
   {
-    $data['page_title']  = "Editar Diagnóstico";
-    $data['diagnostico'] =  Diagnostico::find($id);
-    if ($data['diagnostico']  == null) { return redirect('diagnosticos'); } //Verificación para evitar errores
-    $data['tipos'] = General::getTipoDiagnostico();
-    return view('diagnostico.edit', $data);
+    $data['biopsia'] =  Biopsia::find($id);
+    if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
+    $data['macro'] = Biopsia_macro::where('biopsia_id', '=', $id)->first();
+    $data['micro'] = Biopsia_micro::where('biopsia_id', '=', $id)->first();
+    $data['preliminar'] = Biopsia_preliminar::where('biopsia_id', '=', $id)->first();
+    $data['inmunohistoquimica'] = Biopsia_inmunohistoquimica::where('biopsia_id', '=', $id)->first();
+    $data['inmunohistoquimica_imagenes'] = Biopsia_inmunohistoquimica_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
+      ->where('biopsia_id', '=', $id)->get();
+    $data['page_title']  = "Detalle " . $data['biopsia']->informe;
+    $data['doctores'] = Doctor::all();
+    $data['pacientes'] = Paciente::all();
+    $data['grupos'] = Grupo::all();
+    $data['precios'] = Precio::where('tipo', '=', 'B')->get();
+    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
+    $data['frases'] = Frase::where('tipo', '=', 'B')->get();
+    $data['biopsia']->recibido = General::formatoFecha( $data['biopsia']->recibido );
+    $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
+
+    return view('biopsia.edit', $data);
   }
 
   /**
@@ -115,24 +141,34 @@ class BiopsiaController extends Controller
    */
   public function update(Request $request, $id)
   {
-    $diagnostico = Diagnostico::find($id);
+    $biopsia = Biopsia::find($id);
     $this->validate($request, [
-      'nombre' => 'required',
-      'tipo' => 'required',
+      'doctor_id' => 'required',
+      'paciente_id' => 'required',
+      'grupo_id' => 'required',
+      'diagnostico_id' =>'required',
+      'precio_id' => 'required',
       ]);
+
+      $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 
     //Inicio de las inserciones en la base de datos
     DB::beginTransaction();
       try {
-        $diagnostico->nombre = $request->nombre;
-        $diagnostico->tipo = $request->tipo;
-        $diagnostico->detalle = $request->detalle;
-        $diagnostico->save();
+        $biopsia->doctor_id = $request->doctor_id;
+        $biopsia->paciente_id = $request->paciente_id;
+        $biopsia->grupo_id = $request->grupo_id;
+        $biopsia->precio_id = $request->precio_id;
+        $biopsia->diagnostico_id = $request->diagnostico_id;
+        $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
+        $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
+        $biopsia->save();
+
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
-   DB::commit();
-     return redirect('diagnosticos/'. $id . "/edit");
+    DB::commit();
+     return redirect('biopsia/'. $id . "/edit");
   }
 }

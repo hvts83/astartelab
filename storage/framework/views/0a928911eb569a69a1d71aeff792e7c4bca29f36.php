@@ -8,7 +8,7 @@
     <link rel="shortcut icon" type="image/png" href="<?php echo e(asset('img/favicon.ico')); ?>"/>
     <link rel="stylesheet" href="<?php echo asset('css/vendor.css'); ?>" />
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" />
-    <link href="<?php echo e(asset('backoffice/css/jasny/jasny-bootstrap.min.css')); ?>" rel="stylesheet">
+    <link href="<?php echo e(asset('css/jasny/jasny-bootstrap.min.css')); ?>" rel="stylesheet">
     <?php echo $__env->yieldContent('css'); ?>
 </head>
 <body class="md-skin">

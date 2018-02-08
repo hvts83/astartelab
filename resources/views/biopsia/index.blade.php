@@ -17,6 +17,7 @@
             <tr>
               <th>Informe</th>
               <th>Paciente</th>
+              <th>Doctor</th>
               <th>Recibido</th>
               <th>Acciones</th>
             </tr>
@@ -25,10 +26,11 @@
             @foreach ($biopsias as $key => $biopsia)
               <tr>
                 <td>{{ $biopsia->informe }}</td>
-                <td>{{ $biopsia->paciente_id }}</td>
+                <td>{{ $biopsia->paciente_name }}</td>
+                <td>{{ $biopsia->doctor_name}}</td>
                 <td>{{ $biopsia->recibido }}</td>
                 <td>
-                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/edit" ) }}">Editar</a>
+                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/edit" ) }}">Ver detalle</a>
                 </td>
               </tr>
             @endforeach

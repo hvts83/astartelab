@@ -28,7 +28,7 @@
             <input name="_method" type="hidden" value="PUT">
             <div class="form-group">
               <label>Nombre</label>
-              <input type="text" placeholder="Nombre" class="form-control" name="nombre" value=<?php echo e($diagnostico->nombre); ?>>
+              <input type="text" placeholder="Nombre" class="form-control" name="nombre" value="<?php echo e($diagnostico->nombre); ?>">
             </div>
             <div class="form-group">
               <label class="control-label">Tipo</label>

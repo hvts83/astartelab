@@ -18,6 +18,7 @@ class CreateCitologiaTable extends Migration
             $table->integer('doctor_id');
             $table->integer('paciente_id');
             $table->integer('grupo_id');
+            $table->integer('precio_id');
             $table->integer('diagnostico_id');
             $table->date('recibido')->nullable();
             $table->date('entregado')->nullable();

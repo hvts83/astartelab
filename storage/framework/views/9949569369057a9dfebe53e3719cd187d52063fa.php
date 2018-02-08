@@ -15,6 +15,7 @@
             <tr>
               <th>Informe</th>
               <th>Paciente</th>
+              <th>Doctor</th>
               <th>Recibido</th>
               <th>Acciones</th>
             </tr>
@@ -23,10 +24,11 @@
             <?php $__currentLoopData = $biopsias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $biopsia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               <tr>
                 <td><?php echo e($biopsia->informe); ?></td>
-                <td><?php echo e($biopsia->paciente_id); ?></td>
+                <td><?php echo e($biopsia->paciente_name); ?></td>
+                <td><?php echo e($biopsia->doctor_name); ?></td>
                 <td><?php echo e($biopsia->recibido); ?></td>
                 <td>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Editar</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Ver detalle</a>
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

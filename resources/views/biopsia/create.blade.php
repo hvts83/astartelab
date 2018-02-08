@@ -62,14 +62,17 @@
                  @endforeach
                </select>
              </div>
-             <div class="form-group">
+             <div class="form-group col-md-6">
                <label class="control-label">Precio</label>
-               <select class="form-control m-b" name="precio_id">
-                 <option>Seleccione precio</option>
-                 @foreach ($precios as $precio)
-                   <option value="{{ $precio->id }}">$ {{  $precio->monto }} </option>
-                 @endforeach
-               </select>
+               <div class="input-group m-b">
+                 <span class="input-group-addon">$</span>
+                 <select class="form-control m-b" name="precio_id">
+                   <option>Seleccione precio</option>
+                    @foreach ($precios as $precio)
+                      <option value="{{ $precio->id }}"> {{  $precio->monto }} </option>
+                    @endforeach
+                 </select>
+               </div>
              </div>
             <div class="form-group" id="fecha_nacimiento">
                 <label class="font-normal">Recibido</label>
