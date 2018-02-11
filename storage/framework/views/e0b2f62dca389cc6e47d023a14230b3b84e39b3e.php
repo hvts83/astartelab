@@ -150,23 +150,46 @@
                     </thead>
                     <tbody>
                       <?php $__currentLoopData = $detalle_pago; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $detp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <td><?php echo e($detp->created_at); ?></td>
-                        <td>
-                          <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php if($factu['value'] == $detp->facturacion): ?>
-                              <?php echo e($factu['text']); ?>
+                        <tr>
+                          <td><?php echo e($detp->created_at); ?></td>
+                          <td>
+                            <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <?php if($factu['value'] == $detp->facturacion): ?>
+                                <?php echo e($factu['text']); ?>
 
-                            <?php endif; ?>
-                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </td>
-                        <td><?php echo e($detp->monto); ?></td>
-                        <td><?php echo e($detp->saldo); ?></td>
+                              <?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                          </td>
+                          <td><?php echo e($detp->monto); ?></td>
+                          <td><?php echo e($detp->saldo); ?></td>
+                        </tr>
                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </table>
+                    <tbody>
+                  </table>
                 </div>
 
-                <?php if($citologia->estado_pagon == 'AP' || $citologia->estado_pagon == 'AP'): ?>
+                <?php if($citologia->estado_pago == 'AP' || $citologia->estado_pago == 'PE'): ?>
+                  <form role="form" method="post" action="<?php echo e(url('/citologia-details/abono/'. $citologia->id )); ?>">
+                  <?php echo e(csrf_field()); ?>
 
+                  <label class="control-label"> Abono </label>
+                  <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    <input type="number" placeholder="Abono" required class="form-control" name="monto" step="0.01" min="0.01" max="<?php echo e($detalle_pago[0]->saldo); ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Facturación</label>
+                    <select class="form-control m-b" name="facturacion">
+                      <option>Seleccione facturación</option>
+                      <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($factu['value']); ?>"> <?php echo e($factu['text']); ?> </option>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                  </div>
+                  <div>
+                      <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+                  </div>
+                </form>
                 <?php endif; ?>
 
               </div>

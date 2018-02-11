@@ -148,7 +148,7 @@ class BiopsiaController extends Controller
     $data['detalle_pago'] = Consulta_transacciones::where([
       ['tipo', '=', 'B'],
       ['consulta', '=', $id]
-    ])->get();
+    ])->orderBy('created_at', 'DESC')->get();
     $data['page_title']  = "Detalle " . $data['biopsia']->informe;
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();

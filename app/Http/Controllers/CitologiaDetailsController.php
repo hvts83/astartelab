@@ -16,6 +16,7 @@ use App\Models\Imagen;
 use App\Models\Citologia_imagen;
 use App\Models\Citologia_micro;
 use App\Models\Citologia_diagnostico;
+use App\Models\Consulta_transacciones;
 
 class CitologiaDetailsController extends Controller
 {
@@ -96,6 +97,49 @@ class CitologiaDetailsController extends Controller
       $inimg->citologia_id = $id;
       $inimg->imagen_id = $imagen->id;
       $inimg->save();
+
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
+    return redirect('citologia/'. $id . "/edit");
+  }
+
+  public function abono(Request $request, $id)
+  {
+    $this->validate($request, [
+      'monto' =>'required',
+      'facturacion' => 'required',
+      ]);
+
+      $citologia = Citologia::find($id);
+      $consultaSaldo = Consulta_transacciones::where([
+        ['tipo', '=', 'C'],
+        ['consulta', '=', $id]
+      ])->orderBy('created_at', 'DESC')->first();
+
+      $nuevoSaldo = $consultaSaldo->saldo - $request->monto;
+      $estado = "AP";
+      if ($nuevoSaldo == 0) {
+          $estado = "AC";
+      }
+
+    DB::beginTransaction();
+      try {
+        $ct = new Consulta_transacciones();
+        $ct->tipo = "C";
+        $ct->consulta = $citologia->id;
+        $ct->estado_pago = $estado;
+        $ct->total = $consultaSaldo->total;
+        $ct->monto = $request->monto;
+        $ct->saldo = $nuevoSaldo;
+        $ct->informe = $citologia->informe;
+        $ct->facturacion = $request->facturacion;
+        $ct->save();
+
+        $citologia->estado_pago= $estado;
+        $citologia->save();
 
     } catch (\Exception $e) {
       DB::rollback();

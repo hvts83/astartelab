@@ -18,6 +18,7 @@ use App\Models\Biopsia_inmunohistoquimica_imagen;
 use App\Models\Biopsia_macro;
 use App\Models\Biopsia_micro;
 use App\Models\Biopsia_preliminar;
+use App\Models\Consulta_transacciones;
 
 class BiopsiaDetailsController extends Controller
 {
@@ -150,6 +151,49 @@ class BiopsiaDetailsController extends Controller
       $inimg->biopsia_id = $id;
       $inimg->imagen_id = $imagen->id;
       $inimg->save();
+
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
+    return redirect('biopsia/'. $id . "/edit");
+  }
+
+  public function abono(Request $request, $id)
+  {
+    $this->validate($request, [
+      'monto' =>'required',
+      'facturacion' => 'required',
+      ]);
+
+      $biopsia = Biopsia::find($id);
+      $consultaSaldo = Consulta_transacciones::where([
+        ['tipo', '=', 'B'],
+        ['consulta', '=', $id]
+      ])->orderBy('created_at', 'DESC')->first();
+
+      $nuevoSaldo = $consultaSaldo->saldo - $request->monto;
+      $estado = "AP";
+      if ($nuevoSaldo == 0) {
+          $estado = "AC";
+      }
+
+    DB::beginTransaction();
+      try {
+        $ct = new Consulta_transacciones();
+        $ct->tipo = "B";
+        $ct->consulta = $biopsia->id;
+        $ct->estado_pago = $estado;
+        $ct->total = $consultaSaldo->total;
+        $ct->monto = $request->monto;
+        $ct->saldo = $nuevoSaldo;
+        $ct->informe = $biopsia->informe;
+        $ct->facturacion = $request->facturacion;
+        $ct->save();
+
+        $biopsia->estado_pago= $estado;
+        $biopsia->save();
 
     } catch (\Exception $e) {
       DB::rollback();

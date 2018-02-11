@@ -142,10 +142,10 @@ class CitologiaController extends Controller
     $data['preliminar'] = Citologia_diagnostico::where('citologia_id', '=', $id)->first();
     $data['imagenes'] = Citologia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
       ->where('citologia_id', '=', $id)->get();
-    $data['detalle_pago'] = Consulta_transacciones::where([
-      ['tipo', '=', 'C'],
-      ['consulta', '=', $id]
-    ])->get();
+      $data['detalle_pago'] = Consulta_transacciones::where([
+        ['tipo', '=', 'C'],
+        ['consulta', '=', $id]
+      ])->orderBy('created_at', 'DESC')->get();
     $data['page_title']  = "Detalle " . $data['citologia']->informe;
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();

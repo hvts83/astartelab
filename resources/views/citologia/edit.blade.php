@@ -151,22 +151,44 @@
                     </thead>
                     <tbody>
                       @foreach ($detalle_pago as $detp)
-                        <td>{{ $detp->created_at }}</td>
-                        <td>
-                          @foreach ($facturacion as $factu)
-                            @if ($factu['value'] == $detp->facturacion)
-                              {{  $factu['text'] }}
-                            @endif
-                          @endforeach
-                        </td>
-                        <td>{{ $detp->monto }}</td>
-                        <td>{{ $detp->saldo }}</td>
+                        <tr>
+                          <td>{{ $detp->created_at }}</td>
+                          <td>
+                            @foreach ($facturacion as $factu)
+                              @if ($factu['value'] == $detp->facturacion)
+                                {{  $factu['text'] }}
+                              @endif
+                            @endforeach
+                          </td>
+                          <td>{{ $detp->monto }}</td>
+                          <td>{{ $detp->saldo }}</td>
+                        </tr>
                       @endforeach
-                    </table>
+                    <tbody>
+                  </table>
                 </div>
 
-                @if ($citologia->estado_pagon == 'AP' || $citologia->estado_pagon == 'AP')
-                    --
+                @if ($citologia->estado_pago == 'AP' || $citologia->estado_pago == 'PE')
+                  <form role="form" method="post" action="{{ url('/citologia-details/abono/'. $citologia->id ) }}">
+                  {{ csrf_field() }}
+                  <label class="control-label"> Abono </label>
+                  <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    <input type="number" placeholder="Abono" required class="form-control" name="monto" step="0.01" min="0.01" max="{{ $detalle_pago[0]->saldo }}">
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Facturación</label>
+                    <select class="form-control m-b" name="facturacion">
+                      <option>Seleccione facturación</option>
+                      @foreach ($facturacion as $factu)
+                        <option value="{{ $factu['value'] }}"> {{  $factu['text'] }} </option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div>
+                      <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+                  </div>
+                </form>
                 @endif
 
               </div>
