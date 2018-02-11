@@ -6,6 +6,10 @@
   <li class="active">Usuarios</li>
 @endsection
 
+@section('actions')
+  <a href="{{ url('/usuarios/create') }}" class="btn btn-default">Nuevo usuario</a>
+@endsection
+
 @section ('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -45,7 +49,6 @@
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/usuarios/create') }}" class="btn btn-default">Nuevo usuario</a>
       </div>
     </div>
   </div>

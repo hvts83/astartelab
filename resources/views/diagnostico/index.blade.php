@@ -8,6 +8,10 @@
 
 @section ('content')
 
+@section('actions')
+    <a href="{{ url('/diagnosticos/create') }}" class="btn btn-default">Nuevo diagnóstico</a>
+@endsection
+
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="ibox-content">
@@ -38,7 +42,6 @@
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/diagnosticos/create') }}" class="btn btn-default">Nuevo diagnóstico</a>
       </div>
     </div>
   </div>

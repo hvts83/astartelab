@@ -4,6 +4,10 @@
   <li class="active">Biopsias</li>
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startSection('actions'); ?>
+  <a href="<?php echo e(url('/biopsia/create')); ?>" class="btn btn-default">Nueva biopsia</a>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -34,7 +38,6 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </tbody>
         </table>
-        <a href="<?php echo e(url('/biopsia/create')); ?>" class="btn btn-default">Nueva biopsia</a>
       </div>
     </div>
   </div>

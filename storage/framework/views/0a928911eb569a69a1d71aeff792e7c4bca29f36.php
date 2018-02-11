@@ -26,15 +26,17 @@
             <?php echo $__env->make('layouts.topnavbar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
             <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
+                <div class="col-lg-8">
                     <h2><?php echo $__env->yieldContent('title'); ?> </h2>
                     <ol class="breadcrumb">
                         <li><a href="<?php echo e(url('/')); ?>">Inicio</a></li>
                         <?php echo $__env->yieldContent('breadcrumb'); ?>
                     </ol>
                 </div>
-                <div class="col-lg-2">
-
+                <div class="col-lg-4">
+                  <div class="title-action">
+                    <?php echo $__env->yieldContent('actions'); ?>
+                  </div>>
                 </div>
             </div>
             <!-- Main view  -->

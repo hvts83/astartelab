@@ -6,6 +6,10 @@
   <li class="active">Grupos</li>
 @endsection
 
+@section('actions')
+    <a href="{{ url('/grupos/create') }}" class="btn btn-default">Nuevo grupo</a>
+@endsection
+
 @section ('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -30,7 +34,6 @@
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/grupos/create') }}" class="btn btn-default">Nuevo grupo</a>
       </div>
     </div>
   </div>

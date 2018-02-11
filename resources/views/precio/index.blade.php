@@ -7,6 +7,10 @@
   <li class="active">Precios</li>
 @endsection
 
+@section('actions')
+    <a href="{{ url('/precios/create') }}" class="btn btn-default">Nueva precio</a>
+@endsection
+
 @section ('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -41,7 +45,6 @@
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/precios/create') }}" class="btn btn-default">Nueva precio</a>
       </div>
     </div>
   </div>

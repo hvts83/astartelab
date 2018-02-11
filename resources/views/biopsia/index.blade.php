@@ -6,6 +6,10 @@
   <li class="active">Biopsias</li>
 @endsection
 
+@section('actions')
+  <a href="{{ url('/biopsia/create') }}" class="btn btn-default">Nueva biopsia</a>
+@endsection
+
 @section ('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -36,7 +40,6 @@
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/biopsia/create') }}" class="btn btn-default">Nueva biopsia</a>
       </div>
     </div>
   </div>

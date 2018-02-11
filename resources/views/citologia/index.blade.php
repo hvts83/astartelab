@@ -6,6 +6,10 @@
   <li class="active">Citologías</li>
 @endsection
 
+@section('actions')
+    <a href="{{ url('/citologia/create') }}" class="btn btn-default">Nueva citología</a>
+@endsection
+
 @section ('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -36,7 +40,6 @@
             @endforeach
           </tbody>
         </table>
-        <a href="{{ url('/citologia/create') }}" class="btn btn-default">Nueva citología</a>
       </div>
     </div>
   </div>
