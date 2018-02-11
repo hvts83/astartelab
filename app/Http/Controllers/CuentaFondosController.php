@@ -42,7 +42,7 @@ class CuentaFondosController extends Controller
         'concepto' => 'required'
         ]);
 
-      if ($request->tipo = "E") {
+      if ($request->tipo == "E") {
         $nuevoSaldo = $cuenta->fondo - $request->monto;
       }else {
         $nuevoSaldo = $cuenta->fondo + $request->monto;
