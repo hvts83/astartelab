@@ -15,12 +15,14 @@ class CreateChequeTable extends Migration
     {
         Schema::create('cheques', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('cuenta_id');
             $table->string('numero');
             $table->double('monto', 8, 2);
             $table->date('fecha_realizacion');
             $table->string('lugar');
             $table->string('concepto');
             $table->string('paguese');
+            $table->char('tipo', 1);
             $table->timestamps();
         });
     }

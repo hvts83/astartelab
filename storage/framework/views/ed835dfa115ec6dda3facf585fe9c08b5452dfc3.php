@@ -4,6 +4,10 @@
   <li class="active">Usuarios</li>
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startSection('actions'); ?>
+  <a href="<?php echo e(url('/usuarios/create')); ?>" class="btn btn-default">Nuevo usuario</a>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -45,7 +49,6 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </tbody>
         </table>
-        <a href="<?php echo e(url('/usuarios/create')); ?>" class="btn btn-default">Nuevo usuario</a>
       </div>
     </div>
   </div>

@@ -24,6 +24,11 @@ Route::resource('/frases', 'FraseController');
 Route::resource('/precios', 'PreciosController');
 Route::resource('/biopsia', 'BiopsiaController');
 Route::resource('/citologia', 'CitologiaController');
+Route::resource('/cuentas', 'CuentaController');
+Route::resource('/cheques', 'ChequeController');
+//Cuentas bancarias
+Route::get('/cuenta-account/{id}', "CuentaFondosController@getCuentaAccount" );
+Route::post('/cuenta-account/{id}', "CuentaFondosController@postCuentaFunds");
 //Cuenta doctor
 Route::get('/doctor-account/{id}', "DoctorFondosController@getDoctorAccount" );
 Route::post('/doctor-account/{id}', "DoctorFondosController@postDoctorFunds");
