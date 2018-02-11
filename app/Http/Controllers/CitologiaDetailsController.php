@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Mail;
 use App\Helpers\General;
 use App\Models\Diagnostico;
 use App\Models\Citologia;
@@ -17,6 +18,7 @@ use App\Models\Citologia_imagen;
 use App\Models\Citologia_micro;
 use App\Models\Citologia_diagnostico;
 use App\Models\Consulta_transacciones;
+use App\Mail\CitologiaResults;
 
 class CitologiaDetailsController extends Controller
 {
@@ -146,6 +148,29 @@ class CitologiaDetailsController extends Controller
       throw $e;
     }
     DB::commit();
+    return redirect('citologia/'. $id . "/edit");
+  }
+
+  public function send(Request $request, $id){
+    $citologia = Citologia::select(
+      'citologia.*',
+      'pacientes.name as nombrePaciente',
+      'pacientes.email as correoPaciente',
+      'doctores.nombre as nombreDoctor',
+      'doctores.email as correoDoctor',
+      'precios.monto',
+      'diagnosticos.nombre as diagnostico'
+    )
+    ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
+    ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
+    ->join('precios', 'citologia.precio_id', '=', 'precios.id')
+    ->join('diagnosticos', 'citologia.diagnostico_id', '=', 'diagnosticos.id')
+    ->where('citologia.id', '=', $id)
+    ->first();
+
+    Mail::to($citologia->correoPaciente, $citologia->correoDoctor )
+    ->send(new CitologiaResults($citologia));
+
     return redirect('citologia/'. $id . "/edit");
   }
 

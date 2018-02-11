@@ -34,8 +34,10 @@ Route::post('/biopsia-details/preliminar/{id}', 'BiopsiaDetailsController@prelim
 Route::post('/biopsia-details/inmunohistoquimica/{id}', 'BiopsiaDetailsController@inmunohistoquimica');
 Route::post('/biopsia-details/inmunohistoquimica_imagen/{id}', 'BiopsiaDetailsController@inmunohistoquimica_imagen');
 Route::post('/biopsia-details/abono/{id}', 'BiopsiaDetailsController@abono');
+Route::get('/biopsia-details/send/{id}', 'BiopsiaDetailsController@send');
 //Citologia
 Route::post('/citologia-details/micro/{id}', 'CitologiaDetailsController@micro');
 Route::post('/citologia-details/preliminar/{id}', 'CitologiaDetailsController@preliminar');
 Route::post('/citologia-details/imagen/{id}', 'CitologiaDetailsController@imagen');
 Route::post('/citologia-details/abono/{id}', 'CitologiaDetailsController@abono');
+Route::get('/citologia-details/send/{id}', 'CitologiaDetailsController@send');

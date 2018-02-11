@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Mail;
 use App\Helpers\General;
 use App\Models\Diagnostico;
 use App\Models\Biopsia;
@@ -19,6 +20,7 @@ use App\Models\Biopsia_macro;
 use App\Models\Biopsia_micro;
 use App\Models\Biopsia_preliminar;
 use App\Models\Consulta_transacciones;
+use App\Mail\BiopsiaResults;
 
 class BiopsiaDetailsController extends Controller
 {
@@ -200,6 +202,29 @@ class BiopsiaDetailsController extends Controller
       throw $e;
     }
     DB::commit();
+    return redirect('biopsia/'. $id . "/edit");
+  }
+
+  public function send(Request $request, $id){
+    $biopsia = Biopsia::select(
+      'biopsias.*',
+      'pacientes.name as nombrePaciente',
+      'pacientes.email as correoPaciente',
+      'doctores.nombre as nombreDoctor',
+      'doctores.email as correoDoctor',
+      'precios.monto',
+      'diagnosticos.nombre as diagnostico'
+    )
+    ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
+    ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
+    ->join('precios', 'biopsias.precio_id', '=', 'precios.id')
+    ->join('diagnosticos', 'biopsias.diagnostico_id', '=', 'diagnosticos.id')
+    ->where('biopsias.id', '=', $id)
+    ->first();
+
+    Mail::to($biopsia->correoPaciente, $biopsia->correoDoctor )
+    ->send(new BiopsiaResults($biopsia));
+
     return redirect('biopsia/'. $id . "/edit");
   }
 

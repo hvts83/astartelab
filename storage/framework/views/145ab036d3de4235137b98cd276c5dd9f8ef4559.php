@@ -7,6 +7,10 @@
   </li>
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startSection('actions'); ?>
+  <a href="<?php echo e(url('/biopsia-details/send/'. $biopsia->id )); ?>" class="btn btn-default">Enviar correo</a>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 
   <div class="wrapper wrapper-content animated fadeInRight">

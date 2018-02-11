@@ -9,6 +9,10 @@
   </li>
 @endsection
 
+@section('actions')
+  <a href="{{ url('/biopsia-details/send/'. $biopsia->id ) }}" class="btn btn-default">Enviar correo</a>
+@endsection
+
 @section ('content')
 
   <div class="wrapper wrapper-content animated fadeInRight">
