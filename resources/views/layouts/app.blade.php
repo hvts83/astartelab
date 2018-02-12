@@ -36,7 +36,7 @@
                 <div class="col-lg-4">
                   <div class="title-action">
                     @yield('actions')
-                  </div>>
+                  </div>
                 </div>
             </div>
             <!-- Main view  -->
