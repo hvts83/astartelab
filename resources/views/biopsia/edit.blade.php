@@ -10,7 +10,7 @@
 @endsection
 
 @section('actions')
-  <a href="{{ url('/biopsia-details/send/'. $biopsia->id ) }}" class="btn btn-default">Enviar correo</a>
+  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"> Enviar correo</button>
 @endsection
 
 @section ('content')
@@ -353,6 +353,25 @@
       </div>
   </div>
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Enviar correo</h4>
+      </div>
+      <div class="modal-body">
+        Se enviará un correo al paciente: {{ $pacienteConsulta->name }} al correo {{ $pacienteConsulta->email }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <a href="{{ url('/biopsia-details/send/'. $biopsia->id ) }}" class="btn btn-primary">Enviar correo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="blueimp-gallery" class="blueimp-gallery">
     <div class="slides"></div>
     <h3 class="title"></h3>
@@ -362,6 +381,7 @@
     <a class="play-pause"></a>
     <ol class="indicator"></ol>
 </div>
+
 @endsection
 
 @section('css')

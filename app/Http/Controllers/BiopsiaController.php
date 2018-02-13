@@ -75,8 +75,8 @@ class BiopsiaController extends Controller
       'facturacion' => 'required',
       ]);
 
-      $correlativo=  Consulta_transacciones::whereRaw('tipo = "B" AND MONTH(created_at) = MONTH(CURDATE())')->count();
-      $informe = "B" . date('m') . ($correlativo + 1);
+      $correlativo=  Consulta_transacciones::whereRaw('tipo = "B" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
+      $informe = "B" . date('y') . date('m') . ($correlativo + 1);
       //dd($informe);
       $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 
@@ -152,6 +152,7 @@ class BiopsiaController extends Controller
     $data['page_title']  = "Detalle " . $data['biopsia']->informe;
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
+    $data['pacienteConsulta'] = Paciente::find($data['biopsia']->paciente_id);
     $data['grupos'] = Grupo::all();
     $data['precios'] = Precio::where('tipo', '=', 'B')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();

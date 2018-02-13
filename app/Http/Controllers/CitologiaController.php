@@ -74,8 +74,8 @@ class CitologiaController extends Controller
       'facturacion' => 'required',
       ]);
 
-      $correlativo=  Consulta_transacciones::whereRaw('tipo = "C" AND MONTH(created_at) = MONTH(CURDATE())')->count();
-      $informe = "C" . date('m') . ($correlativo + 1);
+      $correlativo=  Consulta_transacciones::whereRaw('tipo = "C" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
+      $informe = "C" . date('y') . date('m') . ($correlativo + 1);
       //dd($informe);
       $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 
@@ -149,6 +149,7 @@ class CitologiaController extends Controller
     $data['page_title']  = "Detalle " . $data['citologia']->informe;
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
+    $data['pacienteConsulta'] = Paciente::find($data['citologia']->paciente_id);
     $data['grupos'] = Grupo::all();
     $data['precios'] = Precio::where('tipo', '=', 'C')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'C')->get();

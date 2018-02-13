@@ -18,7 +18,7 @@
                   <td><strong>Diagnóstico :</strong> <?php echo e($biopsia->diagnostico); ?></td>
                 </tr>
                 <tr>
-                  <td align="right">
+                  <td align="left">
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tbody>
                         <tr>
