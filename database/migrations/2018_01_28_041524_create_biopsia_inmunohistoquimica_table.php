@@ -16,8 +16,7 @@ class CreateBiopsiaInmunohistoquimicaTable extends Migration
         Schema::create('biopsia_inmunohistoquimica', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('biopsia_id');
-          $table->string('resultado');
-          $table->text('detalle')->nullable();
+          $table->integer('frase_id');
           $table->timestamps();
         });
     }

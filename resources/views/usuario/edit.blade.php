@@ -29,11 +29,15 @@
             <input name="_method" type="hidden" value="PUT">
             <div class="form-group">
               <label>Nombre</label>
-              <input type="text" placeholder="Nombre" class="form-control" name="name" value="{{ $usuario->name}}">
+              <input type="text" placeholder="Nombre" class="form-control" name="nombre" value="{{ $usuario->nombre}}">
             </div>
             <div class="form-group">
-              <label>Correo</label>
-              <input type="email" placeholder="Correo" class="form-control" name="email" value="{{ $usuario->email}}">
+              <label>Apellido</label>
+              <input type="text" placeholder="Apellido" class="form-control" name="apellido" value="{{ $usuario->apellido}}">
+            </div>
+            <div class="form-group">
+              <label>Nombre de usuario</label>
+              <input type="text" placeholder="Nombre de usuario" class="form-control" name="usuario" value="{{ $usuario->usuario}}">
             </div>
             <div class="form-group">
               <label>Clave</label>

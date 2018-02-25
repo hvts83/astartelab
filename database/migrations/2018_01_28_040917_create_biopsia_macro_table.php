@@ -17,7 +17,6 @@ class CreateBiopsiaMacroTable extends Migration
             $table->increments('id');
             $table->integer('biopsia_id');
             $table->integer('frase_id');
-            $table->text('detalle')->nullable();
             $table->timestamps();
         });
     }

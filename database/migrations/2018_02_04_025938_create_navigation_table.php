@@ -17,6 +17,7 @@ class CreateNavigationTable extends Migration
             $table->increments('id');
             $table->string('label');
             $table->string('icon');
+            $table->integer('orden')->nullable();
         });
     }
 

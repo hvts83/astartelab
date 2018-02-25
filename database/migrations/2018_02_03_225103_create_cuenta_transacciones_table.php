@@ -16,9 +16,12 @@ class CreateCuentaTransaccionesTable extends Migration
         Schema::create('cuenta_transacciones', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('cuenta_id');
-            $table->integer('cheque_id');
             $table->char('tipo', 1);
+            $table->string('numero');
+            $table->date('fecha_realizacion');
+            $table->string('lugar');
             $table->string('concepto');
+            $table->string('paguese');
             $table->double('monto', 8, 2);
             $table->double('prev', 8,2);
             $table->double('actual', 8, 2);

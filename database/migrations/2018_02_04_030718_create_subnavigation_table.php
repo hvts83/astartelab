@@ -19,6 +19,7 @@ class CreateSubnavigationTable extends Migration
             $table->string('label');
             $table->string('link');
             $table->string('link_extended');
+            $table->integer('orden')->nullable();
         });
     }
 

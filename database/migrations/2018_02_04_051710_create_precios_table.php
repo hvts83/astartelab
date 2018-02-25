@@ -15,9 +15,10 @@ class CreatePreciosTable extends Migration
     {
         Schema::create('precios', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('tipo_id');
+            $table->char('tipo', 1);
             $table->string('nombre');
             $table->double('monto', 8,2);
-            $table->char('tipo',1);
             $table->timestamps();
         });
     }

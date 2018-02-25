@@ -17,8 +17,6 @@ class CreateBiopsiaPreliminarTable extends Migration
           $table->increments('id');
           $table->integer('biopsia_id');
           $table->integer('diagnostico_id');
-          $table->text('detalle')->nullable();
-          $table->string('informe_preliminar')->nullable();
           $table->timestamps();
         });
     }

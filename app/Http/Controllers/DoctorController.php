@@ -52,7 +52,9 @@ class DoctorController extends Controller
   {
     $this->validate($request, [
       'nombre' => 'max:64|required',
+      'telefono' => 'required',
       'email'    => 'required|email|max:64',
+      'direccion' => 'required'
       ]);
 
       DB::beginTransaction();
@@ -60,6 +62,7 @@ class DoctorController extends Controller
           $doctor = new Doctor();
           $doctor->email = $request->email;
           $doctor->nombre = $request->nombre;
+          $doctor->direccion = $request->direccion;
           $doctor->telefono = $request->telefono;
           $doctor->saldo = 0;
           $doctor->save();
@@ -97,7 +100,9 @@ class DoctorController extends Controller
     $doctor = Doctor::find($id);
     $this->validate($request, [
       'nombre' => 'max:64|required',
+      'telefono' => 'required',
       'email'    => 'required|email|max:64',
+      'direccion' => 'required'
       ]);
 
     //Inicio de las inserciones en la base de datos
@@ -105,6 +110,7 @@ class DoctorController extends Controller
       try {
         $doctor->email = $request->email;
         $doctor->nombre = $request->nombre;
+        $doctor->direccion = $request->direccion;
         $doctor->telefono = $request->telefono;
         $doctor->save();
     } catch (\Exception $e) {

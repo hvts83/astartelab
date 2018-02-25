@@ -28,11 +28,15 @@
              {{ csrf_field() }}
             <div class="form-group">
               <label>Nombre</label>
-              <input type="text" placeholder="Nombre" class="form-control" name="name">
+              <input type="text" placeholder="Nombre" class="form-control" name="nombre">
             </div>
             <div class="form-group">
-              <label>Correo</label>
-              <input type="email" placeholder="Correo" class="form-control" name="email">
+              <label>Apellido</label>
+              <input type="text" placeholder="Apellido" class="form-control" name="apellido">
+            </div>
+            <div class="form-group">
+              <label>Nombre de usuario</label>
+              <input type="text" placeholder="Nombre de usuario" class="form-control" name="usuario">
             </div>
             <div class="form-group">
               <label>Clave</label>

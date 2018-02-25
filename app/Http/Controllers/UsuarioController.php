@@ -53,8 +53,9 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
       $this->validate($request, [
-        'name' => 'required',
-        'email'    => 'required|email|max:64',
+        'nombre' => 'required',
+        'apellido' => 'required',
+        'usuario'    => 'required|max:64',
         'rol' => 'required',
         'password' => 'required|string|min:6|confirmed'
       ]);
@@ -63,9 +64,10 @@ class UsuarioController extends Controller
         DB::beginTransaction();
           try {
             $usuario = new User();
-            $usuario->email = $request->email;
+            $usuario->usuario = $request->usuario;
             $usuario->password = bcrypt($request->password);
-            $usuario->name = $request->name;
+            $usuario->nombre = $request->nombre;
+            $usuario->apellido = $request->apellido;
             $usuario->rol = $request->rol;
             $usuario->save();
         } catch (\Exception $e) {
@@ -102,8 +104,9 @@ class UsuarioController extends Controller
     {
       $usuario = User::find($id);
       $this->validate($request, [
-        'name' => 'required',
-        'email'    => 'required|email|max:64',
+        'nombre' => 'required',
+        'apellido' => 'required',
+        'usuario'    => 'required|max:64',
         'rol' => 'required',
         'password_confirmation' => 'required_with:password'
       ]);
@@ -111,8 +114,9 @@ class UsuarioController extends Controller
       //Inicio de las inserciones en la base de datos
       DB::beginTransaction();
         try {
-          $usuario->email = $request->email;
-          $usuario->name = $request->name;
+          $usuario->usuario = $request->usuario;
+          $usuario->nombre = $request->nombre;
+          $usuario->apellido = $request->apellido;
           $usuario->rol = $request->rol;
           if ($request->has('password')) {
             $usuario->password = bcrypt($request->password);

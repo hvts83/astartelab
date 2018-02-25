@@ -19,6 +19,7 @@
         <table id="tbldoctor" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Correo</th>
               <th>Teléfono</th>
@@ -28,6 +29,7 @@
           <tbody>
             @foreach ($doctores as $key => $doctor)
               <tr>
+                <td>{{ $doctor->id }}</td>
                 <td>{{ $doctor->nombre }}</td>
                 <td>{{ $doctor->email }}</td>
                 <td>{{ $doctor->telefono }}</td>

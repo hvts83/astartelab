@@ -19,11 +19,13 @@ class CreateBiopsiasTable extends Migration
             $table->integer('paciente_id');
             $table->integer('grupo_id');
             $table->integer('precio_id');
+            $table->integer('tipo_biopsia_id');
             $table->char('estado_pago', 2);
             $table->integer('diagnostico_id');
             $table->date('recibido')->nullable();
             $table->date('entregado')->nullable();
             $table->string('informe')->unique();
+            $table->string('informe_preliminar')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

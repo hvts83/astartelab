@@ -38,6 +38,10 @@
               <label>Télefono</label>
               <input type="text" placeholder="Télefono"  class="form-control" data-mask="(999)-9999-9999" name="telefono">
             </div>
+            <div class="form-group">
+              <label>Dirección</label>
+              <textarea name='direccion' class="form-control"> </textarea>
+            </div>
             <div>
                 <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
             </div>

@@ -17,6 +17,7 @@ class CreateDoctoresTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('email');
+            $table->text('direccion');
             $table->string('telefono')->nullable();
             $table->double('saldo', 8, 2);
             $table->timestamps();

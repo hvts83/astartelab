@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCitologiaMicroTable extends Migration
+class CreateTipoCitologiaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateCitologiaMicroTable extends Migration
      */
     public function up()
     {
-        Schema::create('citologia_micro', function (Blueprint $table) {
-          $table->increments('id');
-          $table->integer('citologia_id');
-          $table->integer('frase_id');
-          $table->timestamps();
+        Schema::create('tipo_citologia', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nombre');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +27,6 @@ class CreateCitologiaMicroTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('citologia_micro');
+        Schema::dropIfExists('tipo_citologia');
     }
 }

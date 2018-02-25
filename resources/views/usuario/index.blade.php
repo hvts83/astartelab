@@ -19,8 +19,9 @@
         <table id="tblusuario" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
-              <th>Correo</th>
+              <th>Usuario</th>
               <th>Rol</th>
               <th>Acciones</th>
             </tr>
@@ -28,8 +29,9 @@
           <tbody>
             @foreach ($usuarios as $key => $usuario)
               <tr>
+                <td>{{ $usuario->id }}</td>
                 <td>{{ $usuario->name }}</td>
-                <td>{{ $usuario->email }}</td>
+                <td>{{ $usuario->usuario }}</td>
                 <td>
                   @foreach ($tipos as $tipo)
                     @if ($tipo['value'] == $usuario->rol)

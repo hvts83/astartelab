@@ -24,6 +24,7 @@ class CreateCitologiaTable extends Migration
             $table->date('recibido')->nullable();
             $table->date('entregado')->nullable();
             $table->string('informe')->unique();
+            $table->string('informe_preliminar')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
