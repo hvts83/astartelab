@@ -7,10 +7,16 @@
 @endsection
 
 @section('actions')
-    <a href="{{ url('/doctores/create') }}" class="btn btn-primary">Nuevo doctor</a>
+    <a href="{{ url('/doctores/create') }}" class="btn btn-primary">Nuevo Doctor</a>
 @endsection
 
 @section ('content')
+
+  @if (session('status'))
+      <div class="alert alert-success">
+          {{ session('status') }}
+      </div>
+  @endif
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -43,7 +49,7 @@
         </table>
       </div>
       <div class="div-btn">
-        <a href="{{ url('/doctores/create') }}" class="btn btn-primary pull-right">Nuevo doctor</a>
+        <a href="{{ url('/doctores/create') }}" class="btn btn-primary pull-right">Nuevo Doctor</a>
       </div>
     </div>
   </div>

@@ -7,10 +7,16 @@
 @endsection
 
 @section('actions')
-  <a href="{{ url('/usuarios/create') }}" class="btn btn-primary">Nuevo usuario</a>
+  <a href="{{ url('/usuarios/create') }}" class="btn btn-primary">Nuevo Usuario</a>
 @endsection
 
 @section ('content')
+
+  @if (session('status'))
+      <div class="alert alert-success">
+          {{ session('status') }}
+      </div>
+  @endif
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -55,7 +61,7 @@
         </table>
       </div>
       <div class="div-btn">
-        <a href="{{ url('/usuarios/create') }}" class="btn btn-primary pull-right">Nuevo usuario</a>
+        <a href="{{ url('/usuarios/create') }}" class="btn btn-primary pull-right">Nuevo Usuario</a>
       </div>
     </div>
   </div>

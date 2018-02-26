@@ -6,11 +6,18 @@
   <li class="active">Diagnóstico</li>
 @endsection
 
-@section ('content')
 
 @section('actions')
-    <a href="{{ url('/diagnosticos/create') }}" class="btn btn-primary">Nuevo diagnóstico</a>
+    <a href="{{ url('/diagnosticos/create') }}" class="btn btn-primary">Nuevo Diagnóstico</a>
 @endsection
+
+@section ('content')
+
+  @if (session('status'))
+      <div class="alert alert-success">
+          {{ session('status') }}
+      </div>
+  @endif
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -46,7 +53,7 @@
         </table>
       </div>
       <div class="div-btn">
-        <a href="{{ url('/diagnosticos/create') }}" class="btn btn-primary pull-right">Nuevo diagnóstico</a>
+        <a href="{{ url('/diagnosticos/create') }}" class="btn btn-primary pull-right">Nuevo Diagnóstico</a>
       </div>
     </div>
   </div>

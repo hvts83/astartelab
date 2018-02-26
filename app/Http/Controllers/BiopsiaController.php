@@ -76,7 +76,7 @@ class BiopsiaController extends Controller
       ]);
 
       $correlativo=  Consulta_transacciones::whereRaw('tipo = "B" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
-      $informe = "B" . date('y') . date('m') . ($correlativo + 1);
+      $informe = "B" . date('y') . date('m') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
       //dd($informe);
       $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 

@@ -12,6 +12,12 @@
 
 @section ('content')
 
+  @if (session('status'))
+      <div class="alert alert-success">
+          {{ session('status') }}
+      </div>
+  @endif
+
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="ibox-content">

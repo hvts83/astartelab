@@ -7,10 +7,16 @@
 @endsection
 
 @section('actions')
-  <a href="{{ url('/pacientes/create') }}" class="btn btn-primary">Nuevo paciente</a>
+  <a href="{{ url('/pacientes/create') }}" class="btn btn-primary">Nuevo Paciente</a>
 @endsection
 
 @section ('content')
+
+  @if (session('status'))
+      <div class="alert alert-success">
+          {{ session('status') }}
+      </div>
+  @endif
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -35,8 +41,6 @@
                 <td>{{ $paciente->telefono }}</td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/pacientes/' .  $paciente->id . "/edit" ) }}">Editar</a>
-                  <a class="btn btn-default" href="{{ url('/paciente-biopsias/' .  $paciente->id ) }}">Biopsias</a>
-                  <a class="btn btn-default" href="{{ url('/paciente-citologia/' .  $paciente->id ) }}">Citologías</a>
                 </td>
               </tr>
             @endforeach
@@ -44,7 +48,7 @@
         </table>
       </div>
       <div class="div-btn">
-          <a href="{{ url('/pacientes/create') }}" class="btn btn-primary pull-right">Nuevo paciente</a>
+          <a href="{{ url('/pacientes/create') }}" class="btn btn-primary pull-right">Nuevo Paciente</a>
       </div>
     </div>
   </div>

@@ -75,7 +75,7 @@ class CitologiaController extends Controller
       ]);
 
       $correlativo=  Consulta_transacciones::whereRaw('tipo = "C" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
-      $informe = "C" . date('y') . date('m') . ($correlativo + 1);
+      $informe = "C" . date('y') . date('m') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
       //dd($informe);
       $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 

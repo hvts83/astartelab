@@ -7,10 +7,16 @@
 @endsection
 
 @section('actions')
-    <a href="{{ url('/grupos/create') }}" class="btn btn-primary">Nuevo grupo</a>
+    <a href="{{ url('/grupos/create') }}" class="btn btn-primary">Nuevo Grupo</a>
 @endsection
 
 @section ('content')
+
+  @if (session('status'))
+      <div class="alert alert-success">
+          {{ session('status') }}
+      </div>
+  @endif
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -38,7 +44,7 @@
         </table>
       </div>
       <div class="div-btn">
-        <a href="{{ url('/grupos/create') }}" class="btn btn-primary pull-right">Nuevo grupo</a>
+        <a href="{{ url('/grupos/create') }}" class="btn btn-primary pull-right">Nuevo Grupo</a>
       </div>
     </div>
   </div>
