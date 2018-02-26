@@ -102,7 +102,10 @@
     //Datatable
     var tabla = $('#tblmeses').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

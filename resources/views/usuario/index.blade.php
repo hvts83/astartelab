@@ -7,7 +7,7 @@
 @endsection
 
 @section('actions')
-  <a href="{{ url('/usuarios/create') }}" class="btn btn-default">Nuevo usuario</a>
+  <a href="{{ url('/usuarios/create') }}" class="btn btn-primary">Nuevo usuario</a>
 @endsection
 
 @section ('content')
@@ -20,8 +20,9 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nombre</th>
               <th>Usuario</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
               <th>Rol</th>
               <th>Acciones</th>
             </tr>
@@ -30,8 +31,9 @@
             @foreach ($usuarios as $key => $usuario)
               <tr>
                 <td>{{ $usuario->id }}</td>
-                <td>{{ $usuario->name }}</td>
                 <td>{{ $usuario->usuario }}</td>
+                <td>{{ $usuario->nombre }}</td>
+                <td>{{ $usuario->apellido }}</td>
                 <td>
                   @foreach ($tipos as $tipo)
                     @if ($tipo['value'] == $usuario->rol)
@@ -52,6 +54,9 @@
           </tbody>
         </table>
       </div>
+      <div class="div-btn">
+        <a href="{{ url('/usuarios/create') }}" class="btn btn-primary pull-right">Nuevo usuario</a>
+      </div>
     </div>
   </div>
 </div>
@@ -67,7 +72,10 @@
     //Datatable
     var tabla = $('#tblusuario').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

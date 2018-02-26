@@ -3,6 +3,6 @@
         Desarrollo hecho por ...
     </div>
     <div>
-        <strong>Copyright</strong> Example Company &copy; 2014-2017
+        <strong>Copyright</strong> Astarté Laboratorio de Patologías &copy; 1985 -2018
     </div>
 </div>

@@ -7,10 +7,16 @@
 @endsection
 
 @section('actions')
-    <a href="{{ url('/citologia/create') }}" class="btn btn-default">Nueva citología</a>
+    <a href="{{ url('/citologia/create') }}" class="btn btn-primary">Nueva Citología</a>
 @endsection
 
 @section ('content')
+
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -23,6 +29,7 @@
               <th>Paciente</th>
               <th>Doctor</th>
               <th>Recibido</th>
+              <th>Entregado</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -33,6 +40,7 @@
                 <td>{{ $citologia->paciente_name }}</td>
                 <td>{{ $citologia->doctor_name}}</td>
                 <td>{{ $citologia->recibido }}</td>
+                <td>{{ $citologia->entregado }}</td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/edit" ) }}">Ver detalle</a>
                 </td>
@@ -40,6 +48,9 @@
             @endforeach
           </tbody>
         </table>
+      </div>
+      <div class="div-btn">
+        <a href="{{ url('/citologia/create') }}" class="btn btn-primary pull-right">Nueva Citología</a>
       </div>
     </div>
   </div>
@@ -56,7 +67,10 @@
     //Datatable
     var tabla = $('#tblcitologia').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

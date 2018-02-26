@@ -8,6 +8,7 @@
     <link rel="shortcut icon" type="image/png" href="<?php echo e(asset('img/favicon.ico')); ?>"/>
     <link rel="stylesheet" href="<?php echo asset('css/vendor.css'); ?>" />
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo asset('css/style.css'); ?>" />
     <link href="<?php echo e(asset('css/jasny/jasny-bootstrap.min.css')); ?>" rel="stylesheet">
     <?php echo $__env->yieldContent('css'); ?>
 </head>
@@ -42,8 +43,6 @@
             <!-- Main view  -->
             <?php echo $__env->yieldContent('content'); ?>
 
-            <!-- Footer -->
-            <?php echo $__env->make('layouts.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
         </div>
         <!-- End page wrapper-->

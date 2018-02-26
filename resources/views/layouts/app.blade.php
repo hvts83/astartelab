@@ -8,6 +8,7 @@
     <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}"/>
     <link rel="stylesheet" href="{!! asset('css/vendor.css') !!}" />
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
+    <link rel="stylesheet" href="{!! asset('css/style.css') !!}" />
     <link href="{{ asset('css/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     @yield('css')
 </head>
@@ -42,8 +43,6 @@
             <!-- Main view  -->
             @yield('content')
 
-            <!-- Footer -->
-            @include('layouts.footer')
 
         </div>
         <!-- End page wrapper-->

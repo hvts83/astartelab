@@ -46,8 +46,8 @@
 
     public static function getGenero(){
       $genero = array(
-        array("value" => "M", "text" => trans('general.masculino') ),
-        array("value" => "F", "text" => trans('general.femenino') )
+        array("value" => "M", "text" => 'masculino' ),
+        array("value" => "F", "text" => 'femenino' )
       );
       return $genero;
     }
@@ -79,6 +79,7 @@
 
     public static function getTipoUsuario(){
       $tipo = array(
+        array("value" => "A", "text" => "Administrador"),
         array("value" => "B", "text" => "Empleado tipo 1"),
         array("value" => "C", "text" => "Empleado tipo 2"),
       );

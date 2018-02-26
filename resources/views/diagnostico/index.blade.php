@@ -9,7 +9,7 @@
 @section ('content')
 
 @section('actions')
-    <a href="{{ url('/diagnosticos/create') }}" class="btn btn-default">Nuevo diagnóstico</a>
+    <a href="{{ url('/diagnosticos/create') }}" class="btn btn-primary">Nuevo diagnóstico</a>
 @endsection
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -19,6 +19,7 @@
         <table id="tbldiagnostico" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Tipo</th>
               <th>Acciones</th>
@@ -27,6 +28,7 @@
           <tbody>
             @foreach ($diagnosticos as $key => $diagnostico)
               <tr>
+                <td>{{ $diagnostico->id }}</td>
                 <td>{{ $diagnostico->nombre }}</td>
                 <td>
                   @foreach ($tipos as $tipo)
@@ -43,6 +45,9 @@
           </tbody>
         </table>
       </div>
+      <div class="div-btn">
+        <a href="{{ url('/diagnosticos/create') }}" class="btn btn-primary pull-right">Nuevo diagnóstico</a>
+      </div>
     </div>
   </div>
 </div>
@@ -58,7 +63,10 @@
     //Datatable
     var tabla = $('#tbldiagnostico').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

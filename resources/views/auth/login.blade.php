@@ -15,7 +15,7 @@
           {{ csrf_field() }}
 
           <div class="form-group{{ $errors->has('usuario') ? ' has-error' : '' }}">
-              <input type="text" class="form-control" placeholder="Correo" name="usuario" value="{{ old('usuario') }}" required autofocus>
+              <input type="text" class="form-control" placeholder="usuario" name="usuario" value="{{ old('usuario') }}" required autofocus>
               @if ($errors->has('usuario'))
                   <span class="help-block">
                       <strong>{{ $errors->first('usuario') }}</strong>
@@ -49,7 +49,7 @@
               </div>
           </div>
       </form>
-      <p class="m-t"> <small>Astarté laboratorio de patologías</small> </p>
+      <p class="m-t"> <small>Astarté Laboratorio de Patologías</small> </p>
     </div>
     </div>
 @endsection

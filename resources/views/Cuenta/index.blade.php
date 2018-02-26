@@ -7,7 +7,7 @@
 @endsection
 
 @section('actions')
-    <a href="{{ url('/cuentas/create') }}" class="btn btn-default">Nueva Cuenta</a>
+    <a href="{{ url('/cuentas/create') }}" class="btn btn-primary">Nueva Cuenta</a>
 @endsection
 
 @section ('content')
@@ -40,6 +40,9 @@
           </tbody>
         </table>
       </div>
+      <div class="div-btn">
+        <a href="{{ url('/cuentas/create') }}" class="btn btn-primary pull-right">Nueva Cuenta</a>
+      </div>
     </div>
   </div>
 </div>
@@ -55,7 +58,10 @@
     //Datatable
     var tabla = $('#tblcuenta').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

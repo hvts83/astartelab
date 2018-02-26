@@ -7,7 +7,7 @@
 @endsection
 
 @section('actions')
-    <a href="{{ url('/doctores/create') }}" class="btn btn-default">Nuevo doctor</a>
+    <a href="{{ url('/doctores/create') }}" class="btn btn-primary">Nuevo doctor</a>
 @endsection
 
 @section ('content')
@@ -42,6 +42,9 @@
           </tbody>
         </table>
       </div>
+      <div class="div-btn">
+        <a href="{{ url('/doctores/create') }}" class="btn btn-primary pull-right">Nuevo doctor</a>
+      </div>
     </div>
   </div>
 </div>
@@ -56,8 +59,10 @@
 	<script>
     //Datatable
     var tabla = $('#tbldoctor').DataTable({
-      "paging": true,
-      "lengthChange": false,
+      "paging": true,"language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

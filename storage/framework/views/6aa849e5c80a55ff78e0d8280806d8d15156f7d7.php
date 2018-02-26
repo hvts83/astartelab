@@ -13,11 +13,11 @@
           <?php echo e(csrf_field()); ?>
 
 
-          <div class="form-group<?php echo e($errors->has('email') ? ' has-error' : ''); ?>">
-              <input type="email" class="form-control" placeholder="Correo" name="email" value="<?php echo e(old('email')); ?>" required autofocus>
-              <?php if($errors->has('email')): ?>
+          <div class="form-group<?php echo e($errors->has('usuario') ? ' has-error' : ''); ?>">
+              <input type="text" class="form-control" placeholder="usuario" name="usuario" value="<?php echo e(old('usuario')); ?>" required autofocus>
+              <?php if($errors->has('usuario')): ?>
                   <span class="help-block">
-                      <strong><?php echo e($errors->first('email')); ?></strong>
+                      <strong><?php echo e($errors->first('usuario')); ?></strong>
                   </span>
               <?php endif; ?>
           </div>

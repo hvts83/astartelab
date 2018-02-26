@@ -7,7 +7,7 @@
 @endsection
 
 @section('actions')
-    <a href="{{ url('/grupos/create') }}" class="btn btn-default">Nuevo grupo</a>
+    <a href="{{ url('/grupos/create') }}" class="btn btn-primary">Nuevo grupo</a>
 @endsection
 
 @section ('content')
@@ -19,6 +19,7 @@
         <table id="tblgrupo" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Acciones</th>
             </tr>
@@ -26,6 +27,7 @@
           <tbody>
             @foreach ($grupos as $key => $grupo)
               <tr>
+                <td>{{ $grupo->id }}</td>
                 <td>{{ $grupo->nombre }}</td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/grupos/' .  $grupo->id . "/edit" ) }}">Editar</a>
@@ -34,6 +36,9 @@
             @endforeach
           </tbody>
         </table>
+      </div>
+      <div class="div-btn">
+        <a href="{{ url('/grupos/create') }}" class="btn btn-primary pull-right">Nuevo grupo</a>
       </div>
     </div>
   </div>
@@ -49,8 +54,10 @@
 	<script>
     //Datatable
     var tabla = $('#tblgrupo').DataTable({
-      "paging": true,
-      "lengthChange": false,
+      "paging": true,"language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

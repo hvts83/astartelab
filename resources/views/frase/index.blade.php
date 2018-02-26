@@ -7,7 +7,7 @@
 @endsection
 
 @section('actions')
-  <a href="{{ url('/frases/create') }}" class="btn btn-default">Nueva frase</a>
+  <a href="{{ url('/frases/create') }}" class="btn btn-primary">Nueva frase</a>
 @endsection
 
 @section ('content')
@@ -19,6 +19,7 @@
         <table id="tblfrase" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Tipo</th>
               <th>Acciones</th>
@@ -27,6 +28,7 @@
           <tbody>
             @foreach ($frases as $key => $frase)
               <tr>
+                <td>{{ $frase->id }}</td>
                 <td>{{ $frase->nombre }}</td>
                 <td>
                   @foreach ($tipos as $tipo)
@@ -43,6 +45,9 @@
           </tbody>
         </table>
       </div>
+      <div class="div-btn">
+          <a href="{{ url('/frases/create') }}" class="btn btn-primary pull-right">Nueva frase</a>
+      </div>
     </div>
   </div>
 </div>
@@ -57,8 +62,10 @@
 	<script>
     //Datatable
     var tabla = $('#tblfrase').DataTable({
-      "paging": true,
-      "lengthChange": false,
+      "paging": true,"language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

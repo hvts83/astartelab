@@ -6,6 +6,10 @@
 
 <?php $__env->startSection('content'); ?>
 
+<?php $__env->startSection('actions'); ?>
+    <a href="<?php echo e(url('/diagnosticos/create')); ?>" class="btn btn-primary">Nuevo diagnóstico</a>
+<?php $__env->stopSection(); ?>
+
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="ibox-content">
@@ -37,7 +41,9 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </tbody>
         </table>
-        <a href="<?php echo e(url('/diagnosticos/create')); ?>" class="btn btn-default">Nuevo diagnóstico</a>
+      </div>
+      <div class="div-btn">
+        <a href="<?php echo e(url('/diagnosticos/create')); ?>" class="btn btn-primary pull-right">Nuevo diagnóstico</a>
       </div>
     </div>
   </div>
@@ -54,7 +60,10 @@
     //Datatable
     var tabla = $('#tbldiagnostico').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,
