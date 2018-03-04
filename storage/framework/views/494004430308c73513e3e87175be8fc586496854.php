@@ -5,14 +5,57 @@
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="col-lg-4">
+      <a href="<?php echo e(url('reporte/date')); ?>">
+        <div class="widget yellow-bg p-lg text-center">
+          <div class="m-b-md">
+            <i class="fa fa-file fa-4x"></i>
+            <h3 class="font-bold no-margins">
+              Reportes por fecha
+            </h3>
+            <small>Reportes</small>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-lg-4">
+      <a href="<?php echo e(url('biopsia/create')); ?>">
+        <div class="widget navy-bg p-lg text-center">
+            <div class="m-b-md">
+                <i class="fa fa-medkit fa-4x"></i>
+                <h3 class="font-bold no-margins">
+                    Crear Biopsia
+                </h3>
+                <small>Biopsia</small>
+            </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-lg-4">
+      <a href="<?php echo e(url('citologia/create')); ?>">
+        <div class="widget lazur-bg p-lg text-center">
+            <div class="m-b-md">
+                <i class="fa fa-heartbeat fa-4x"></i>
+                <h3 class="font-bold no-margins">
+                    Crear Citología
+                </h3>
+                <small>Citología</small>
+            </div>
+        </div>
+      </a>
+    </div>
+
+
+    <div class="col-lg-4">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <span class="label label-success pull-right">Día</span>
-                <h5>Consultas</h5>
+                <h5>Exámenes</h5>
             </div>
             <div class="ibox-content">
                 <h1 class="no-margins"><?php echo e($dia); ?></h1>
-                <small>Consultas del día</small>
+                <small>Exámenes del día</small>
             </div>
         </div>
     </div>
@@ -41,12 +84,13 @@
         </div>
     </div>
   </div>
+
   <div class="row">
 
     <div class="col-md-12">
         <div class="ibox float-e-margins">
           <div class="ibox-title">
-            <h5>Consulta del mes</h5>
+            <h5>Exámenes del mes</h5>
           </div>
           <div class="ibox-content">
             <div class="table-responsive">
@@ -101,7 +145,10 @@
     //Datatable
     var tabla = $('#tblmeses').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

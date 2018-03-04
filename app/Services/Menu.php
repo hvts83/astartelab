@@ -25,6 +25,7 @@ class Menu {
               ->join('user_navigation', 'subnavigation.id', '=', 'user_navigation.subnavigation_id')
               ->where('tipo', '=', Auth::user()->rol)
               ->groupBy('Navigation.id', 'Navigation.label', 'Navigation.icon')
+              ->orderBy('navigation.orden', 'ASC')
               ->get();
 
     $submodulos = Subnavigation::select('subnavigation.id','subnavigation.label', 'subnavigation.link', 'subnavigation.link_extended', 'navigation_id')

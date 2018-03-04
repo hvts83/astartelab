@@ -27,11 +27,15 @@
 
             <div class="form-group">
               <label>Nombre</label>
-              <input type="text" placeholder="Nombre" class="form-control" name="name">
+              <input type="text" placeholder="Nombre" class="form-control" name="nombre">
             </div>
             <div class="form-group">
-              <label>Correo</label>
-              <input type="email" placeholder="Correo" class="form-control" name="email">
+              <label>Apellido</label>
+              <input type="text" placeholder="Apellido" class="form-control" name="apellido">
+            </div>
+            <div class="form-group">
+              <label>Nombre de usuario</label>
+              <input type="text" placeholder="Nombre de usuario" class="form-control" name="usuario">
             </div>
             <div class="form-group">
               <label>Clave</label>
@@ -50,8 +54,9 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               </select>
             </div>
-            <div>
-                <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+            <div class="div-btn">
+                <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
+                <a href="<?php echo e(url('usuarios/')); ?>" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a>
             </div>
         </form>
       </div>
