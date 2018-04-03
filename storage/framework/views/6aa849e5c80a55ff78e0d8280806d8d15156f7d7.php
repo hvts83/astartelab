@@ -48,7 +48,7 @@
               </div>
           </div>
       </form>
-      <p class="m-t"> <small>Astarté laboratorio de patologías</small> </p>
+      <p class="m-t"> <small>Astarté Laboratorio de Patologías</small> </p>
     </div>
     </div>
 <?php $__env->stopSection(); ?>

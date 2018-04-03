@@ -4,7 +4,18 @@
   <li class="active">Grupos</li>
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startSection('actions'); ?>
+    <a href="<?php echo e(url('/grupos/create')); ?>" class="btn btn-primary">Nuevo Grupo</a>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
+
+  <?php if(session('status')): ?>
+      <div class="alert alert-success">
+          <?php echo e(session('status')); ?>
+
+      </div>
+  <?php endif; ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -13,6 +24,7 @@
         <table id="tblgrupo" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Acciones</th>
             </tr>
@@ -20,6 +32,7 @@
           <tbody>
             <?php $__currentLoopData = $grupos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $grupo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               <tr>
+                <td><?php echo e($grupo->id); ?></td>
                 <td><?php echo e($grupo->nombre); ?></td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/grupos/' .  $grupo->id . "/edit" )); ?>">Editar</a>
@@ -28,7 +41,9 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </tbody>
         </table>
-        <a href="<?php echo e(url('/grupos/create')); ?>" class="btn btn-default">Nuevo grupo</a>
+      </div>
+      <div class="div-btn">
+        <a href="<?php echo e(url('/grupos/create')); ?>" class="btn btn-primary pull-right">Nuevo Grupo</a>
       </div>
     </div>
   </div>
@@ -44,8 +59,10 @@
 	<script>
     //Datatable
     var tabla = $('#tblgrupo').DataTable({
-      "paging": true,
-      "lengthChange": false,
+      "paging": true,"language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

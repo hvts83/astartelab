@@ -69,7 +69,7 @@
       "language": {
             "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
       },
-      "lengthChange": false,
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

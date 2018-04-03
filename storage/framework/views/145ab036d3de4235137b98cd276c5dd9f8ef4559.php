@@ -8,7 +8,6 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('actions'); ?>
-
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"> Enviar correo</button>
 <?php $__env->stopSection(); ?>
 

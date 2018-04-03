@@ -42,8 +42,9 @@
                 <label class="control-label">Detalle</label>
                   <textarea class="form-control" name="detalle"></textarea>
             </div>
-            <div>
-                <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+            <div class="div-btn">
+                <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
+                <a href="<?php echo e(url('diagnosticos/')); ?>" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a>
             </div>
         </form>
       </div>

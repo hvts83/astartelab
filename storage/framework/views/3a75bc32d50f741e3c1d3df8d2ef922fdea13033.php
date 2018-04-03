@@ -4,7 +4,18 @@
   <li class="active">Doctores</li>
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startSection('actions'); ?>
+    <a href="<?php echo e(url('/doctores/create')); ?>" class="btn btn-primary">Nuevo Doctor</a>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
+
+  <?php if(session('status')): ?>
+      <div class="alert alert-success">
+          <?php echo e(session('status')); ?>
+
+      </div>
+  <?php endif; ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -13,6 +24,7 @@
         <table id="tbldoctor" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Correo</th>
               <th>Teléfono</th>
@@ -22,20 +34,21 @@
           <tbody>
             <?php $__currentLoopData = $doctores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               <tr>
+                <td><?php echo e($doctor->id); ?></td>
                 <td><?php echo e($doctor->nombre); ?></td>
                 <td><?php echo e($doctor->email); ?></td>
                 <td><?php echo e($doctor->telefono); ?></td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/doctores/' .  $doctor->id . "/edit" )); ?>">Editar</a>
                   <a class="btn btn-default" href="<?php echo e(url('/doctor-account/' .  $doctor->id )); ?>">Fondos</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/reports/doctor-biopsia' .  $doctor->id )); ?>">Biopsias</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/reports/doctor-citologia' .  $doctor->id )); ?>">Citologías</a>
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </tbody>
         </table>
-        <a href="<?php echo e(url('/doctores/create')); ?>" class="btn btn-default">Nuevo doctor</a>
+      </div>
+      <div class="div-btn">
+        <a href="<?php echo e(url('/doctores/create')); ?>" class="btn btn-primary pull-right">Nuevo Doctor</a>
       </div>
     </div>
   </div>
@@ -51,8 +64,10 @@
 	<script>
     //Datatable
     var tabla = $('#tbldoctor').DataTable({
-      "paging": true,
-      "lengthChange": false,
+      "paging": true,"language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

@@ -21,11 +21,18 @@ Route::resource('/doctores', 'DoctorController');
 Route::resource('/grupos', 'GrupoController');
 Route::resource('/diagnosticos', 'DiagnosticoController');
 Route::resource('/frases', 'FraseController');
-Route::resource('/precios', 'PreciosController');
 Route::resource('/biopsia', 'BiopsiaController');
+Route::resource('/tipo-biopsia', 'TipoBiopsiaController');
 Route::resource('/citologia', 'CitologiaController');
+Route::resource('/tipo-citologia', 'TipoCitologiaController');
 Route::resource('/cuentas', 'CuentaController');
 Route::resource('/cheques', 'ChequeController');
+//Precios
+Route::get('/precios', 'PreciosController@index');
+Route::get('/precios/create/{type}', 'PreciosController@create');
+Route::post('/precios', 'PreciosController@store');
+Route::get('/precios/edit/{id}', 'PreciosController@edit');
+Route::post('/precios/update/{id}', 'PreciosController@update');
 //Cuentas bancarias
 Route::get('/cuenta-account/{id}', "CuentaFondosController@getCuentaAccount" );
 Route::post('/cuenta-account/{id}', "CuentaFondosController@postCuentaFunds");

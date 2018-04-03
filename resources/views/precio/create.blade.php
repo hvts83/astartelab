@@ -26,6 +26,7 @@
         @endif
         <form role="form" method="post" action="{{ url('/precios') }}">
              {{ csrf_field() }}
+            <input type="hidden" value="{{ $tipo }}" name="tipo">
             <div class="form-group">
               <label>Nombre</label>
               <input type="text" placeholder="Nombre" class="form-control" name="nombre">
@@ -39,10 +40,10 @@
             </div>
             <div class="form-group">
               <label class="control-label">Tipo</label>
-              <select class="form-control m-b" name="tipo">
+              <select class="form-control m-b" name="tipo_consulta">
                 <option>Seleccione tipo</option>
-                @foreach ($tipos as $tipo)
-                  <option value="{{ $tipo['value'] }}"> {{  $tipo['text'] }} </option>
+                @foreach ($tipos_consulta as $tipo_c)
+                  <option value="{{ $tipo_c['id'] }}"> {{  $tipo_c['nombre'] }} </option>
                 @endforeach
               </select>
             </div>
@@ -54,4 +55,10 @@
       </div>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+  <script>
+    
+  </script>
 @endsection

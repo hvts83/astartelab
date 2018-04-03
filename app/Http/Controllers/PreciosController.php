@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Helpers\General;
 use App\Models\Precio;
+use App\Models\Tipo_biopsia;
+use App\Models\Tipo_citologia;
 
 class PreciosController extends Controller
 {
@@ -29,6 +31,8 @@ class PreciosController extends Controller
       $data['page_title'] = "Ver Precios";
       $data['precios'] = Precio::all();
       $data['tipos'] = General::getTipoServicio();
+      $data['tipo_biopsia'] = Tipo_biopsia::all();
+      $data['tipo_citologia'] = Tipo_citologia::all();
       return view('precio.index')->with($data);
     }
 
@@ -37,10 +41,17 @@ class PreciosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($type)
     {
+      
       $data['page_title'] = "Nuevo precio";
-      $data['tipos'] = General::getTipoServicio();
+      if($type === 'B' || $type === 'b' ){
+        $data['tipo'] = 'B';
+        $data['tipos_consulta'] = Tipo_biopsia::all();
+      }elseif($type === 'C' || $type === 'c'){
+        $data['tipo'] = 'C';
+        $data['tipos_consulta'] = Tipo_citologia::all();
+      }
       return view('precio.create', $data);
     }
 
@@ -55,7 +66,7 @@ class PreciosController extends Controller
       $this->validate($request, [
         'nombre' => 'required',
         'monto' => 'numeric|required',
-        'tipo' => 'required'
+        'tipo_consulta' => 'required'
         ]);
 
         DB::beginTransaction();
@@ -64,6 +75,7 @@ class PreciosController extends Controller
             $precio->nombre = $request->nombre;
             $precio->monto = $request->monto;
             $precio->tipo = $request->tipo;
+            $precio->tipo_id = $request->tipo_consulta;
             $precio->save();
         } catch (\Exception $e) {
           DB::rollback();

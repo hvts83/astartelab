@@ -5,10 +5,17 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('actions'); ?>
-    <a href="<?php echo e(url('/citologia/create')); ?>" class="btn btn-default">Nueva citología</a>
+    <a href="<?php echo e(url('/citologia/create')); ?>" class="btn btn-primary">Nueva Citología</a>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+
+<?php if(session('status')): ?>
+    <div class="alert alert-success">
+        <?php echo e(session('status')); ?>
+
+    </div>
+<?php endif; ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -21,6 +28,7 @@
               <th>Paciente</th>
               <th>Doctor</th>
               <th>Recibido</th>
+              <th>Entregado</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -31,6 +39,7 @@
                 <td><?php echo e($citologia->paciente_name); ?></td>
                 <td><?php echo e($citologia->doctor_name); ?></td>
                 <td><?php echo e($citologia->recibido); ?></td>
+                <td><?php echo e($citologia->entregado); ?></td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/edit" )); ?>">Ver detalle</a>
                 </td>
@@ -38,6 +47,9 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </tbody>
         </table>
+      </div>
+      <div class="div-btn">
+        <a href="<?php echo e(url('/citologia/create')); ?>" class="btn btn-primary pull-right">Nueva Citología</a>
       </div>
     </div>
   </div>
@@ -54,7 +66,10 @@
     //Datatable
     var tabla = $('#tblcitologia').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

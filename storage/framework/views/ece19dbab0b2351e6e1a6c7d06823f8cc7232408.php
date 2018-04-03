@@ -4,7 +4,18 @@
   <li class="active">Pacientes</li>
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startSection('actions'); ?>
+  <a href="<?php echo e(url('/pacientes/create')); ?>" class="btn btn-primary">Nuevo Paciente</a>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
+
+  <?php if(session('status')): ?>
+      <div class="alert alert-success">
+          <?php echo e(session('status')); ?>
+
+      </div>
+  <?php endif; ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -13,6 +24,7 @@
         <table id="tblpaciente" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Correo</th>
               <th>Teléfono</th>
@@ -22,19 +34,20 @@
           <tbody>
             <?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               <tr>
+                <th><?php echo e($paciente->id); ?></th>
                 <td><?php echo e($paciente->name); ?></td>
                 <td><?php echo e($paciente->email); ?></td>
                 <td><?php echo e($paciente->telefono); ?></td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/pacientes/' .  $paciente->id . "/edit" )); ?>">Editar</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/paciente-biopsias/' .  $paciente->id )); ?>">Biopsias</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/paciente-citologia/' .  $paciente->id )); ?>">Citologías</a>
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </tbody>
         </table>
-        <a href="<?php echo e(url('/pacientes/create')); ?>" class="btn btn-default">Nuevo paciente</a>
+      </div>
+      <div class="div-btn">
+          <a href="<?php echo e(url('/pacientes/create')); ?>" class="btn btn-primary pull-right">Nuevo Paciente</a>
       </div>
     </div>
   </div>
@@ -50,8 +63,10 @@
 	<script>
     //Datatable
     var tabla = $('#tblpaciente').DataTable({
-      "paging": true,
-      "lengthChange": false,
+      "paging": true,"language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

@@ -4,11 +4,19 @@
   <li class="active">Diagnóstico</li>
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('content'); ?>
 
 <?php $__env->startSection('actions'); ?>
-    <a href="<?php echo e(url('/diagnosticos/create')); ?>" class="btn btn-primary">Nuevo diagnóstico</a>
+    <a href="<?php echo e(url('/diagnosticos/create')); ?>" class="btn btn-primary">Nuevo Diagnóstico</a>
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+  <?php if(session('status')): ?>
+      <div class="alert alert-success">
+          <?php echo e(session('status')); ?>
+
+      </div>
+  <?php endif; ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -17,6 +25,7 @@
         <table id="tbldiagnostico" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Tipo</th>
               <th>Acciones</th>
@@ -25,6 +34,7 @@
           <tbody>
             <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               <tr>
+                <td><?php echo e($diagnostico->id); ?></td>
                 <td><?php echo e($diagnostico->nombre); ?></td>
                 <td>
                   <?php $__currentLoopData = $tipos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tipo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -43,7 +53,7 @@
         </table>
       </div>
       <div class="div-btn">
-        <a href="<?php echo e(url('/diagnosticos/create')); ?>" class="btn btn-primary pull-right">Nuevo diagnóstico</a>
+        <a href="<?php echo e(url('/diagnosticos/create')); ?>" class="btn btn-primary pull-right">Nuevo Diagnóstico</a>
       </div>
     </div>
   </div>

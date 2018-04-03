@@ -8,7 +8,8 @@
 @endsection
 
 @section('actions')
-    <a href="{{ url('/precios/create') }}" class="btn btn-primary">Nuevo Precio</a>
+    <a href="{{ url('/precios/create/B') }}" class="btn btn-primary">Nuevo Precio de Biopsia</a>
+    <a href="{{ url('/precios/create/C') }}" class="btn btn-primary">Nuevo Precio de Citología</a>
 @endsection
 
 @section ('content')
@@ -29,14 +30,15 @@
               <th>ID</th>
               <th>Nombre</th>
               <th>Monto</th>
-              <th>Tipo</th>
+              <th>Consulta</th>
+              <th>Tipo Consulta</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($precios as $key => $precio)
               <tr>
-                <td>{{ $precios->id }}</td>
+                <td>{{ $precio->id }}</td>
                 <td>{{ $precio->nombre }}</td>
                 <td>$ {{ $precio->monto }}</td>
                 <td>
@@ -45,6 +47,21 @@
                       {{ $tipo['text'] }}
                     @endif
                   @endforeach
+                </td>
+                <td>
+                  @if($precio->tipo === 'c')
+                    @foreach ($tipo_citologia as $tipo_c)
+                      @if ($tipo_c->id == $precio->tipo_id)
+                        {{ $tipo_c->nombre }}
+                      @endif
+                    @endforeach
+                  @else
+                    @foreach ($tipo_biopsia as $tipo_b)
+                      @if ($tipo_b->id == $precio->tipo_id)
+                        {{ $tipo_b->nombre }}
+                      @endif
+                    @endforeach
+                  @endif
                 </td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/precios/' .  $precio->id . "/edit" ) }}">Editar</a>

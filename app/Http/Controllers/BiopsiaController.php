@@ -52,6 +52,7 @@ class BiopsiaController extends Controller
     $data['grupos'] = Grupo::all();
     $data['precios'] = Precio::where('tipo', '=', 'B')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
+    $data['frases'] = Frase::where('tipo', '=', 'B')->get();
     $data['pagos'] = General::getCondicionPago();
     $data['facturacion'] = General::getFacturacion();
     return view('biopsia.create', $data);
@@ -65,6 +66,7 @@ class BiopsiaController extends Controller
    */
   public function store(Request $request)
   {
+
     $this->validate($request, [
       'doctor_id' => 'required',
       'paciente_id' => 'required',
@@ -90,6 +92,7 @@ class BiopsiaController extends Controller
           $biopsia->diagnostico_id = $request->diagnostico_id;
           $biopsia->estado_pago = $request->estado_pago;
           $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
+          $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
           $biopsia->informe = $informe;
           $biopsia->save();
 
@@ -121,6 +124,27 @@ class BiopsiaController extends Controller
           $ct->facturacion = $request->facturacion;
           $ct->save();
 
+          $micro = new Biopsia_micro();
+          $micro->biopsia_id = $biopsia->id;
+          $micro->frase_id = $request->micro_id;
+          $micro->save();
+
+          $macro = new Biopsia_macro();
+          $macro->biopsia_id = $biopsia->id;
+          $macro->frase_id = $request->macro_id;
+          $macro->save();
+
+
+          $preliminar = new Biopsia_preliminar();
+          $preliminar->biopsia_id = $biopsia->id;
+          $preliminar->diagnostico_id = $request->preliminar_id;
+          $preliminar->save();
+
+          $inmunohistoquimica = new Biopsia_inmunohistoquimica();
+          $inmunohistoquimica->biopsia_id = $biopsia->id;
+          $inmunohistoquimica->frase_id = $request->inmuno_id;
+          $inmunohistoquimica->save();
+                
       } catch (\Exception $e) {
         DB::rollback();
         throw $e;
