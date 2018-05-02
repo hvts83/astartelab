@@ -20,44 +20,46 @@
     </div>
     <?php if($transacciones->isEmpty() == false  ): ?>
       <div class="row">
-        <div class="table-responsive">
-          <table id="tblcuenta" class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Cheque</th>
-                <th>Concepto</th>
-                <th>Ingreso</th>
-                <th>Egreso</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $__currentLoopData = $transacciones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $trans): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="ibox-content">
+          <div class="table-responsive">
+            <table id="tblcuenta" class="table table-bordered table-striped">
+              <thead>
                 <tr>
-                  <td><?php echo e($trans->created_at); ?></td>
-                  <td><?php echo e($trans->cheque); ?></td>
-                  <td><?php echo e($trans->concepto); ?> </td>
-                  <td>
-                    <?php if($trans->tipo == "I"): ?>
-                      $ <?php echo e($trans->monto); ?>
-
-                    <?php else: ?>
-                      -
-                    <?php endif; ?>
-                  </td>
-                  <td>
-                    <?php if($trans->tipo == "E"): ?>
-                       -$(<?php echo e($trans->monto); ?>)
-                    <?php else: ?>
-                      -
-                    <?php endif; ?>
-                  </td>
-                  <td><?php echo e($trans->actual); ?></td>
+                  <th>Fecha</th>
+                  <th>Número</th>
+                  <th>Concepto</th>
+                  <th>Ingreso</th>
+                  <th>Egreso</th>
+                  <th>Total</th>
                 </tr>
-              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <?php $__currentLoopData = $transacciones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $trans): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                  <tr>
+                    <td><?php echo e($trans->created_at); ?></td>
+                    <td><?php echo e($trans->numero); ?></td>
+                    <td><?php echo e($trans->concepto); ?> </td>
+                    <td>
+                      <?php if($trans->tipo == "I"): ?>
+                        $ <?php echo e($trans->monto); ?>
+
+                      <?php else: ?>
+                        -
+                      <?php endif; ?>
+                    </td>
+                    <td>
+                      <?php if($trans->tipo == "E"): ?>
+                        -$(<?php echo e($trans->monto); ?>)
+                      <?php else: ?>
+                        -
+                      <?php endif; ?>
+                    </td>
+                    <td><?php echo e($trans->actual); ?></td>
+                  </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     <?php endif; ?>
@@ -88,7 +90,7 @@
                  <span class="input-group-addon">
                    <i class="fa fa-calendar"></i>
                  </span>
-                 <input type="text" name="fecha_realizacion" class="form-control" value="01-01-2018">
+                  <input type="text" name="fecha_realizacion" class="form-control" value="<?php echo e(DATE("y-m-d")); ?>">
                </div>
              </div>
              <div class="form-group col-md-4">
@@ -143,11 +145,14 @@
     //Datatable
     var tabla = $('#tblcuenta').DataTable({
       "paging": true,
-      "lengthChange": false,
-      "searching": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
+      "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": true
+      "autoWidth": false
     });
     $(document).ready(function () {
       $('.i-checks').iCheck({

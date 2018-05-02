@@ -12,7 +12,6 @@ use App\Http\Requests;
 use App\Helpers\General;
 use App\Models\Cuenta;
 use App\Models\Cuenta_transaccion;
-use App\Models\Cheque;
 
 class CuentaFondosController extends Controller
 {
@@ -22,7 +21,7 @@ class CuentaFondosController extends Controller
 
     public function getCuentaAccount(Request $request, $id){
       $data['cuenta'] =  Cuenta::find($id);
-      if ($data['cuenta']  == null) { return redirect('cuentaes'); } //Verificación para evitar errores
+      if ($data['cuenta']  == null) { return redirect('cuentas'); } //Verificación para evitar errores
       $data['transacciones'] = Cuenta_transaccion::where('cuenta_id', '=', $data['cuenta']->id )
         ->orderBy('created_at', 'DESC')
         ->get();
@@ -49,23 +48,15 @@ class CuentaFondosController extends Controller
       }
       //Inicio de las inserciones en la base de datos
       DB::beginTransaction();
-        try {
-          $cheque = new Cheque();
-          $cheque->cuenta_id = $cuenta->id;
-          $cheque->numero = $request->numero;
-          $cheque->monto = $request->monto;
-          $cheque->fecha_realizacion = Carbon::createFromFormat('d-m-Y', $request->fecha_realizacion);
-          $cheque->lugar = $request->lugar;
-          $cheque->concepto = $request->concepto;
-          $cheque->paguese = $request->paguese;
-          $cheque->tipo = $request->tipo;
-          $cheque->save();
-
+        try { 
           $trans = new Cuenta_transaccion();
           $trans->cuenta_id = $cuenta->id;
-          $trans->cheque_id = $cheque->id;
           $trans->tipo = $request->tipo;
+          $trans->numero = $request->numero;
+          $trans->fecha_realizacion = Carbon::createFromFormat('d-m-Y', $request->fecha_realizacion);
+          $trans->lugar = $request->lugar;
           $trans->concepto = $request->concepto;
+          $trans->paguese = $request->paguese;
           $trans->monto = $request->monto;
           $trans->prev = $cuenta->fondo;
           $trans->actual = $nuevoSaldo;

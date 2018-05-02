@@ -22,43 +22,45 @@
     </div>
     @if ($transacciones->isEmpty() == false  )
       <div class="row">
-        <div class="table-responsive">
-          <table id="tblcuenta" class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Cheque</th>
-                <th>Concepto</th>
-                <th>Ingreso</th>
-                <th>Egreso</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($transacciones as $key => $trans)
+        <div class="ibox-content">
+          <div class="table-responsive">
+            <table id="tblcuenta" class="table table-bordered table-striped">
+              <thead>
                 <tr>
-                  <td>{{ $trans->created_at }}</td>
-                  <td>{{ $trans->cheque }}</td>
-                  <td>{{ $trans->concepto}} </td>
-                  <td>
-                    @if ($trans->tipo == "I")
-                      $ {{ $trans->monto }}
-                    @else
-                      -
-                    @endif
-                  </td>
-                  <td>
-                    @if ($trans->tipo == "E")
-                       -$({{ $trans->monto }})
-                    @else
-                      -
-                    @endif
-                  </td>
-                  <td>{{ $trans->actual }}</td>
+                  <th>Fecha</th>
+                  <th>Número</th>
+                  <th>Concepto</th>
+                  <th>Ingreso</th>
+                  <th>Egreso</th>
+                  <th>Total</th>
                 </tr>
-              @endforeach
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                @foreach ($transacciones as $key => $trans)
+                  <tr>
+                    <td>{{ $trans->created_at }}</td>
+                    <td>{{ $trans->numero }}</td>
+                    <td>{{ $trans->concepto}} </td>
+                    <td>
+                      @if ($trans->tipo == "I")
+                        $ {{ $trans->monto }}
+                      @else
+                        -
+                      @endif
+                    </td>
+                    <td>
+                      @if ($trans->tipo == "E")
+                        -$({{ $trans->monto }})
+                      @else
+                        -
+                      @endif
+                    </td>
+                    <td>{{ $trans->actual }}</td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     @endif
@@ -88,7 +90,7 @@
                  <span class="input-group-addon">
                    <i class="fa fa-calendar"></i>
                  </span>
-                 <input type="text" name="fecha_realizacion" class="form-control" value="01-01-2018">
+                  <input type="text" name="fecha_realizacion" class="form-control" value="{{ DATE("y-m-d") }}">
                </div>
              </div>
              <div class="form-group col-md-4">
@@ -143,11 +145,14 @@
     //Datatable
     var tabla = $('#tblcuenta').DataTable({
       "paging": true,
-      "lengthChange": false,
-      "searching": false,
+      "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+      },
+      "lengthChange": true,
+      "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": true
+      "autoWidth": false
     });
     $(document).ready(function () {
       $('.i-checks').iCheck({
