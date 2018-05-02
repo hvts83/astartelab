@@ -205,24 +205,22 @@
 
                      <div class="form-group">
                        <label class="control-label">Frases</label>
-                       <select class="chosen-select"  tabindex="2" name="frase_id">
+                       <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="macro_id[]">
                          <option>Seleccione Frase</option>
                          <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                            <?php if($macro != null): ?>
-                             <?php if($frase->id == $macro->frase_id): ?>
-                               <option value="<?php echo e($frase->id); ?>" selected> <?php echo e($frase->nombre); ?> </option>
-                             <?php else: ?>
-                               <option value="<?php echo e($frase->id); ?>"> <?php echo e($frase->nombre); ?> </option>
-                             <?php endif; ?>
+                            <?php $__currentLoopData = $macro; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mac): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <?php if($frase->id == $mac->opcion_id): ?>
+                                <option value="<?php echo e($frase->id); ?>" selected> <?php echo e($frase->nombre); ?> </option>
+                              <?php else: ?>
+                                <option value="<?php echo e($frase->id); ?>"> <?php echo e($frase->nombre); ?> </option>
+                              <?php endif; ?>
+                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                            <?php else: ?>
                              <option value="<?php echo e($frase->id); ?>"> <?php echo e($frase->nombre); ?> </option>
                            <?php endif; ?>
                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                        </select>
-                     </div>
-                     <div class="form-group">
-                         <label class="control-label">Detalle</label>
-                         <textarea name="detalle" class="form-control"><?php if($macro != null): ?><?php echo e($macro->detalle); ?><?php endif; ?></textarea>
                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
@@ -237,24 +235,22 @@
 
                      <div class="form-group">
                        <label class="control-label">Frases</label>
-                       <select class="chosen-select"  tabindex="2" name="frase_id">
+                       <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="micro_id[]">
                          <option>Seleccione Frase</option>
                          <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                            <?php if($micro != null): ?>
-                             <?php if($frase->id == $micro->frase_id): ?>
+                            <?php $__currentLoopData = $micro; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                             <?php if($frase->id == $mic->opcion_id): ?>
                                <option value="<?php echo e($frase->id); ?>" selected> <?php echo e($frase->nombre); ?> </option>
                              <?php else: ?>
                                <option value="<?php echo e($frase->id); ?>"> <?php echo e($frase->nombre); ?> </option>
                              <?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                            <?php else: ?>
                              <option value="<?php echo e($frase->id); ?>"> <?php echo e($frase->nombre); ?> </option>
                            <?php endif; ?>
                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                        </select>
-                     </div>
-                     <div class="form-group">
-                         <label class="control-label">Detalle</label>
-                         <textarea name="detalle" class="form-control"><?php if($micro != null): ?><?php echo e($micro->detalle); ?><?php endif; ?></textarea>
                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
@@ -269,15 +265,17 @@
 
                      <div class="form-group">
                        <label class="control-label">Diagnóstico</label>
-                       <select class="chosen-select"  tabindex="2" name="diagnostico_id">
+                       <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="preliminar_id[]">
                          <option>Seleccione diagnóstico</option>
                          <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                            <?php if($preliminar != null): ?>
-                             <?php if($diagnostico->id == $preliminar->diagnostico_id): ?>
+                            <?php $__currentLoopData = $preliminar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pre): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                             <?php if($diagnostico->id == $pre->opcion_id): ?>
                                <option value="<?php echo e($diagnostico->id); ?>" selected> <?php echo e($diagnostico->nombre); ?> </option>
                              <?php else: ?>
                                <option value="<?php echo e($diagnostico->id); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
                              <?php endif; ?>
+                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                            <?php else: ?>
                              <option value="<?php echo e($diagnostico->id); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
                            <?php endif; ?>
@@ -285,9 +283,11 @@
                        </select>
                      </div>
                      <div class="form-group">
-                         <label class="control-label">Detalle</label>
-                         <textarea name="detalle" class="form-control"><?php if($preliminar != null): ?><?php echo e($preliminar->detalle); ?><?php endif; ?></textarea>
-                     </div>
+                        <label class="control-label">¿Es diagnóstico preeliminar?</label>
+                        <br>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar">No</label>
+                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                     </div>
@@ -301,13 +301,25 @@
                     <?php echo e(csrf_field()); ?>
 
                     <div class="form-group">
-                      <label class="control-label">Resultado</label>
-                      <input class="form-control" placeholder="Resultado" type="text" name="resultado" value="<?php if($inmunohistoquimica != null): ?><?php echo e($inmunohistoquimica->resultado); ?><?php endif; ?>">
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Detalle</label>
-                      <textarea name="detalle" class="form-control"><?php if($inmunohistoquimica != null): ?><?php echo e($inmunohistoquimica->detalle); ?><?php endif; ?></textarea>
-                    </div>
+                      <label class="control-label">Diagnóstico</label>
+                      <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="inmuno_id[]">
+                              <option>Seleccione diagnóstico</option>
+                              <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($inmunohistoquimica != null): ?>
+                                  <?php $__currentLoopData = $inmunohistoquimica; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $inmuno): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                  <?php if($diagnostico->id == $inmuno->opcion_id): ?>
+                                    <option value="<?php echo e($diagnostico->id); ?>" selected> <?php echo e($diagnostico->nombre); ?> </option>
+                                  <?php else: ?>
+                                    <option value="<?php echo e($diagnostico->id); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
+                                  <?php endif; ?>
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
+                                  <option value="<?php echo e($diagnostico->id); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
+                                <?php endif; ?>
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                          </div>
+                   
                     <div>
                       <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                     </div>
@@ -343,10 +355,10 @@
                     </fieldset>
                   </div>
                 <?php endif; ?>
-                <?php if(!$inmunohistoquimica_imagenes->isEmpty()): ?>
+                <?php if(!$imagenes->isEmpty()): ?>
                   <div class="lightBoxGallery">
                       <div id="list_images">
-                        <?php $__currentLoopData = $inmunohistoquimica_imagenes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $imagenes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                           <a href="<?php echo e(asset($img->url)); ?>" ><img src="<?php echo e(asset($img->url)); ?>" style="height=auto;width: 200px;"></a>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </div>

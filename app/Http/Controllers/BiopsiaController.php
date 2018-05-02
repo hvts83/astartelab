@@ -14,16 +14,13 @@ use App\Models\Doctor;
 use App\Models\Paciente;
 use App\Models\Grupo;
 use App\Models\Diagnostico;
+use App\Models\Frase;
 use App\Models\Precio;
-use App\Models\Biopsia;
 use App\Models\Consulta_transacciones;
 use App\Models\Imagen;
-use App\Models\Biopsia_inmunohistoquimica;
-use App\Models\Biopsia_inmunohistoquimica_imagen;
-use App\Models\Biopsia_macro;
-use App\Models\Biopsia_micro;
-use App\Models\Biopsia_preliminar;
-use App\Models\Frase;
+use App\Models\Biopsia;
+use App\Models\Biopsia_detalle;
+use App\Models\Biopsia_imagen;
 use App\Models\Doctor_transaccion;
 
 
@@ -92,6 +89,7 @@ class BiopsiaController extends Controller
           $biopsia->estado_pago = $request->estado_pago;
           $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
           $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
+          $biopsia->informe_preliminar = $request->preliminar;
           $biopsia->informe = $informe;
           $biopsia->save();
 
@@ -123,33 +121,36 @@ class BiopsiaController extends Controller
           $ct->facturacion = $request->facturacion;
           $ct->save();
 
-          $micro = new Biopsia_micro();
-          $micro->biopsia_id = $biopsia->id;
-          $micro->frase_id = $request->micro_id;
-          $micro->save();
+          foreach($request->micro_id as $micro){
+            $this->createDetalle($biopsia->id, 'micro', $micro);
+          }
 
-          $macro = new Biopsia_macro();
-          $macro->biopsia_id = $biopsia->id;
-          $macro->frase_id = $request->macro_id;
-          $macro->save();
+          foreach($request->macro_id as $macro){
+            $this->createDetalle($biopsia->id, 'macro', $micro);
+          }
 
+          foreach($request->preliminar_id as $preliminar){
+            $this->createDetalle($biopsia->id, 'preliminar', $preliminar);
+          }
 
-          $preliminar = new Biopsia_preliminar();
-          $preliminar->biopsia_id = $biopsia->id;
-          $preliminar->diagnostico_id = $request->preliminar_id;
-          $preliminar->save();
-
-          $inmunohistoquimica = new Biopsia_inmunohistoquimica();
-          $inmunohistoquimica->biopsia_id = $biopsia->id;
-          $inmunohistoquimica->frase_id = $request->inmuno_id;
-          $inmunohistoquimica->save();
-                
+          foreach($request->inmuno_id as $inmuno){
+            $this->createDetalle($biopsia->id, 'inmunohistoquimica', $inmuno);
+          }
+     
       } catch (\Exception $e) {
         DB::rollback();
         throw $e;
       }
      DB::commit();
      return redirect('/biopsia');
+  }
+
+  private function createDetalle($biopsia, $tipo_detalle, $opcion_id) {
+    $detalle = new Biopsia_detalle();
+    $detalle->biopsia_id = $biopsia;
+    $detalle->tipo_detalle = $tipo_detalle;
+    $detalle->opcion_id = $opcion_id;
+    $detalle->save();
   }
 
   /**
@@ -162,11 +163,23 @@ class BiopsiaController extends Controller
   {
     $data['biopsia'] =  Biopsia::find($id);
     if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
-    $data['macro'] = Biopsia_macro::where('biopsia_id', '=', $id)->first();
-    $data['micro'] = Biopsia_micro::where('biopsia_id', '=', $id)->first();
-    $data['preliminar'] = Biopsia_preliminar::where('biopsia_id', '=', $id)->first();
-    $data['inmunohistoquimica'] = Biopsia_inmunohistoquimica::where('biopsia_id', '=', $id)->first();
-    $data['inmunohistoquimica_imagenes'] = Biopsia_inmunohistoquimica_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
+    $data['macro'] = Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'macro']
+      ])->get();
+    $data['micro'] = Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'micro']
+      ])->get();
+    $data['preliminar'] =Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'preliminar']
+      ])->get();
+    $data['inmunohistoquimica'] =Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'inmunohistoquimica']
+      ])->get();
+    $data['imagenes'] = Biopsia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
       ->where('biopsia_id', '=', $id)->get();
     $data['detalle_pago'] = Consulta_transacciones::where([
       ['tipo', '=', 'B'],

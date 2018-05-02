@@ -203,24 +203,22 @@
                      {{ csrf_field() }}
                      <div class="form-group">
                        <label class="control-label">Frases</label>
-                       <select class="chosen-select"  tabindex="2" name="frase_id">
+                       <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="macro_id[]">
                          <option>Seleccione Frase</option>
                          @foreach ($frases as $frase)
                            @if ($macro != null)
-                             @if ($frase->id == $macro->frase_id)
-                               <option value="{{ $frase->id }}" selected> {{  $frase->nombre }} </option>
-                             @else
-                               <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
-                             @endif
+                            @foreach($macro as $mac)
+                              @if ($frase->id == $mac->opcion_id)
+                                <option value="{{ $frase->id }}" selected> {{  $frase->nombre }} </option>
+                              @else
+                                <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
+                              @endif
+                             @endforeach
                            @else
                              <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
                            @endif
                          @endforeach
                        </select>
-                     </div>
-                     <div class="form-group">
-                         <label class="control-label">Detalle</label>
-                         <textarea name="detalle" class="form-control">@if ($macro != null){{ $macro->detalle }}@endif</textarea>
                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
@@ -234,24 +232,22 @@
                      {{ csrf_field() }}
                      <div class="form-group">
                        <label class="control-label">Frases</label>
-                       <select class="chosen-select"  tabindex="2" name="frase_id">
+                       <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="micro_id[]">
                          <option>Seleccione Frase</option>
                          @foreach ($frases as $frase)
                            @if ($micro != null)
-                             @if ($frase->id == $micro->frase_id)
+                            @foreach($micro as $mic)
+                             @if ($frase->id == $mic->opcion_id)
                                <option value="{{ $frase->id }}" selected> {{  $frase->nombre }} </option>
                              @else
                                <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
                              @endif
+                            @endforeach
                            @else
                              <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
                            @endif
                          @endforeach
                        </select>
-                     </div>
-                     <div class="form-group">
-                         <label class="control-label">Detalle</label>
-                         <textarea name="detalle" class="form-control">@if ($micro != null){{ $micro->detalle }}@endif</textarea>
                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
@@ -265,15 +261,17 @@
                      {{ csrf_field() }}
                      <div class="form-group">
                        <label class="control-label">Diagnóstico</label>
-                       <select class="chosen-select"  tabindex="2" name="diagnostico_id">
+                       <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="preliminar_id[]">
                          <option>Seleccione diagnóstico</option>
                          @foreach ($diagnosticos as $diagnostico)
                            @if ($preliminar != null)
-                             @if ($diagnostico->id == $preliminar->diagnostico_id)
+                            @foreach($preliminar as $pre)
+                             @if ($diagnostico->id == $pre->opcion_id)
                                <option value="{{ $diagnostico->id }}" selected> {{  $diagnostico->nombre }} </option>
                              @else
                                <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
                              @endif
+                             @endforeach
                            @else
                              <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
                            @endif
@@ -281,9 +279,11 @@
                        </select>
                      </div>
                      <div class="form-group">
-                         <label class="control-label">Detalle</label>
-                         <textarea name="detalle" class="form-control">@if ($preliminar != null){{ $preliminar->detalle }}@endif</textarea>
-                     </div>
+                        <label class="control-label">¿Es diagnóstico preeliminar?</label>
+                        <br>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar">No</label>
+                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                     </div>
@@ -296,13 +296,25 @@
                   <form role="form" method="post" action="{{ url('/biopsia-details/inmunohistoquimica/'. $biopsia->id ) }}">
                     {{ csrf_field() }}
                     <div class="form-group">
-                      <label class="control-label">Resultado</label>
-                      <input class="form-control" placeholder="Resultado" type="text" name="resultado" value="@if($inmunohistoquimica != null){{ $inmunohistoquimica->resultado }}@endif">
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Detalle</label>
-                      <textarea name="detalle" class="form-control">@if ($inmunohistoquimica != null){{ $inmunohistoquimica->detalle }}@endif</textarea>
-                    </div>
+                      <label class="control-label">Diagnóstico</label>
+                      <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="inmuno_id[]">
+                              <option>Seleccione diagnóstico</option>
+                              @foreach ($diagnosticos as $diagnostico)
+                                @if ($inmunohistoquimica != null)
+                                  @foreach($inmunohistoquimica as $inmuno)
+                                  @if ($diagnostico->id == $inmuno->opcion_id)
+                                    <option value="{{ $diagnostico->id }}" selected> {{  $diagnostico->nombre }} </option>
+                                  @else
+                                    <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
+                                  @endif
+                                  @endforeach
+                                @else
+                                  <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
+                                @endif
+                              @endforeach
+                            </select>
+                          </div>
+                   
                     <div>
                       <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                     </div>
@@ -337,10 +349,10 @@
                     </fieldset>
                   </div>
                 @endif
-                @if (!$inmunohistoquimica_imagenes->isEmpty())
+                @if (!$imagenes->isEmpty())
                   <div class="lightBoxGallery">
                       <div id="list_images">
-                        @foreach ($inmunohistoquimica_imagenes as $key => $img)
+                        @foreach ($imagenes as $key => $img)
                           <a href="{{ asset($img->url) }}" ><img src="{{ asset($img->url) }}" style="height=auto;width: 200px;"></a>
                         @endforeach
                       </div>

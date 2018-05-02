@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Biopsia_macro extends Model
+class Biopsia_imagen extends Model
 {
-    protected $table = "biopsia_macro";
+  protected $table = "biopsia_imagen";
+
 }
