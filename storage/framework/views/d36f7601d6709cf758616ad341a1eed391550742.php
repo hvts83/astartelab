@@ -26,7 +26,9 @@
               <tr>
                 <th>Tipo transacción</th>
                 <th>Monto</th>
+                <th>Notas</th>
                 <th>Fecha</th>
+                <th>Opciones</th>
               </tr>
             </thead>
             <tbody>
@@ -40,7 +42,20 @@
                     <?php endif; ?>
                   </td>
                   <td><?php echo e($trans->monto); ?></td>
+                  <td><?php echo e($trans->notas); ?></td>
                   <td><?php echo e($trans->created_at); ?></td>
+                  <td>
+                    <?php if($trans->tipo == "I"): ?>
+                      <button class="btn btn-danger delete" value="<?php echo e($trans->id); ?>">
+                        <i class="fa fa-times"></i>
+                      </button>
+                      <form action="<?php echo e(url('/doctor-account/delete/' . $trans->id )); ?>" method="post" id="<?php echo e('del' . $trans->id); ?>">
+                        <?php echo e(csrf_field()); ?>
+
+                        <input name="_method" type="hidden" value="DELETE">
+                      </form>
+                    <?php endif; ?>
+                  </td>
                 </tr>
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
@@ -70,6 +85,10 @@
                 <input type="number" placeholder="$" class="form-control" name="monto" step="0.01" min="0.01">
               </div>
             </div>
+            <div class="form-group">
+                <label>Notas</label>
+                <input type="text" placeholder="Notas" class="form-control" name="notas">
+              </div>
             <div class="div-btn">
                 <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
                 <a href="<?php echo e(url('/doctores/' . $doctor->id . '/edit')); ?>" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a>
@@ -81,11 +100,13 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
-	<link rel="stylesheet" href="<?php echo e(asset('css/dataTables/datatables.min.css')); ?>">
+  <link rel="stylesheet" href="<?php echo e(asset('css/dataTables/datatables.min.css')); ?>">
+  <link rel="stylesheet" href="<?php echo e(asset('css/sweetalert/sweetalert.css')); ?>">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-	<script src="<?php echo e(asset('js/dataTables/datatables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('js/dataTables/datatables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('js/sweetalert/sweetalert.min.js')); ?>"></script>
 	<script>
     //Datatable
     var tabla = $('#tbldoctor').DataTable({
@@ -95,6 +116,29 @@
       "ordering": true,
       "info": true,
       "autoWidth": true
+    });
+
+    $('.delete').click(function (e) {
+        swal({
+            title: "¿Desea eliminar la información?",
+            text: "Al realizar la acción no podrás recuperar los datos",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false },
+        function (isConfirm) {
+            if (isConfirm) {
+              swal("Eliminado", "Eliminado con exíto.", "success");
+              setTimeout(function () {
+                $('#del'+ e.currentTarget.value).submit()
+              }, 500);
+            } else {
+                swal("Cancelado", "Eliminación cancelada", "error");
+            }
+        });
     });
   </script>
 <?php $__env->stopSection(); ?>

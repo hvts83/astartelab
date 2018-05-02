@@ -39,6 +39,7 @@ Route::post('/cuenta-account/{id}', "CuentaFondosController@postCuentaFunds");
 //Cuenta doctor
 Route::get('/doctor-account/{id}', "DoctorFondosController@getDoctorAccount");
 Route::post('/doctor-account/{id}', "DoctorFondosController@postDoctorFunds");
+Route::delete('doctor-account/delete/{id}', "DoctorFondosController@deleteDoctorFunds");
 //Biopsias
 Route::post('/biopsia-details/macro/{id}', 'BiopsiaDetailsController@macro');
 Route::post('/biopsia-details/micro/{id}', 'BiopsiaDetailsController@micro');

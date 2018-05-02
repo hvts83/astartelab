@@ -28,11 +28,15 @@
             <input name="_method" type="hidden" value="PUT">
             <div class="form-group">
               <label>Nombre</label>
-              <input type="text" placeholder="Nombre" class="form-control" name="name" value="<?php echo e($usuario->name); ?>">
+              <input type="text" placeholder="Nombre" class="form-control" name="nombre" value="<?php echo e($usuario->nombre); ?>">
             </div>
             <div class="form-group">
-              <label>Correo</label>
-              <input type="email" placeholder="Correo" class="form-control" name="email" value="<?php echo e($usuario->email); ?>">
+              <label>Apellido</label>
+              <input type="text" placeholder="Apellido" class="form-control" name="apellido" value="<?php echo e($usuario->apellido); ?>">
+            </div>
+            <div class="form-group">
+              <label>Nombre de usuario</label>
+              <input type="text" placeholder="Nombre de usuario" class="form-control" name="usuario" value="<?php echo e($usuario->usuario); ?>">
             </div>
             <div class="form-group">
               <label>Clave</label>
@@ -54,8 +58,9 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               </select>
             </div>
-            <div>
-                <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+            <div class="div-btn">
+                <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
+                <a href="<?php echo e(url('usuarios/')); ?>" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a>
             </div>
         </form>
       </div>

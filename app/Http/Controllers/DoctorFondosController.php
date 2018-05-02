@@ -19,7 +19,8 @@ class DoctorFondosController extends Controller
         $this->middleware('auth');
     }
 
-    public function getDoctorAccount(Request $request, $id){
+    public function getDoctorAccount(Request $request, $id)
+    {
       $data['doctor'] =  Doctor::find($id);
       if ($data['doctor']  == null) { return redirect('doctores'); } //Verificación para evitar errores
       $data['transacciones'] = Doctor_transaccion::where('doctor_id', '=', $data['doctor']->id )
@@ -29,7 +30,8 @@ class DoctorFondosController extends Controller
       return view('doctor.account', $data);
     }
 
-    public function postDoctorFunds(Request $request, $id){
+    public function postDoctorFunds(Request $request, $id)
+    {
       $doctor = Doctor::find($id);
       $this->validate($request, [
         'monto' => 'numeric|required',
@@ -43,6 +45,7 @@ class DoctorFondosController extends Controller
           $trans->doctor_id = $doctor->id;
           $trans->tipo = "I";
           $trans->monto = $request->monto;
+          $trans->notas = $request->notas;
           $trans->prev = $doctor->saldo;
           $trans->actual = $nuevoSaldo;
           $trans->save();
@@ -55,5 +58,16 @@ class DoctorFondosController extends Controller
       }
      DB::commit();
        return redirect('doctor-account/'. $id);
+    }
+
+    public function deleteDoctorFunds(Request $request, $id)
+    {
+      $trans = Doctor_transaccion::find( $id );
+      $doctor = Doctor::find($trans->doctor_id);
+      
+      $doctor->saldo = $doctor->saldo - $trans->monto;
+      $doctor->save();
+      $trans->delete();
+      return redirect('doctor-account/'. $doctor->id);
     }
 }

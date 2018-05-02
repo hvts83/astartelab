@@ -30,6 +30,7 @@ class Menu {
     $submodulos = Subnavigation::select('subnavigation.id','subnavigation.label', 'subnavigation.link', 'subnavigation.link_extended', 'subnavigation.navigation_id')
               ->join('user_navigation', 'subnavigation.navigation_id', '=', 'user_navigation.navigation_id')
               ->where('tipo', '=', Auth::user()->rol)
+              ->orderBy('subnavigation.orden', 'ASC')
               ->get();
 
     //---------------------------
