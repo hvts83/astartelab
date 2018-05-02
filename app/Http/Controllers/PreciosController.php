@@ -95,7 +95,13 @@ class PreciosController extends Controller
       $data['page_title']  = "Editar precio";
       $data['precio'] =  Precio::find($id);
       if ($data['precio']  == null) { return redirect('precios'); } //Verificación para evitar errores
-      $data['tipos'] = General::getTipoServicio();
+      if($data['precio']->tipo === 'B'){
+        $data['tipo'] = 'B';
+        $data['tipos_consulta'] = Tipo_biopsia::all();
+      }elseif($data['precio']->tipo === 'C'){
+        $data['tipo'] = 'C';
+        $data['tipos_consulta'] = Tipo_citologia::all();
+      }
       return view('precio.edit', $data);
     }
 
@@ -112,7 +118,7 @@ class PreciosController extends Controller
       $this->validate($request, [
         'nombre' => 'required',
         'monto' => 'numeric|required',
-        'tipo' => 'required'
+        'tipo_consulta' => 'required'
         ]);
 
       //Inicio de las inserciones en la base de datos
@@ -121,6 +127,7 @@ class PreciosController extends Controller
           $precio->nombre = $request->nombre;
           $precio->monto = $request->monto;
           $precio->tipo = $request->tipo;
+          $precio->tipo_id = $request->tipo_consulta;
           $precio->save();
       } catch (\Exception $e) {
         DB::rollback();

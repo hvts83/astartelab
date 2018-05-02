@@ -26,6 +26,7 @@
             <?php echo e(csrf_field()); ?>
 
             <input name="_method" type="hidden" value="PUT">
+            <input type="hidden" value="<?php echo e($tipo); ?>" name="tipo">
             <div class="form-group">
               <label>Nombre</label>
               <input type="text" placeholder="Nombre" class="form-control" name="nombre" value="<?php echo e($precio->nombre); ?>">
@@ -39,19 +40,20 @@
             </div>
             <div class="form-group">
               <label class="control-label">Tipo</label>
-              <select class="form-control m-b" name="tipo">
+              <select class="form-control m-b" name="tipo_consulta">
                 <option>Seleccione tipo</option>
-                <?php $__currentLoopData = $tipos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tipo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                  <?php if($tipo['value'] == $precio->tipo ): ?>
-                    <option value="<?php echo e($tipo['value']); ?>" selected> <?php echo e($tipo['text']); ?> </option>
+                <?php $__currentLoopData = $tipos_consulta; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tipo_c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($tipo_c['id'] == $precio->tipo_id ): ?>
+                    <option value="<?php echo e($tipo_c['id']); ?>" selected> <?php echo e($tipo_c['nombre']); ?> </option>
                   <?php else: ?>
-                    <option value="<?php echo e($tipo['value']); ?>"> <?php echo e($tipo['text']); ?> </option>
+                    <option value="<?php echo e($tipo_c['id']); ?>"> <?php echo e($tipo_c['nombre']); ?> </option>
                   <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               </select>
             </div>
-            <div>
-                <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+            <div class="div-btn">
+                <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
+                <a href="<?php echo e(url('precios/')); ?>" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a>
             </div>
         </form>
       </div>

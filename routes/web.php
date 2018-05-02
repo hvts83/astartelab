@@ -31,8 +31,8 @@ Route::resource('/cheques', 'ChequeController');
 Route::get('/precios', 'PreciosController@index');
 Route::get('/precios/create/{type}', 'PreciosController@create');
 Route::post('/precios', 'PreciosController@store');
-Route::get('/precios/edit/{id}', 'PreciosController@edit');
-Route::post('/precios/update/{id}', 'PreciosController@update');
+Route::get('/precios/{id}/edit', 'PreciosController@edit');
+Route::put('/precios/{id}', 'PreciosController@update');
 //Cuentas bancarias
 Route::get('/cuenta-account/{id}', "CuentaFondosController@getCuentaAccount");
 Route::post('/cuenta-account/{id}', "CuentaFondosController@postCuentaFunds");

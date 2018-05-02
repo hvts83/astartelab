@@ -73,7 +73,8 @@
         </table>
       </div>
       <div class="div-btn">
-          <a href="<?php echo e(url('/precios/create')); ?>" class="btn btn-primary pull-right">Nuevo Precio</a>
+          <a href="<?php echo e(url('/precios/create/B')); ?>" class="btn btn-primary pull-right">Nuevo Precio de Biopsia</a>
+          <a href="<?php echo e(url('/precios/create/C')); ?>" class="btn btn-primary pull-right">Nuevo Precio de Citología</a>
       </div>
     </div>
   </div>

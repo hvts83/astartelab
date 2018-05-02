@@ -27,6 +27,7 @@
         <form role="form" method="post" action="{{ url('precios/'. $precio->id ) }}">
             {{ csrf_field() }}
             <input name="_method" type="hidden" value="PUT">
+            <input type="hidden" value="{{ $tipo }}" name="tipo">
             <div class="form-group">
               <label>Nombre</label>
               <input type="text" placeholder="Nombre" class="form-control" name="nombre" value="{{ $precio->nombre }}">
@@ -40,13 +41,13 @@
             </div>
             <div class="form-group">
               <label class="control-label">Tipo</label>
-              <select class="form-control m-b" name="tipo">
+              <select class="form-control m-b" name="tipo_consulta">
                 <option>Seleccione tipo</option>
-                @foreach ($tipos as $tipo)
-                  @if ($tipo['value'] == $precio->tipo )
-                    <option value="{{ $tipo['value'] }}" selected> {{  $tipo['text'] }} </option>
+                @foreach ($tipos_consulta as $tipo_c)
+                @if ($tipo_c['id'] == $precio->tipo_id )
+                    <option value="{{ $tipo_c['id'] }}" selected> {{  $tipo_c['nombre'] }} </option>
                   @else
-                    <option value="{{ $tipo['value'] }}"> {{  $tipo['text'] }} </option>
+                    <option value="{{ $tipo_c['id'] }}"> {{  $tipo_c['nombre'] }} </option>
                   @endif
                 @endforeach
               </select>
