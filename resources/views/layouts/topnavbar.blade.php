@@ -4,7 +4,7 @@
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
-          <li><a href="#"><i class="fa fa-user"></i>{{ Auth::user()->name }}</a></li>
+          <li><a href="#"><i class="fa fa-user"></i>{{ Auth::user()->nombre . ' ' . Auth::user()->apellido }}</a></li>
           <li>
               <a href="#" onclick="event.preventDefault();
                          document.getElementById('logout-form').submit();">

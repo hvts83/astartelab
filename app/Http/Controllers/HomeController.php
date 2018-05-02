@@ -31,11 +31,16 @@ class HomeController extends Controller
     public function index()
     {
         $data['page_title'] = "Inicio";
-        $data['dia'] = Consulta_transacciones::whereRAW('DATE(created_at) = DATE(NOW())')->count();
-        $data['biopsias'] = Consulta_transacciones::whereRAW('MONTH(created_at) = MONTH(NOW()) AND tipo = "B"')->count();
-        $data['citologias'] = Consulta_transacciones::whereRAW('MONTH(created_at) = MONTH(NOW()) AND tipo = "C"')->count();
+        $data['biopsias'] = Consulta_transacciones::whereRAW('YEAR(created_at) = YEAR(NOW()) 
+            AND MONTH(created_at) = MONTH(NOW()) 
+            AND tipo = "B"')
+            ->count();
+        $data['citologias'] = Consulta_transacciones::whereRAW('YEAR(created_at) = YEAR(NOW()) 
+            AND MONTH(created_at) = MONTH(NOW()) 
+            AND tipo = "C"')
+            ->count();
         $data['meses'] = Consulta_transacciones::select('tipo', 'informe', 'estado_pago')
-            ->whereRAW('MONTH(created_at) = MONTH(NOW())')
+            ->whereRAW('YEAR(created_at) = YEAR(NOW()) AND MONTH(created_at) = MONTH(NOW())')
             ->groupBy('informe', 'tipo', 'estado_pago')->get();
         $data['pagos'] = General::getCondicionPago();
 

@@ -49,10 +49,12 @@
                 </td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/usuarios/' .  $usuario->id . "/edit" ) }}">Editar</a>
-                  <form action="{{ url('usuarios/' . $usuario->id ) }}" method="post">
+                  <button class="btn btn-danger delete" value="{{ $usuario->id }}">
+                    <i class="fa fa-times"></i>
+                  </button>
+                  <form action="{{ url('usuarios/' . $usuario->id ) }}" method="post" id="{{ 'del' . $usuario->id }}">
                     {{ csrf_field() }}
                     <input name="_method" type="hidden" value="DELETE">
-                    <button type="submit" name="button" class="btn btn-danger"><i class="fa fa-times"></i></button>
                   </form>
                 </td>
               </tr>
@@ -69,11 +71,13 @@
 @endsection
 
 @section('css')
-	<link rel="stylesheet" href="{{ asset('css/dataTables/datatables.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('css/dataTables/datatables.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('css/sweetalert/sweetalert.css')}}">
 @endsection
 
 @section('scripts')
-	<script src="{{ asset('js/dataTables/datatables.min.js')}}"></script>
+  <script src="{{ asset('js/dataTables/datatables.min.js')}}"></script>
+  <script src="{{ asset('js/sweetalert/sweetalert.min.js')}}"></script>
 	<script>
     //Datatable
     var tabla = $('#tblusuario').DataTable({
@@ -86,6 +90,30 @@
       "ordering": true,
       "info": true,
       "autoWidth": false
+    });
+
+
+    $('.delete').click(function (e) {
+        swal({
+            title: "¿Desea eliminar la información?",
+            text: "Al realizar la acción no podrás recuperar los datos",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false },
+        function (isConfirm) {
+            if (isConfirm) {
+              swal("Eliminado", "Eliminado con exíto.", "success");
+              setTimeout(function () {
+                $('#del'+ e.currentTarget.value).submit()
+              }, 500);
+            } else {
+                swal("Cancelado", "Eliminación cancelada", "error");
+            }
+        });
     });
   </script>
 @endsection

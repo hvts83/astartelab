@@ -49,11 +49,13 @@
                 </td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/usuarios/' .  $usuario->id . "/edit" )); ?>">Editar</a>
-                  <form action="<?php echo e(url('usuarios/' . $usuario->id )); ?>" method="post">
+                  <button class="btn btn-danger delete" value="<?php echo e($usuario->id); ?>">
+                    <i class="fa fa-times"></i>
+                  </button>
+                  <form action="<?php echo e(url('usuarios/' . $usuario->id )); ?>" method="post" id="<?php echo e('del' . $usuario->id); ?>">
                     <?php echo e(csrf_field()); ?>
 
                     <input name="_method" type="hidden" value="DELETE">
-                    <button type="submit" name="button" class="btn btn-danger"><i class="fa fa-times"></i></button>
                   </form>
                 </td>
               </tr>
@@ -70,11 +72,13 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
-	<link rel="stylesheet" href="<?php echo e(asset('css/dataTables/datatables.min.css')); ?>">
+  <link rel="stylesheet" href="<?php echo e(asset('css/dataTables/datatables.min.css')); ?>">
+  <link rel="stylesheet" href="<?php echo e(asset('css/sweetalert/sweetalert.css')); ?>">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-	<script src="<?php echo e(asset('js/dataTables/datatables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('js/dataTables/datatables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('js/sweetalert/sweetalert.min.js')); ?>"></script>
 	<script>
     //Datatable
     var tabla = $('#tblusuario').DataTable({
@@ -87,6 +91,30 @@
       "ordering": true,
       "info": true,
       "autoWidth": false
+    });
+
+
+    $('.delete').click(function (e) {
+        swal({
+            title: "¿Desea eliminar la información?",
+            text: "Al realizar la acción no podrás recuperar los datos",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false },
+        function (isConfirm) {
+            if (isConfirm) {
+              swal("Eliminado", "Eliminado con exíto.", "success");
+              setTimeout(function () {
+                $('#del'+ e.currentTarget.value).submit()
+              }, 500);
+            } else {
+                swal("Cancelado", "Eliminación cancelada", "error");
+            }
+        });
     });
   </script>
 <?php $__env->stopSection(); ?>
