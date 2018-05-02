@@ -16,7 +16,6 @@ class PacienteController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('acceso', ['only' => ['index','create']] );
     }
     /**
      * Display a listing of the resource.

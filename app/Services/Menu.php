@@ -21,15 +21,14 @@ class Menu {
 
     //Consultas del menu
     $modulos = Navigation::select('navigation.id', 'navigation.label', 'navigation.icon')
-              ->join('Subnavigation', 'navigation.id', '=', 'navigation_id')
-              ->join('user_navigation', 'subnavigation.id', '=', 'user_navigation.subnavigation_id')
+              ->join('user_navigation', 'navigation.id', '=', 'user_navigation.navigation_id')
               ->where('tipo', '=', Auth::user()->rol)
               ->groupBy('Navigation.id', 'Navigation.label', 'Navigation.icon')
               ->orderBy('navigation.orden', 'ASC')
               ->get();
 
-    $submodulos = Subnavigation::select('subnavigation.id','subnavigation.label', 'subnavigation.link', 'subnavigation.link_extended', 'navigation_id')
-              ->join('user_navigation', 'subnavigation.id', '=', 'user_navigation.subnavigation_id')
+    $submodulos = Subnavigation::select('subnavigation.id','subnavigation.label', 'subnavigation.link', 'subnavigation.link_extended', 'subnavigation.navigation_id')
+              ->join('user_navigation', 'subnavigation.navigation_id', '=', 'user_navigation.navigation_id')
               ->where('tipo', '=', Auth::user()->rol)
               ->get();
 

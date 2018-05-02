@@ -34,10 +34,10 @@ Route::post('/precios', 'PreciosController@store');
 Route::get('/precios/edit/{id}', 'PreciosController@edit');
 Route::post('/precios/update/{id}', 'PreciosController@update');
 //Cuentas bancarias
-Route::get('/cuenta-account/{id}', "CuentaFondosController@getCuentaAccount" );
+Route::get('/cuenta-account/{id}', "CuentaFondosController@getCuentaAccount");
 Route::post('/cuenta-account/{id}', "CuentaFondosController@postCuentaFunds");
 //Cuenta doctor
-Route::get('/doctor-account/{id}', "DoctorFondosController@getDoctorAccount" );
+Route::get('/doctor-account/{id}', "DoctorFondosController@getDoctorAccount");
 Route::post('/doctor-account/{id}', "DoctorFondosController@postDoctorFunds");
 //Biopsias
 Route::post('/biopsia-details/macro/{id}', 'BiopsiaDetailsController@macro');
