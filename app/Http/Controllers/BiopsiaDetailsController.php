@@ -14,11 +14,8 @@ use App\Helpers\General;
 use App\Models\Diagnostico;
 use App\Models\Biopsia;
 use App\Models\Imagen;
-use App\Models\Biopsia_inmunohistoquimica;
-use App\Models\Biopsia_inmunohistoquimica_imagen;
-use App\Models\Biopsia_macro;
-use App\Models\Biopsia_micro;
-use App\Models\Biopsia_preliminar;
+use App\Models\Biopsia_detalle;
+use App\Models\Biopsia_imagen;
 use App\Models\Consulta_transacciones;
 use App\Mail\BiopsiaResults;
 
@@ -29,23 +26,28 @@ class BiopsiaDetailsController extends Controller
       $this->middleware('auth');
   }
 
-  public function micro(Request $request, $id)
+  public function macro(Request $request, $id)
   {
     $this->validate($request, [
-      'frase_id' =>'required',
-      'detalle' => 'required',
-      ]);
+      'macro_id' =>'required',
+    ]);
 
-    $micro = Biopsia_micro::where('biopsia_id', '=', $id)->first();
-    if ($micro == null) {
-      $micro = new Biopsia_micro();
-    }
     DB::beginTransaction();
-      try {
-        $micro->biopsia_id = $id;
-        $micro->frase_id = $request->frase_id;
-        $micro->detalle = $request->detalle;
-        $micro->save();
+    try {
+    $macros = Biopsia_detalle::where([
+      ['tipo_detalle', '=', 'macro'],
+      ['biopsia_id', '=', $id]
+    ])->pluck('opcion_id');
+    $macros = collect($macros)->all();
+    //Valores Nuevos
+    $nuevos = array_diff($request->macro_id, $macros);
+    //Valores a eliminar
+    $eliminar = array_diff($macros, $request->macro_id);
+
+    foreach ($nuevos as $value) {
+      $this->createDetalle( $id, 'macro', $value);
+    }
+    $this->deleteDetalle($id, 'macro', $eliminar);
 
     } catch (\Exception $e) {
       DB::rollback();
@@ -55,23 +57,28 @@ class BiopsiaDetailsController extends Controller
     return redirect('biopsia/'. $id . "/edit");
   }
 
-  public function macro(Request $request, $id)
+  public function micro(Request $request, $id)
   {
     $this->validate($request, [
-      'frase_id' =>'required',
-      'detalle' => 'required',
-      ]);
+      'micro_id' =>'required',
+    ]);
 
-    $macro = Biopsia_macro::where('biopsia_id', '=', $id)->first();
-    if ($macro == null) {
-      $macro = new Biopsia_macro();
-    }
     DB::beginTransaction();
-      try {
-        $macro->biopsia_id = $id;
-        $macro->frase_id = $request->frase_id;
-        $macro->detalle = $request->detalle;
-        $macro->save();
+    try {
+    $micros = Biopsia_detalle::where([
+      ['tipo_detalle', '=', 'micro'],
+      ['biopsia_id', '=', $id]
+    ])->pluck('opcion_id');
+    $micros = collect($micros)->all();
+    //Valores Nuevos
+    $nuevos = array_diff($request->micro_id, $micros);
+    //Valores a eliminar
+    $eliminar = array_diff($micros, $request->micro_id);
+
+    foreach ($nuevos as $value) {
+      $this->createDetalle( $id, 'micro', $value);
+    }
+    $this->deleteDetalle($id, 'micro', $eliminar);
 
     } catch (\Exception $e) {
       DB::rollback();
@@ -84,20 +91,30 @@ class BiopsiaDetailsController extends Controller
   public function preliminar(Request $request, $id)
   {
     $this->validate($request, [
-      'diagnostico_id' =>'required',
-      'detalle' => 'required',
-      ]);
+      'preliminar_id' =>'required',
+      'preliminar' => 'required',
+    ]);
 
-    $preliminar = Biopsia_preliminar::where('biopsia_id', '=', $id)->first();
-    if ($preliminar == null) {
-      $preliminar = new Biopsia_preliminar();
-    }
     DB::beginTransaction();
-      try {
-        $preliminar->biopsia_id = $id;
-        $preliminar->diagnostico_id = $request->diagnostico_id;
-        $preliminar->detalle = $request->detalle;
-        $preliminar->save();
+    try {
+     $biopsia  = Biopsia::find($id);
+     $biopsia->informe_preliminar = $request->preliminar;
+     $biopsia->save(); 
+
+    $preliminars = Biopsia_detalle::where([
+      ['tipo_detalle', '=', 'preliminar'],
+      ['biopsia_id', '=', $id]
+    ])->pluck('opcion_id');
+    $preliminars = collect($preliminars)->all();
+    //Valores Nuevos
+    $nuevos = array_diff($request->preliminar_id, $preliminars);
+    //Valores a eliminar
+    $eliminar = array_diff($preliminars, $request->preliminar_id);
+
+    foreach ($nuevos as $value) {
+      $this->createDetalle( $id, 'preliminar', $value);
+    }
+    $this->deleteDetalle($id, 'preliminar', $eliminar);
 
     } catch (\Exception $e) {
       DB::rollback();
@@ -110,20 +127,25 @@ class BiopsiaDetailsController extends Controller
   public function inmunohistoquimica(Request $request, $id)
   {
     $this->validate($request, [
-      'resultado' =>'required',
-      'detalle' => 'required',
-      ]);
+      'inmuno_id' =>'required',
+    ]);
 
-    $inmunohistoquimica = Biopsia_inmunohistoquimica::where('biopsia_id', '=', $id)->first();
-    if ($inmunohistoquimica == null) {
-      $inmunohistoquimica = new Biopsia_inmunohistoquimica();
-    }
     DB::beginTransaction();
-      try {
-        $inmunohistoquimica->biopsia_id = $id;
-        $inmunohistoquimica->resultado = $request->resultado;
-        $inmunohistoquimica->detalle = $request->detalle;
-        $inmunohistoquimica->save();
+    try {
+    $inmunohistoquimicas = Biopsia_detalle::where([
+      ['tipo_detalle', '=', 'inmunohistoquimica'],
+      ['biopsia_id', '=', $id]
+    ])->pluck('opcion_id');
+    $inmunohistoquimicas = collect($inmunohistoquimicas)->all();
+    //Valores Nuevos
+    $nuevos = array_diff($request->inmuno_id, $inmunohistoquimicas);
+    //Valores a eliminar
+    $eliminar = array_diff($inmunohistoquimicas, $request->inmuno_id);
+
+    foreach ($nuevos as $value) {
+      $this->createDetalle( $id, 'inmunohistoquimica', $value);
+    }
+    $this->deleteDetalle($id, 'inmunohistoquimica', $eliminar);
 
     } catch (\Exception $e) {
       DB::rollback();
@@ -133,7 +155,7 @@ class BiopsiaDetailsController extends Controller
     return redirect('biopsia/'. $id . "/edit");
   }
 
-  public function inmunohistoquimica_imagen(Request $request, $id)
+  public function imagen(Request $request, $id)
   {
     $this->validate($request, [
       'imagen' => 'image|required',
@@ -149,7 +171,7 @@ class BiopsiaDetailsController extends Controller
       $imagen->url = $url . '/' . $imageName;
       $imagen->save();
 
-      $inimg = new Biopsia_inmunohistoquimica_imagen();
+      $inimg = new Biopsia_imagen();
       $inimg->biopsia_id = $id;
       $inimg->imagen_id = $imagen->id;
       $inimg->save();
@@ -226,6 +248,23 @@ class BiopsiaDetailsController extends Controller
     ->send(new BiopsiaResults($biopsia));
 
     return redirect('biopsia/'. $id . "/edit");
+  }
+
+  private function createDetalle($biopsia, $tipo_detalle, $opcion_id) {
+    $detalle = new Biopsia_detalle();
+    $detalle->biopsia_id = $biopsia;
+    $detalle->tipo_detalle = $tipo_detalle;
+    $detalle->opcion_id = $opcion_id;
+    $detalle->save();
+  }
+
+  private function deleteDetalle($biopsia, $tipo_detalle, $detalle_id){
+    $detalle = Biopsia_detalle::where([
+      ['biopsia_id', '=', $biopsia],
+      ['tipo_detalle', '=', $tipo_detalle]
+    ])
+    ->whereIn('opcion_id', $detalle_id)
+    ->delete();
   }
 
 }

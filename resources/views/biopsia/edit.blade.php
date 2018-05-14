@@ -69,45 +69,18 @@
                            </div>
                        </div>
                        <div class="form-group col-md-6">
-                         <label class="control-label">Doctor</label>
-                         <select class="chosen-select"  tabindex="2" name="doctor_id">
-                           <option>Seleccione doctor</option>
-                           @foreach ($doctores as $doctor)
-                             @if ($doctor->id == $biopsia->doctor_id)
-                               <option value="{{ $doctor->id }}" selected> {{  $doctor->nombre }} </option>
-                             @else
-                              <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
-                             @endif
-                           @endforeach
-                         </select>
+                          <label class="control-label">Doctor</label>
+                          <input type="text" class="form-control" readonly value="{{$biopsia->doctor}}">
                        </div>
                        <div class="form-group col-md-6">
                          <label class="control-label">Grupo</label>
-                         <select class="chosen-select"  tabindex="2" name="grupo_id">
-                           <option>Seleccione grupo</option>
-                           @foreach ($grupos as $grupo)
-                             @if ($grupo->id == $biopsia->grupo_id)
-                               <option value="{{ $grupo->id }}" selected> {{  $grupo->nombre }} </option>
-                             @else
-                              <option value="{{ $grupo->id }}"> {{  $grupo->nombre }} </option>
-                             @endif
-                           @endforeach
-                         </select>
+                         <input type="text" class="form-control" readonly value="{{$biopsia->grupo}}">
                        </div>
                        <div class="form-group col-md-6">
                          <label class="control-label">Paciente</label>
-                         <select class="chosen-select"  tabindex="2" name="paciente_id">
-                           <option>Seleccione paciente</option>
-                           @foreach ($pacientes as $paciente)
-                             @if ($paciente->id == $biopsia->paciente_id)
-                               <option value="{{ $paciente->id }}" selected> {{  $paciente->name }} </option>
-                             @else
-                              <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
-                             @endif
-                           @endforeach
-                         </select>
+                         <input type="text" class="form-control" readonly value="{{$biopsia->paciente}}">
                        </div>
-                       <div class="form-group">
+                       <div class="form-group col-md-6">
                          <label class="control-label">Diagnóstico</label>
                          <select class="chosen-select"  tabindex="2" name="diagnostico_id">
                            <option>Seleccione diagnóstico</option>
@@ -120,7 +93,7 @@
                            @endforeach
                          </select>
                        </div>
-                      <div>
+                      <div class="col-md-12">
                           <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                       </div>
                   </form>
@@ -211,7 +184,7 @@
                               @if ($frase->id == $mac->opcion_id)
                                 <option value="{{ $frase->id }}" selected> {{  $frase->nombre }} </option>
                               @else
-                                <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
+                                <option value="{{ $frase->id }}"> {{ $frase->nombre }} </option>
                               @endif
                              @endforeach
                            @else
@@ -281,8 +254,13 @@
                      <div class="form-group">
                         <label class="control-label">¿Es diagnóstico preeliminar?</label>
                         <br>
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
+                        @if($biopsia->informe_preliminar == '1')
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar" checked>Si</label>
                         <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar">No</label>
+                        @else
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar" checked>No</label>
+                        @endIf
                       </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
@@ -325,7 +303,7 @@
                   <div class="row">
                     <fieldset>
                       <legend>Imágenes</legend>
-                      <form action="{{ url('/biopsia-details/inmunohistoquimica_imagen/'. $biopsia->id ) }}" method="post" enctype="multipart/form-data">
+                      <form action="{{ url('/biopsia-details/imagen/'. $biopsia->id ) }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-group">
                           <label>Imagen</label>
@@ -352,9 +330,10 @@
                 @if (!$imagenes->isEmpty())
                   <div class="lightBoxGallery">
                       <div id="list_images">
-                        @foreach ($imagenes as $key => $img)
-                          <a href="{{ asset($img->url) }}" ><img src="{{ asset($img->url) }}" style="height=auto;width: 200px;"></a>
-                        @endforeach
+                            @foreach ($imagenes as $key => $img)
+                              <a href="{{ asset($img->url) }}" ><img src="{{ asset($img->url) }}" style="height=auto;width: 200px;"/></a>
+                            @endforeach
+                          
                       </div>
                       <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
                   </div>
@@ -401,6 +380,7 @@
   <link href="{{ asset('css/iCheck/custom.css')}}" rel="stylesheet">
   <link href="{{ asset('css/datepicker/datepicker3.css')}}" rel="stylesheet">
   <link href="{{ asset('css/blueimp/css/blueimp-gallery.min.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('css/sweetalert/sweetalert.css')}}">
 @endsection
 
 @section('scripts')
@@ -408,6 +388,7 @@
   <script src="{{ asset('js/datepicker/bootstrap-datepicker.js')}}"></script>
   <script src="{{ asset('js/iCheck/icheck.min.js')}}"></script>
   <script src="{{ asset('js/blueimp/jquery.blueimp-gallery.min.js')}}"></script>
+  <script src="{{ asset('js/sweetalert/sweetalert.min.js')}}"></script>
   <script>
       $(document).ready(function () {
           $('.i-checks').iCheck({
@@ -431,5 +412,28 @@
       links = this.getElementsByTagName('a');
       blueimp.Gallery(links, options);
     };
+
+    $('.delete').click(function (e) {
+        swal({
+            title: "¿Desea eliminar la información?",
+            text: "Al realizar la acción no podrás recuperar los datos",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false },
+        function (isConfirm) {
+            if (isConfirm) {
+              swal("Eliminado", "Eliminado con exíto.", "success");
+              setTimeout(function () {
+                $('#del'+ e.currentTarget.value).submit()
+              }, 500);
+            } else {
+                swal("Cancelado", "Eliminación cancelada", "error");
+            }
+        });
+    });
   </script>
 @endsection

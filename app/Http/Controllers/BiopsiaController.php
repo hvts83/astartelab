@@ -121,36 +121,36 @@ class BiopsiaController extends Controller
           $ct->facturacion = $request->facturacion;
           $ct->save();
 
-          foreach($request->micro_id as $micro){
-            $this->createDetalle($biopsia->id, 'micro', $micro);
+          if($request->has('micro_id')){
+            foreach($request->micro_id as $micro){
+              $this->createDetalle($biopsia->id, 'micro', $micro);
+            }
           }
 
-          foreach($request->macro_id as $macro){
-            $this->createDetalle($biopsia->id, 'macro', $micro);
+          if($request->has('macro_id')){
+            foreach($request->macro_id as $macro){
+              $this->createDetalle($biopsia->id, 'macro', $micro);
+            }
           }
 
-          foreach($request->preliminar_id as $preliminar){
-            $this->createDetalle($biopsia->id, 'preliminar', $preliminar);
+          if($request->has('preliminar_id')){
+            foreach($request->preliminar_id as $preliminar){
+              $this->createDetalle($biopsia->id, 'preliminar', $preliminar);
+            }
           }
 
-          foreach($request->inmuno_id as $inmuno){
-            $this->createDetalle($biopsia->id, 'inmunohistoquimica', $inmuno);
+          if($request->has('inmuno_id')){
+            foreach($request->inmuno_id as $inmuno){
+              $this->createDetalle($biopsia->id, 'inmunohistoquimica', $inmuno);
+            }
           }
-     
+
       } catch (\Exception $e) {
         DB::rollback();
         throw $e;
       }
      DB::commit();
      return redirect('/biopsia');
-  }
-
-  private function createDetalle($biopsia, $tipo_detalle, $opcion_id) {
-    $detalle = new Biopsia_detalle();
-    $detalle->biopsia_id = $biopsia;
-    $detalle->tipo_detalle = $tipo_detalle;
-    $detalle->opcion_id = $opcion_id;
-    $detalle->save();
   }
 
   /**
@@ -161,7 +161,12 @@ class BiopsiaController extends Controller
    */
   public function edit($id)
   {
-    $data['biopsia'] =  Biopsia::find($id);
+    $data['biopsia'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, grupos.nombre as grupo')
+      ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
+      ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
+      ->join('grupos', 'biopsias.grupo_id', '=', 'grupos.id')
+      ->where('biopsias.id', '=', $id)
+      ->first();
     if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
     $data['macro'] = Biopsia_detalle::where([
       ['biopsia_id', '=', $id], 
@@ -186,10 +191,7 @@ class BiopsiaController extends Controller
       ['consulta', '=', $id]
     ])->orderBy('created_at', 'DESC')->get();
     $data['page_title']  = "Detalle " . $data['biopsia']->informe;
-    $data['doctores'] = Doctor::all();
-    $data['pacientes'] = Paciente::all();
     $data['pacienteConsulta'] = Paciente::find($data['biopsia']->paciente_id);
-    $data['grupos'] = Grupo::all();
     $data['precios'] = Precio::where('tipo', '=', 'B')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
     $data['frases'] = Frase::where('tipo', '=', 'B')->get();
@@ -197,7 +199,6 @@ class BiopsiaController extends Controller
     $data['facturacion'] = General::getFacturacion();
     $data['biopsia']->recibido = General::formatoFecha( $data['biopsia']->recibido );
     $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
-
     return view('biopsia.edit', $data);
   }
 
@@ -212,22 +213,12 @@ class BiopsiaController extends Controller
   {
     $biopsia = Biopsia::find($id);
     $this->validate($request, [
-      'doctor_id' => 'required',
-      'paciente_id' => 'required',
-      'grupo_id' => 'required',
       'diagnostico_id' =>'required',
-      'precio_id' => 'required',
-      ]);
-
-      $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
+    ]);
 
     //Inicio de las inserciones en la base de datos
     DB::beginTransaction();
       try {
-        $biopsia->doctor_id = $request->doctor_id;
-        $biopsia->paciente_id = $request->paciente_id;
-        $biopsia->grupo_id = $request->grupo_id;
-        $biopsia->precio_id = $request->precio_id;
         $biopsia->diagnostico_id = $request->diagnostico_id;
         $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
         $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
@@ -255,5 +246,18 @@ class BiopsiaController extends Controller
 
     $doctor->saldo = $nuevoSaldo;
     $doctor->save();
+  }
+
+  private function createDetalle($biopsia, $tipo_detalle, $opcion_id) {
+    $detalle = new Biopsia_detalle();
+    $detalle->biopsia_id = $biopsia;
+    $detalle->tipo_detalle = $tipo_detalle;
+    $detalle->opcion_id = $opcion_id;
+    $detalle->save();
+  }
+
+  private function deleteDetalle($detalle_id){
+    $detalle = Biopsia_detalle::find($detalle_id);
+    $detalle->delete();
   }
 }

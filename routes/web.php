@@ -45,7 +45,8 @@ Route::post('/biopsia-details/macro/{id}', 'BiopsiaDetailsController@macro');
 Route::post('/biopsia-details/micro/{id}', 'BiopsiaDetailsController@micro');
 Route::post('/biopsia-details/preliminar/{id}', 'BiopsiaDetailsController@preliminar');
 Route::post('/biopsia-details/inmunohistoquimica/{id}', 'BiopsiaDetailsController@inmunohistoquimica');
-Route::post('/biopsia-details/inmunohistoquimica_imagen/{id}', 'BiopsiaDetailsController@inmunohistoquimica_imagen');
+Route::post('/biopsia-details/imagen/{id}', 'BiopsiaDetailsController@imagen');
+Route::post('/biopsia-details/imagen/delete/{id}', 'BiopsiaDetailsController@imagenDelete');
 Route::post('/biopsia-details/abono/{id}', 'BiopsiaDetailsController@abono');
 Route::get('/biopsia-details/send/{id}', 'BiopsiaDetailsController@send');
 //Citologia

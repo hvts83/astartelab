@@ -162,6 +162,12 @@
                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
               </div>
+              <div class="form-group">
+                <label class="control-label">¿Es diagnóstico preeliminar?</label>
+                <br>
+                <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
+                <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar">No</label>
+              </div>
             </div>
           </div>
           <div id="tab-6" class="tab-pane">

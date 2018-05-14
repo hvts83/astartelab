@@ -68,45 +68,18 @@
                            </div>
                        </div>
                        <div class="form-group col-md-6">
-                         <label class="control-label">Doctor</label>
-                         <select class="chosen-select"  tabindex="2" name="doctor_id">
-                           <option>Seleccione doctor</option>
-                           <?php $__currentLoopData = $doctores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                             <?php if($doctor->id == $biopsia->doctor_id): ?>
-                               <option value="<?php echo e($doctor->id); ?>" selected> <?php echo e($doctor->nombre); ?> </option>
-                             <?php else: ?>
-                              <option value="<?php echo e($doctor->id); ?>"> <?php echo e($doctor->nombre); ?> </option>
-                             <?php endif; ?>
-                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                         </select>
+                          <label class="control-label">Doctor</label>
+                          <input type="text" class="form-control" readonly value="<?php echo e($biopsia->doctor); ?>">
                        </div>
                        <div class="form-group col-md-6">
                          <label class="control-label">Grupo</label>
-                         <select class="chosen-select"  tabindex="2" name="grupo_id">
-                           <option>Seleccione grupo</option>
-                           <?php $__currentLoopData = $grupos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $grupo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                             <?php if($grupo->id == $biopsia->grupo_id): ?>
-                               <option value="<?php echo e($grupo->id); ?>" selected> <?php echo e($grupo->nombre); ?> </option>
-                             <?php else: ?>
-                              <option value="<?php echo e($grupo->id); ?>"> <?php echo e($grupo->nombre); ?> </option>
-                             <?php endif; ?>
-                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                         </select>
+                         <input type="text" class="form-control" readonly value="<?php echo e($biopsia->grupo); ?>">
                        </div>
                        <div class="form-group col-md-6">
                          <label class="control-label">Paciente</label>
-                         <select class="chosen-select"  tabindex="2" name="paciente_id">
-                           <option>Seleccione paciente</option>
-                           <?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                             <?php if($paciente->id == $biopsia->paciente_id): ?>
-                               <option value="<?php echo e($paciente->id); ?>" selected> <?php echo e($paciente->name); ?> </option>
-                             <?php else: ?>
-                              <option value="<?php echo e($paciente->id); ?>"> <?php echo e($paciente->name); ?> </option>
-                             <?php endif; ?>
-                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                         </select>
+                         <input type="text" class="form-control" readonly value="<?php echo e($biopsia->paciente); ?>">
                        </div>
-                       <div class="form-group">
+                       <div class="form-group col-md-6">
                          <label class="control-label">Diagnóstico</label>
                          <select class="chosen-select"  tabindex="2" name="diagnostico_id">
                            <option>Seleccione diagnóstico</option>
@@ -119,7 +92,7 @@
                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                          </select>
                        </div>
-                      <div>
+                      <div class="col-md-12">
                           <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                       </div>
                   </form>
@@ -285,8 +258,13 @@
                      <div class="form-group">
                         <label class="control-label">¿Es diagnóstico preeliminar?</label>
                         <br>
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
+                        <?php if($biopsia->informe_preliminar == '1'): ?>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar" checked>Si</label>
                         <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar">No</label>
+                        <?php else: ?>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar" checked>No</label>
+                        <?php endif; ?>
                       </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
@@ -330,7 +308,7 @@
                   <div class="row">
                     <fieldset>
                       <legend>Imágenes</legend>
-                      <form action="<?php echo e(url('/biopsia-details/inmunohistoquimica_imagen/'. $biopsia->id )); ?>" method="post" enctype="multipart/form-data">
+                      <form action="<?php echo e(url('/biopsia-details/imagen/'. $biopsia->id )); ?>" method="post" enctype="multipart/form-data">
                         <?php echo e(csrf_field()); ?>
 
                         <div class="form-group">
@@ -358,9 +336,10 @@
                 <?php if(!$imagenes->isEmpty()): ?>
                   <div class="lightBoxGallery">
                       <div id="list_images">
-                        <?php $__currentLoopData = $imagenes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                          <a href="<?php echo e(asset($img->url)); ?>" ><img src="<?php echo e(asset($img->url)); ?>" style="height=auto;width: 200px;"></a>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $imagenes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <a href="<?php echo e(asset($img->url)); ?>" ><img src="<?php echo e(asset($img->url)); ?>" style="height=auto;width: 200px;"/></a>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                          
                       </div>
                       <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
                   </div>
@@ -408,6 +387,7 @@
   <link href="<?php echo e(asset('css/iCheck/custom.css')); ?>" rel="stylesheet">
   <link href="<?php echo e(asset('css/datepicker/datepicker3.css')); ?>" rel="stylesheet">
   <link href="<?php echo e(asset('css/blueimp/css/blueimp-gallery.min.css')); ?>" rel="stylesheet">
+  <link rel="stylesheet" href="<?php echo e(asset('css/sweetalert/sweetalert.css')); ?>">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
@@ -415,6 +395,7 @@
   <script src="<?php echo e(asset('js/datepicker/bootstrap-datepicker.js')); ?>"></script>
   <script src="<?php echo e(asset('js/iCheck/icheck.min.js')); ?>"></script>
   <script src="<?php echo e(asset('js/blueimp/jquery.blueimp-gallery.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('js/sweetalert/sweetalert.min.js')); ?>"></script>
   <script>
       $(document).ready(function () {
           $('.i-checks').iCheck({
@@ -438,6 +419,29 @@
       links = this.getElementsByTagName('a');
       blueimp.Gallery(links, options);
     };
+
+    $('.delete').click(function (e) {
+        swal({
+            title: "¿Desea eliminar la información?",
+            text: "Al realizar la acción no podrás recuperar los datos",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false },
+        function (isConfirm) {
+            if (isConfirm) {
+              swal("Eliminado", "Eliminado con exíto.", "success");
+              setTimeout(function () {
+                $('#del'+ e.currentTarget.value).submit()
+              }, 500);
+            } else {
+                swal("Cancelado", "Eliminación cancelada", "error");
+            }
+        });
+    });
   </script>
 <?php $__env->stopSection(); ?>
 
