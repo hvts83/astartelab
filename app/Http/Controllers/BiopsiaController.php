@@ -129,7 +129,7 @@ class BiopsiaController extends Controller
 
           if($request->has('macro_id')){
             foreach($request->macro_id as $macro){
-              $this->createDetalle($biopsia->id, 'macro', $micro);
+              $this->createDetalle($biopsia->id, 'macro', $macro);
             }
           }
 

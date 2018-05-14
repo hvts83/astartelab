@@ -10,7 +10,7 @@
 @endsection
 
 @section('actions')
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"> Enviar correo</button>
+  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"> Enviar correo</button>
 @endsection
 
 @section ('content')
@@ -20,7 +20,7 @@
         <div class="widget style1 navy-bg">
             <div class="row">
                 <div class="col-xs-4">
-                    <i class="fa fa-heartbeat fa-5x"></i>
+                    <i class="fa fa-medkit fa-5x"></i>
                 </div>
                 <div class="col-xs-8 text-right">
                     <span> Detalle de informe </span>
@@ -45,9 +45,10 @@
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#tab-1">Datos de consulta</a></li>
             <li class=""><a data-toggle="tab" href="#tab-2">Pago</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-3">Reporte Micro</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-4">Reporte preliminar</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-5">Imágenes</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-3">Reporte Macro</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-4">Reporte Micro</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-5">Reporte Informe preliminar</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-6">Imagenes</a></li>
         </ul>
         <div class="tab-content">
             <div id="tab-1" class="tab-pane active">
@@ -68,45 +69,18 @@
                            </div>
                        </div>
                        <div class="form-group col-md-6">
-                         <label class="control-label">Doctor</label>
-                         <select class="chosen-select"  tabindex="2" name="doctor_id">
-                           <option>Seleccione doctor</option>
-                           @foreach ($doctores as $doctor)
-                             @if ($doctor->id == $citologia->doctor_id)
-                               <option value="{{ $doctor->id }}" selected> {{  $doctor->nombre }} </option>
-                             @else
-                              <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
-                             @endif
-                           @endforeach
-                         </select>
+                          <label class="control-label">Doctor</label>
+                          <input type="text" class="form-control" readonly value="{{$citologia->doctor}}">
                        </div>
                        <div class="form-group col-md-6">
                          <label class="control-label">Grupo</label>
-                         <select class="chosen-select"  tabindex="2" name="grupo_id">
-                           <option>Seleccione grupo</option>
-                           @foreach ($grupos as $grupo)
-                             @if ($grupo->id == $citologia->grupo_id)
-                               <option value="{{ $grupo->id }}" selected> {{  $grupo->nombre }} </option>
-                             @else
-                              <option value="{{ $grupo->id }}"> {{  $grupo->nombre }} </option>
-                             @endif
-                           @endforeach
-                         </select>
+                         <input type="text" class="form-control" readonly value="{{$citologia->grupo}}">
                        </div>
                        <div class="form-group col-md-6">
                          <label class="control-label">Paciente</label>
-                         <select class="chosen-select"  tabindex="2" name="paciente_id">
-                           <option>Seleccione paciente</option>
-                           @foreach ($pacientes as $paciente)
-                             @if ($paciente->id == $citologia->paciente_id)
-                               <option value="{{ $paciente->id }}" selected> {{  $paciente->name }} </option>
-                             @else
-                              <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
-                             @endif
-                           @endforeach
-                         </select>
+                         <input type="text" class="form-control" readonly value="{{$citologia->paciente}}">
                        </div>
-                       <div class="form-group">
+                       <div class="form-group col-md-6">
                          <label class="control-label">Diagnóstico</label>
                          <select class="chosen-select"  tabindex="2" name="diagnostico_id">
                            <option>Seleccione diagnóstico</option>
@@ -119,8 +93,7 @@
                            @endforeach
                          </select>
                        </div>
-                       <br><br>
-                      <div>
+                      <div class="col-md-12">
                           <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                       </div>
                   </form>
@@ -199,28 +172,26 @@
             </div>
             <div id="tab-3" class="tab-pane">
               <div class="panel-body">
-                <form role="form" method="post" action="{{ url('/citologia-details/micro/'. $citologia->id ) }}">
+                <form role="form" method="post" action="{{ url('/citologia-details/macro/'. $citologia->id ) }}">
                      {{ csrf_field() }}
                      <div class="form-group">
                        <label class="control-label">Frases</label>
-                       <select class="chosen-select"  tabindex="2" name="frase_id">
+                       <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="macro_id[]">
                          <option>Seleccione Frase</option>
                          @foreach ($frases as $frase)
-                           @if ($micro != null)
-                             @if ($frase->id == $micro->frase_id)
-                               <option value="{{ $frase->id }}" selected> {{  $frase->nombre }} </option>
-                             @else
-                               <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
-                             @endif
+                           @if ($macro != null)
+                            @foreach($macro as $mac)
+                              @if ($frase->id == $mac->opcion_id)
+                                <option value="{{ $frase->id }}" selected> {{  $frase->nombre }} </option>
+                              @else
+                                <option value="{{ $frase->id }}"> {{ $frase->nombre }} </option>
+                              @endif
+                             @endforeach
                            @else
                              <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
                            @endif
                          @endforeach
                        </select>
-                     </div>
-                     <div class="form-group">
-                         <label class="control-label">Detalle</label>
-                         <textarea name="detalle" class="form-control">@if ($micro != null){{ $micro->detalle }}@endif</textarea>
                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
@@ -230,28 +201,26 @@
             </div>
             <div id="tab-4" class="tab-pane">
               <div class="panel-body">
-                <form role="form" method="post" action="{{ url('/citologia-details/preliminar/'. $citologia->id ) }}">
+                <form role="form" method="post" action="{{ url('/citologia-details/micro/'. $citologia->id ) }}">
                      {{ csrf_field() }}
                      <div class="form-group">
-                       <label class="control-label">Diagnóstico</label>
-                       <select class="chosen-select"  tabindex="2" name="diagnostico_id">
-                         <option>Seleccione diagnóstico</option>
-                         @foreach ($diagnosticos as $diagnostico)
-                           @if ($preliminar != null)
-                             @if ($diagnostico->id == $preliminar->diagnostico_id)
-                               <option value="{{ $diagnostico->id }}" selected> {{  $diagnostico->nombre }} </option>
+                       <label class="control-label">Frases</label>
+                       <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="micro_id[]">
+                         <option>Seleccione Frase</option>
+                         @foreach ($frases as $frase)
+                           @if ($micro != null)
+                            @foreach($micro as $mic)
+                             @if ($frase->id == $mic->opcion_id)
+                               <option value="{{ $frase->id }}" selected> {{  $frase->nombre }} </option>
                              @else
-                               <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
+                               <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
                              @endif
+                            @endforeach
                            @else
-                             <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
+                             <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
                            @endif
                          @endforeach
                        </select>
-                     </div>
-                     <div class="form-group">
-                         <label class="control-label">Detalle</label>
-                         <textarea name="detalle" class="form-control">@if ($preliminar != null){{ $preliminar->detalle }}@endif</textarea>
                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
@@ -260,6 +229,46 @@
               </div>
             </div>
             <div id="tab-5" class="tab-pane">
+              <div class="panel-body">
+                <form role="form" method="post" action="{{ url('/citologia-details/preliminar/'. $citologia->id ) }}">
+                     {{ csrf_field() }}
+                     <div class="form-group">
+                       <label class="control-label">Diagnóstico</label>
+                       <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="preliminar_id[]">
+                         <option>Seleccione diagnóstico</option>
+                         @foreach ($diagnosticos as $diagnostico)
+                           @if ($preliminar != null)
+                            @foreach($preliminar as $pre)
+                             @if ($diagnostico->id == $pre->opcion_id)
+                               <option value="{{ $diagnostico->id }}" selected> {{  $diagnostico->nombre }} </option>
+                             @else
+                               <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
+                             @endif
+                             @endforeach
+                           @else
+                             <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
+                           @endif
+                         @endforeach
+                       </select>
+                     </div>
+                     <div class="form-group">
+                        <label class="control-label">¿Es diagnóstico preeliminar?</label>
+                        <br>
+                        @if($citologia->informe_preliminar == '1')
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar" checked>Si</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar">No</label>
+                        @else
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar" checked>No</label>
+                        @endIf
+                      </div>
+                    <div>
+                        <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+                    </div>
+                </form>
+              </div>
+            </div>
+            <div id="tab-6" class="tab-pane">
               <div class="panel-body">
                 <div class="row">
                   <fieldset>
@@ -290,9 +299,10 @@
                 @if (!$imagenes->isEmpty())
                   <div class="lightBoxGallery">
                       <div id="list_images">
-                        @foreach ($imagenes as $key => $img)
-                          <a href="{{ asset($img->url) }}" ><img src="{{ asset($img->url) }}" style="height=auto;width: 200px;"></a>
-                        @endforeach
+                            @foreach ($imagenes as $key => $img)
+                              <a href="{{ asset($img->url) }}" ><img src="{{ asset($img->url) }}" style="height=auto;width: 200px;"/></a>
+                            @endforeach
+                          
                       </div>
                       <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
                   </div>
@@ -331,6 +341,7 @@
     <a class="play-pause"></a>
     <ol class="indicator"></ol>
 </div>
+
 @endsection
 
 @section('css')
@@ -338,6 +349,7 @@
   <link href="{{ asset('css/iCheck/custom.css')}}" rel="stylesheet">
   <link href="{{ asset('css/datepicker/datepicker3.css')}}" rel="stylesheet">
   <link href="{{ asset('css/blueimp/css/blueimp-gallery.min.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('css/sweetalert/sweetalert.css')}}">
 @endsection
 
 @section('scripts')
@@ -345,6 +357,7 @@
   <script src="{{ asset('js/datepicker/bootstrap-datepicker.js')}}"></script>
   <script src="{{ asset('js/iCheck/icheck.min.js')}}"></script>
   <script src="{{ asset('js/blueimp/jquery.blueimp-gallery.min.js')}}"></script>
+  <script src="{{ asset('js/sweetalert/sweetalert.min.js')}}"></script>
   <script>
       $(document).ready(function () {
           $('.i-checks').iCheck({
@@ -368,5 +381,28 @@
       links = this.getElementsByTagName('a');
       blueimp.Gallery(links, options);
     };
+
+    $('.delete').click(function (e) {
+        swal({
+            title: "¿Desea eliminar la información?",
+            text: "Al realizar la acción no podrás recuperar los datos",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false },
+        function (isConfirm) {
+            if (isConfirm) {
+              swal("Eliminado", "Eliminado con exíto.", "success");
+              setTimeout(function () {
+                $('#del'+ e.currentTarget.value).submit()
+              }, 500);
+            } else {
+                swal("Cancelado", "Eliminación cancelada", "error");
+            }
+        });
+    });
   </script>
 @endsection

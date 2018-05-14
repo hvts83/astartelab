@@ -14,9 +14,8 @@ use App\Helpers\General;
 use App\Models\Diagnostico;
 use App\Models\Citologia;
 use App\Models\Imagen;
+use App\Models\Citologia_detalle;
 use App\Models\Citologia_imagen;
-use App\Models\Citologia_micro;
-use App\Models\Citologia_diagnostico;
 use App\Models\Consulta_transacciones;
 use App\Mail\CitologiaResults;
 
@@ -27,23 +26,59 @@ class CitologiaDetailsController extends Controller
       $this->middleware('auth');
   }
 
+  public function macro(Request $request, $id)
+  {
+    $this->validate($request, [
+      'macro_id' =>'required',
+    ]);
+
+    DB::beginTransaction();
+    try {
+    $macros = Citologia_detalle::where([
+      ['tipo_detalle', '=', 'macro'],
+      ['citologia_id', '=', $id]
+    ])->pluck('opcion_id');
+    $macros = collect($macros)->all();
+    //Valores Nuevos
+    $nuevos = array_diff($request->macro_id, $macros);
+    //Valores a eliminar
+    $eliminar = array_diff($macros, $request->macro_id);
+
+    foreach ($nuevos as $value) {
+      $this->createDetalle( $id, 'macro', $value);
+    }
+    $this->deleteDetalle($id, 'macro', $eliminar);
+
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
+    return redirect('citologia/'. $id . "/edit");
+  }
+
   public function micro(Request $request, $id)
   {
     $this->validate($request, [
-      'frase_id' =>'required',
-      'detalle' => 'required',
-      ]);
+      'micro_id' =>'required',
+    ]);
 
-    $micro = Citologia_micro::where('citologia_id', '=', $id)->first();
-    if ($micro == null) {
-      $micro = new Citologia_micro();
-    }
     DB::beginTransaction();
-      try {
-        $micro->citologia_id = $id;
-        $micro->frase_id = $request->frase_id;
-        $micro->detalle = $request->detalle;
-        $micro->save();
+    try {
+    $micros = Citologia_detalle::where([
+      ['tipo_detalle', '=', 'micro'],
+      ['citologia_id', '=', $id]
+    ])->pluck('opcion_id');
+    $micros = collect($micros)->all();
+    //Valores Nuevos
+    $nuevos = array_diff($request->micro_id, $micros);
+    //Valores a eliminar
+    $eliminar = array_diff($micros, $request->micro_id);
+
+    foreach ($nuevos as $value) {
+      $this->createDetalle( $id, 'micro', $value);
+    }
+    $this->deleteDetalle($id, 'micro', $eliminar);
 
     } catch (\Exception $e) {
       DB::rollback();
@@ -56,20 +91,30 @@ class CitologiaDetailsController extends Controller
   public function preliminar(Request $request, $id)
   {
     $this->validate($request, [
-      'diagnostico_id' =>'required',
-      'detalle' => 'required',
-      ]);
+      'preliminar_id' =>'required',
+      'preliminar' => 'required',
+    ]);
 
-    $preliminar = Citologia_diagnostico::where('citologia_id', '=', $id)->first();
-    if ($preliminar == null) {
-      $preliminar = new Citologia_diagnostico();
-    }
     DB::beginTransaction();
-      try {
-        $preliminar->citologia_id = $id;
-        $preliminar->diagnostico_id = $request->diagnostico_id;
-        $preliminar->detalle = $request->detalle;
-        $preliminar->save();
+    try {
+     $citologia  = Citologia::find($id);
+     $citologia->informe_preliminar = $request->preliminar;
+     $citologia->save(); 
+
+    $preliminars = Citologia_detalle::where([
+      ['tipo_detalle', '=', 'preliminar'],
+      ['citologia_id', '=', $id]
+    ])->pluck('opcion_id');
+    $preliminars = collect($preliminars)->all();
+    //Valores Nuevos
+    $nuevos = array_diff($request->preliminar_id, $preliminars);
+    //Valores a eliminar
+    $eliminar = array_diff($preliminars, $request->preliminar_id);
+
+    foreach ($nuevos as $value) {
+      $this->createDetalle( $id, 'preliminar', $value);
+    }
+    $this->deleteDetalle($id, 'preliminar', $eliminar);
 
     } catch (\Exception $e) {
       DB::rollback();
@@ -117,7 +162,7 @@ class CitologiaDetailsController extends Controller
 
       $citologia = Citologia::find($id);
       $consultaSaldo = Consulta_transacciones::where([
-        ['tipo', '=', 'C'],
+        ['tipo', '=', 'B'],
         ['consulta', '=', $id]
       ])->orderBy('created_at', 'DESC')->first();
 
@@ -130,7 +175,7 @@ class CitologiaDetailsController extends Controller
     DB::beginTransaction();
       try {
         $ct = new Consulta_transacciones();
-        $ct->tipo = "C";
+        $ct->tipo = "B";
         $ct->consulta = $citologia->id;
         $ct->estado_pago = $estado;
         $ct->total = $consultaSaldo->total;
@@ -153,7 +198,7 @@ class CitologiaDetailsController extends Controller
 
   public function send(Request $request, $id){
     $citologia = Citologia::select(
-      'citologia.*',
+      'citologias.*',
       'pacientes.name as nombrePaciente',
       'pacientes.email as correoPaciente',
       'doctores.nombre as nombreDoctor',
@@ -161,17 +206,34 @@ class CitologiaDetailsController extends Controller
       'precios.monto',
       'diagnosticos.nombre as diagnostico'
     )
-    ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
-    ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
-    ->join('precios', 'citologia.precio_id', '=', 'precios.id')
-    ->join('diagnosticos', 'citologia.diagnostico_id', '=', 'diagnosticos.id')
-    ->where('citologia.id', '=', $id)
+    ->join('pacientes', 'citologias.paciente_id', '=', 'pacientes.id')
+    ->join('doctores', 'citologias.doctor_id', '=', 'doctores.id')
+    ->join('precios', 'citologias.precio_id', '=', 'precios.id')
+    ->join('diagnosticos', 'citologias.diagnostico_id', '=', 'diagnosticos.id')
+    ->where('citologias.id', '=', $id)
     ->first();
 
     Mail::to($citologia->correoPaciente, $citologia->correoDoctor )
     ->send(new CitologiaResults($citologia));
 
     return redirect('citologia/'. $id . "/edit");
+  }
+
+  private function createDetalle($citologia, $tipo_detalle, $opcion_id) {
+    $detalle = new Citologia_detalle();
+    $detalle->citologia_id = $citologia;
+    $detalle->tipo_detalle = $tipo_detalle;
+    $detalle->opcion_id = $opcion_id;
+    $detalle->save();
+  }
+
+  private function deleteDetalle($citologia, $tipo_detalle, $detalle_id){
+    $detalle = Citologia_detalle::where([
+      ['citologia_id', '=', $citologia],
+      ['tipo_detalle', '=', $tipo_detalle]
+    ])
+    ->whereIn('opcion_id', $detalle_id)
+    ->delete();
   }
 
 }
