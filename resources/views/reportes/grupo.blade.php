@@ -3,17 +3,16 @@
 @section ('title') {{ $page_title }} @stop
 
 @section('breadcrumb')
-  <li class="active">Reportes de Biopsias</li>
+  <li class="active">Reportes de Grupo</li>
 @endsection
 
 @section ('content')
 
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-      <div class="ibox-content">
+        <div class="ibox-content">
         <div class="panel-body">
-        <form role="form" method="get" action="{{ url('/reportes/biopsia') }}">
+        <form role="form" method="get" action="{{ url('/reportes/grupo') }}">
             <legend>Fecha</legend>
             {{ csrf_field() }}
             <div class="form-group col-md-6" id="fecha_nacimiento">
@@ -34,23 +33,13 @@
                     <input type="text" name="fin" class="form-control">
                 </div>
             </div>
-            <legend>Cliente </legend>
+            <legend>Grupo</legend>
             <div class="form-group col-md-12">
-                <label class="control-label">Paciente</label>
-                <select class="chosen-select"  name="paciente">
-                    <option value="0">Seleccione paciente</option>
-                    @foreach ($pacientes as $paciente)
-                    <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
-                    @endforeach
-                </select>
-            </div>
-            <legend>Doctor </legend>
-            <div class="form-group col-md-6">
-                <label class="control-label">Doctor</label>
-                <select class="chosen-select"  name="doctor">
-                    <option value="0">Seleccione doctor</option>
-                    @foreach ($doctores as $doctor)
-                        <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
+                <label class="control-label">Grupo</label>
+                <select class="chosen-select"  name="grupo">
+                    <option value="0">Seleccione grupo</option>
+                    @foreach ($grupos as $grupo)
+                    <option value="{{ $grupo->id }}"> {{  $grupo->nombre }} </option>
                     @endforeach
                 </select>
             </div>
@@ -59,31 +48,31 @@
             </div>
         </form>
         </div>
-      </div>
+        </div>
     </div>
-
-    @if( isset($biopsias))
+    
+    @if( isset($cgrupos))
     <div class="row">
         <div class="ibox-content">
             <div class="table-responsive">
-            <table id="tblbiopsia" class="table table-bordered table-striped">
+            <table id="tblcgrupo" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>Informe</th>
-                    <th>Paciente</th>
                     <th>Doctor</th>
+                    <th>Grupo</th>
                     <th>Recibido</th>
                     <th>Entregado</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($biopsias as $key => $biopsia)
+                @foreach ($cgrupos as $key => $cgrupo)
                     <tr>
-                        <td>{{ $biopsia->informe }}</td>
-                        <td>{{ $biopsia->paciente_name }}</td>
-                        <td>{{ $biopsia->doctor_name}}</td>
-                        <td>{{ $biopsia->recibido }}</td>
-                        <td>{{ $biopsia->entregado }}</td>
+                        <td>{{ $cgrupo->informe }}</td>
+                        <td>{{ $cgrupo->paciente_name }}</td>
+                        <td>{{ $cgrupo->doctor_name}}</td>
+                        <td>{{ $cgrupo->recibido }}</td>
+                        <td>{{ $cgrupo->entregado }}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -92,9 +81,8 @@
         </div>
     </div>
     @endIf
-
+    
 </div>
-
 @endsection
 
 @section('css')
@@ -109,7 +97,7 @@
     <script src="{{ asset('js/datepicker/bootstrap-datepicker.js')}}"></script>
 	<script>
     //Datatable
-    var tabla = $('#tblbiopsia').DataTable({
+    var tabla = $('#tblcgrupo').DataTable({
       "paging": true,
       "language": {
             "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"

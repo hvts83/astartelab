@@ -56,9 +56,9 @@ Route::post('/citologia-details/imagen/{id}', 'CitologiaDetailsController@imagen
 Route::post('/citologia-details/abono/{id}', 'CitologiaDetailsController@abono');
 Route::get('/citologia-details/send/{id}', 'CitologiaDetailsController@send');
 //Reportes
-Route::get('/reportes/biopsia/{param?}/{value?}', 'TablasController@biopsia');
-Route::get('/reportes/citologia/{param?}/{value?}', 'TablasController@citologia');
-Route::get('/reportes/grupo/{param?}/{value?}', 'TablasController@grupo');
-Route::get('/reportes/ingresos/{param?}/{value?}', 'TablasController@ingresos');
-Route::get('/reportes/pendientes/{param?}/{value?}', 'TablasController@pendientes');
-Route::get('/reportes/prepagados/{param?}/{value?}', 'TablasController@prepagados');
+Route::get('/reportes/biopsia', 'TablasController@biopsia');
+Route::get('/reportes/citologia', 'TablasController@citologia');
+Route::get('/reportes/grupo', 'TablasController@grupo');
+Route::get('/reportes/ingresos', 'TablasController@ingresos');
+Route::get('/reportes/pendientes', 'TablasController@pendientes');
+Route::get('/reportes/prepagados', 'TablasController@prepagados');

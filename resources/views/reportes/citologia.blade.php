@@ -3,7 +3,7 @@
 @section ('title') {{ $page_title }} @stop
 
 @section('breadcrumb')
-  <li class="active">Reportes de Biopsias</li>
+  <li class="active">Reportes de Citologías</li>
 @endsection
 
 @section ('content')
@@ -13,7 +13,7 @@
     <div class="row">
       <div class="ibox-content">
         <div class="panel-body">
-        <form role="form" method="get" action="{{ url('/reportes/biopsia') }}">
+        <form role="form" method="get" action="{{ url('/reportes/citologia') }}">
             <legend>Fecha</legend>
             {{ csrf_field() }}
             <div class="form-group col-md-6" id="fecha_nacimiento">
@@ -62,11 +62,11 @@
       </div>
     </div>
 
-    @if( isset($biopsias))
+    @if( isset($citologias))
     <div class="row">
         <div class="ibox-content">
             <div class="table-responsive">
-            <table id="tblbiopsia" class="table table-bordered table-striped">
+            <table id="tblcitologia" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>Informe</th>
@@ -77,13 +77,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($biopsias as $key => $biopsia)
+                @foreach ($citologias as $key => $citologia)
                     <tr>
-                        <td>{{ $biopsia->informe }}</td>
-                        <td>{{ $biopsia->paciente_name }}</td>
-                        <td>{{ $biopsia->doctor_name}}</td>
-                        <td>{{ $biopsia->recibido }}</td>
-                        <td>{{ $biopsia->entregado }}</td>
+                        <td>{{ $citologia->informe }}</td>
+                        <td>{{ $citologia->paciente_name }}</td>
+                        <td>{{ $citologia->doctor_name}}</td>
+                        <td>{{ $citologia->recibido }}</td>
+                        <td>{{ $citologia->entregado }}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -109,7 +109,7 @@
     <script src="{{ asset('js/datepicker/bootstrap-datepicker.js')}}"></script>
 	<script>
     //Datatable
-    var tabla = $('#tblbiopsia').DataTable({
+    var tabla = $('#tblcitologia').DataTable({
       "paging": true,
       "language": {
             "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
