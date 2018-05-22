@@ -26,7 +26,7 @@ class TablasController extends Controller
 
   public function biopsia(Request $request){
     
-    $data['page_title'] = "Ver biopsias";
+    $data['page_title'] = "Reportes de biopsias";
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
 
@@ -55,7 +55,7 @@ class TablasController extends Controller
   
   public function citologia(Request $request){
     
-    $data['page_title'] = "Ver citologías";
+    $data['page_title'] = "Reportes de citologías";
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
 
@@ -83,7 +83,7 @@ class TablasController extends Controller
   }
 
   public function grupo(Request $request){
-    $data['page_title'] = "Ver citologías";
+    $data['page_title'] = "Reportes de grupos";
     $data['grupos'] = Grupo::all();
 
     if( count($request->all()) > 0 ){

@@ -100,12 +100,20 @@
 @section('css')
     <link href="{{ asset('css/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/dataTables/datatables.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/dataTables/buttons.dataTables.min.css')}}">
     <link href="{{ asset('css/datepicker/datepicker3.css')}}" rel="stylesheet">
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/chosen/chosen.jquery.js')}}"></script>
     <script src="{{ asset('js/dataTables/datatables.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables/buttons.flash.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables/buttons.html5.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables/buttons.print.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables/dataTables.buttons.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables/jszip.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables/pdfmake.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables/vfs_fonts.js')}}"></script>
     <script src="{{ asset('js/datepicker/bootstrap-datepicker.js')}}"></script>
 	<script>
     //Datatable
@@ -118,7 +126,11 @@
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": false
+      "autoWidth": false,
+      'dom': 'Bfrtip',
+      'buttons': [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
     });
 
      $('#fecha_nacimiento .input-group.date').datepicker({
