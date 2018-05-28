@@ -107,10 +107,10 @@
 @section('scripts')
     <script src="{{ asset('js/chosen/chosen.jquery.js')}}"></script>
     <script src="{{ asset('js/dataTables/datatables.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables/dataTables.buttons.min.js')}}"></script>
     <script src="{{ asset('js/dataTables/buttons.flash.min.js')}}"></script>
     <script src="{{ asset('js/dataTables/buttons.html5.min.js')}}"></script>
     <script src="{{ asset('js/dataTables/buttons.print.min.js')}}"></script>
-    <script src="{{ asset('js/dataTables/dataTables.buttons.min.js')}}"></script>
     <script src="{{ asset('js/dataTables/jszip.min.js')}}"></script>
     <script src="{{ asset('js/dataTables/pdfmake.min.js')}}"></script>
     <script src="{{ asset('js/dataTables/vfs_fonts.js')}}"></script>

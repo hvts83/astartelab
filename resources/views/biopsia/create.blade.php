@@ -58,7 +58,7 @@
               <div class="form-group col-md-6">
                 <label class="control-label">Doctor</label>
                 <select class="chosen-select"  name="doctor_id">
-                  <option>Seleccione doctor</option>
+                  <option disabled selected>Seleccione doctor</option>
                   @foreach ($doctores as $doctor)
                       <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
                   @endforeach
@@ -67,7 +67,7 @@
               <div class="form-group col-md-6">
                 <label class="control-label">Grupo</label>
                 <select class="chosen-select"  name="grupo_id">
-                  <option>Seleccione grupo</option>
+                  <option disabled selected>Seleccione grupo</option>
                   @foreach ($grupos as $grupo)
                     <option value="{{ $grupo->id }}"> {{  $grupo->nombre }} </option>
                   @endforeach
@@ -76,7 +76,7 @@
               <div class="form-group col-md-6">
                 <label class="control-label">Paciente</label>
                 <select class="chosen-select"  name="paciente_id">
-                  <option>Seleccione paciente</option>
+                  <option disabled selected>Seleccione paciente</option>
                   @foreach ($pacientes as $paciente)
                     <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
                   @endforeach
@@ -86,7 +86,7 @@
                 <div class="form-group">
                   <label class="control-label">Diagnóstico</label>
                   <select class="chosen-select"  name="diagnostico_id">
-                    <option>Seleccione diagnóstico</option>
+                    <option disabled selected>Seleccione diagnóstico</option>
                     @foreach ($diagnosticos as $diagnostico)
                         <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
                     @endforeach
@@ -101,8 +101,8 @@
                   <label class="control-label">Precio</label>
                   <div class="input-group m-b">
                     <span class="input-group-addon">$</span>
-                    <select class="chosen-select"  name="precio_id">
-                      <option>Seleccione precio</option>
+                    <select  class="form-control"  name="precio_id">
+                      <option disabled selected>Seleccione precio</option>
                       @foreach ($precios as $precio)
                         <option value="{{ $precio->id }}"> {{ $precio->nombre . ' - $' . $precio->monto }} </option>
                       @endforeach
@@ -112,7 +112,7 @@
                 <div class="form-group col-md-4">
                   <label class="control-label">Condición de pago</label>
                   <select class="form-control m-b" name="estado_pago">
-                    <option>Seleccione condición</option>
+                    <option disabled selected>Seleccione condición</option>
                     @foreach ($pagos as $pago)
                       <option value="{{ $pago['value'] }}"> {{  $pago['text'] }} </option>
                     @endforeach
@@ -121,7 +121,7 @@
                 <div class="form-group col-md-4">
                   <label class="control-label">Facturación</label>
                   <select class="form-control m-b" name="facturacion">
-                    <option>Seleccione facturación</option>
+                    <option disabled selected>Seleccione facturación</option>
                     @foreach ($facturacion as $factu)
                       <option value="{{ $factu['value'] }}"> {{  $factu['text'] }} </option>
                     @endforeach

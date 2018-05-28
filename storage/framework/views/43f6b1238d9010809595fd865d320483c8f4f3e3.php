@@ -99,12 +99,20 @@
 <?php $__env->startSection('css'); ?>
     <link href="<?php echo e(asset('css/chosen/bootstrap-chosen.css')); ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo e(asset('css/dataTables/datatables.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/dataTables/buttons.dataTables.min.css')); ?>">
     <link href="<?php echo e(asset('css/datepicker/datepicker3.css')); ?>" rel="stylesheet">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
     <script src="<?php echo e(asset('js/chosen/chosen.jquery.js')); ?>"></script>
     <script src="<?php echo e(asset('js/dataTables/datatables.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/dataTables/dataTables.buttons.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/dataTables/buttons.flash.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/dataTables/buttons.html5.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/dataTables/buttons.print.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/dataTables/jszip.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/dataTables/pdfmake.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/dataTables/vfs_fonts.js')); ?>"></script>
     <script src="<?php echo e(asset('js/datepicker/bootstrap-datepicker.js')); ?>"></script>
 	<script>
     //Datatable
@@ -117,7 +125,11 @@
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": false
+      "autoWidth": false,
+      'dom': 'Bfrtip',
+      'buttons': [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
     });
 
      $('#fecha_nacimiento .input-group.date').datepicker({
