@@ -15,6 +15,7 @@ use App\Models\Paciente;
 use App\Models\Biopsia;
 use App\Models\Citologia;
 use App\Models\Grupo;
+use App\Models\Consulta_transacciones;
 
 
 class TablasController extends Controller
@@ -54,7 +55,7 @@ class TablasController extends Controller
           Carbon::createFromFormat('d-m-Y', $request->mes)
           ]);
       }elseif($request->annio != ''){
-        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->mes)]);
+        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
       }
       $data['biopsias'] = $query->get();
     }
@@ -91,7 +92,7 @@ class TablasController extends Controller
           Carbon::createFromFormat('d-m-Y', $request->mes)
           ]);
       }elseif($request->annio != ''){
-        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->mes)]);
+        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
       }
       $data['citologias'] = $query->get();
     }
@@ -123,7 +124,7 @@ class TablasController extends Controller
           Carbon::createFromFormat('d-m-Y', $request->mes)
           ]);
       }elseif($request->annio != ''){
-        $query1->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->mes)]);
+        $query1->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
       }
       
       $query2 = Citologia::select('citologia.*', 'doctores.nombre as doctor_name', 'grupos.nombre as grupo_name')
@@ -146,7 +147,7 @@ class TablasController extends Controller
           Carbon::createFromFormat('d-m-Y', $request->mes)
           ]);
       }elseif($request->annio != ''){
-        $query2->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->mes)]);
+        $query2->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
       }
       $data['cgrupos'] = $query2->union($query1)->get();
 
@@ -154,4 +155,96 @@ class TablasController extends Controller
 
     return view('reportes.grupo')->with($data);
   }
+
+  public function ingresos(Request $request){
+    $data['page_title'] = "Reportes de ingresos";
+    $data['facturacion'] = General::getFacturacion();
+    $data['pagos'] = General::getCondicionPago();
+    
+    if( count($request->all()) > 0 ){
+      $query = Consulta_transacciones::where('estado_pago', '!=', 'PE');
+      
+      if($request->inicio != '' and $request->fin != '' ){
+        $query->whereBetween('created_at', 
+          [ 
+            Carbon::createFromFormat('d-m-Y', $request->inicio), 
+            Carbon::createFromFormat('d-m-Y', $request->fin) 
+          ]);
+      }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(created_at) AND YEAR(?) = YEAR(created_at)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(created_at)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
+      }
+      
+      $data['cpagos'] = $query->get();
+
+    }
+
+    return view('reportes.ingresos')->with($data);
+  }
+
+  public function prepagados(Request $request){
+    $data['page_title'] = "Reportes de prepagados";
+    $data['facturacion'] = General::getFacturacion();
+    $data['pagos'] = General::getCondicionPago();
+    
+    if( count($request->all()) > 0 ){
+      $query = Consulta_transacciones::where('estado_pago', '=', 'PP');
+      
+      if($request->inicio != '' and $request->fin != '' ){
+        $query->whereBetween('created_at', 
+          [ 
+            Carbon::createFromFormat('d-m-Y', $request->inicio), 
+            Carbon::createFromFormat('d-m-Y', $request->fin) 
+          ]);
+      }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(created_at) AND YEAR(?) = YEAR(created_at)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(created_at)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
+      }
+      
+      $data['cpagos'] = $query->get();
+
+    }
+
+    return view('reportes.prepagados')->with($data);
+  }
+
+  public function pendientes(Request $request){
+    $data['page_title'] = "Reportes de pendientes de pago";
+    $data['facturacion'] = General::getFacturacion();
+    $data['pagos'] = General::getCondicionPago();
+    
+    if( count($request->all()) > 0 ){
+      $query = Consulta_transacciones::where('estado_pago', '=', 'PE');
+      
+      if($request->inicio != '' and $request->fin != '' ){
+        $query->whereBetween('created_at', 
+          [ 
+            Carbon::createFromFormat('d-m-Y', $request->inicio), 
+            Carbon::createFromFormat('d-m-Y', $request->fin) 
+          ]);
+      }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(created_at) AND YEAR(?) = YEAR(created_at)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(created_at)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
+      }
+      $data['cpagos'] = $query->get();
+    }
+
+    return view('reportes.pendientes')->with($data);
+  }
+
 }

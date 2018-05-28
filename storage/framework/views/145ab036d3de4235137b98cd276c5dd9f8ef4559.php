@@ -304,35 +304,33 @@
                   </form>
                 </div>
                 <br>
-                <?php if($inmunohistoquimica != null): ?>
-                  <div class="row">
-                    <fieldset>
-                      <legend>Imágenes</legend>
-                      <form action="<?php echo e(url('/biopsia-details/imagen/'. $biopsia->id )); ?>" method="post" enctype="multipart/form-data">
-                        <?php echo e(csrf_field()); ?>
+                <div class="row">
+                  <fieldset>
+                    <legend>Imágenes</legend>
+                    <form action="<?php echo e(url('/biopsia-details/imagen/'. $biopsia->id )); ?>" method="post" enctype="multipart/form-data">
+                      <?php echo e(csrf_field()); ?>
 
-                        <div class="form-group">
-                          <label>Imagen</label>
-                          <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-                            <div class="form-control" data-trigger="fileinput">
-                              <i class="glyphicon glyphicon-file fileinput-exists"></i>
-                              <span class="fileinput-filename"></span>
-                            </div>
-                            <span class="input-group-addon btn btn-default btn-file">
-                              <span class="fileinput-new">Select file</span>
-                              <span class="fileinput-exists">Change</span>
-                              <input type="file" name="imagen"/>
-                            </span>
-                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                      <div class="form-group">
+                        <label>Imagen</label>
+                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                          <div class="form-control" data-trigger="fileinput">
+                            <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                            <span class="fileinput-filename"></span>
                           </div>
+                          <span class="input-group-addon btn btn-default btn-file">
+                            <span class="fileinput-new">Select file</span>
+                            <span class="fileinput-exists">Change</span>
+                            <input type="file" name="imagen"/>
+                          </span>
+                          <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                         </div>
-                        <div>
-                            <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
-                        </div>
-                      </form>
-                    </fieldset>
-                  </div>
-                <?php endif; ?>
+                      </div>
+                      <div>
+                          <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+                      </div>
+                    </form>
+                  </fieldset>
+                </div>
                 <?php if(!$imagenes->isEmpty()): ?>
                   <div class="lightBoxGallery">
                       <div id="list_images">
