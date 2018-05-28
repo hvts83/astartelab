@@ -35,10 +35,10 @@ class TablasController extends Controller
       ->join('doctores', 'doctores.id', '=', 'doctor_id')
       ->join('pacientes', 'pacientes.id', '=', 'paciente_id');
       
-      if($request->doctor != 0){
+      if($request->has('doctor')){
         $query->where('doctor_id', '=',  $request->doctor);
       }
-      if($request->paciente != 0){
+      if($request->has('paciente')){
         $query->where('paciente_id', '=', $request->paciente);
       }
       if($request->inicio != '' and $request->fin != '' ){
@@ -47,6 +47,14 @@ class TablasController extends Controller
             Carbon::createFromFormat('d-m-Y', $request->inicio), 
             Carbon::createFromFormat('d-m-Y', $request->fin) 
           ]);
+      }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->mes)]);
       }
       $data['biopsias'] = $query->get();
     }
@@ -64,10 +72,10 @@ class TablasController extends Controller
       ->join('doctores', 'doctores.id', '=', 'doctor_id')
       ->join('pacientes', 'pacientes.id', '=', 'paciente_id');
       
-      if($request->doctor != 0){
+      if($request->has('doctor')){
         $query->where('doctor_id', '=',  $request->doctor);
       }
-      if($request->paciente != 0){
+      if($request->has('paciente')){
         $query->where('paciente_id', '=', $request->paciente);
       }
       if($request->inicio != '' and $request->fin != '' ){
@@ -76,6 +84,14 @@ class TablasController extends Controller
             Carbon::createFromFormat('d-m-Y', $request->inicio), 
             Carbon::createFromFormat('d-m-Y', $request->fin) 
           ]);
+      }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->mes)]);
       }
       $data['citologias'] = $query->get();
     }
@@ -91,7 +107,7 @@ class TablasController extends Controller
       ->join('doctores', 'doctores.id', '=', 'doctor_id')
       ->join('grupos', 'grupos.id', '=', 'grupo_id');
       
-      if($request->grupo != 0){
+      if($request->has('grupo')){
         $query1->where('grupo_id', '=', $request->grupo);
       }
       if($request->inicio != '' and $request->fin != '' ){
@@ -100,6 +116,14 @@ class TablasController extends Controller
             Carbon::createFromFormat('d-m-Y', $request->inicio), 
             Carbon::createFromFormat('d-m-Y', $request->fin) 
           ]);
+      }elseif($request->mes != ''){
+        $query1->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query1->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->mes)]);
       }
       
       $query2 = Citologia::select('citologia.*', 'doctores.nombre as doctor_name', 'grupos.nombre as grupo_name')
@@ -115,6 +139,14 @@ class TablasController extends Controller
             Carbon::createFromFormat('d-m-Y', $request->inicio), 
             Carbon::createFromFormat('d-m-Y', $request->fin) 
           ]);
+      }elseif($request->mes != ''){
+        $query2->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query2->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->mes)]);
       }
       $data['cgrupos'] = $query2->union($query1)->get();
 

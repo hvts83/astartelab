@@ -12,42 +12,44 @@
       <div class="ibox-content">
         <div class="panel-body">
         <form role="form" method="get" action="<?php echo e(url('/reportes/biopsia')); ?>">
-            <legend>Fecha</legend>
             <?php echo e(csrf_field()); ?>
 
-            <div class="form-group col-md-6" id="fecha_nacimiento">
-                <label class="font-normal">Fecha inicio</label>
-                <div class="input-group date">
-                    <span class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                    </span>
-                    <input type="text" name="inicio" class="form-control">
+            <legend>Busqueda por fecha</legend>
+            <div class="col-md-4 form-group" id="data_3">
+                <label class="font-normal">Rango:</label>
+                <div class="input-daterange input-group">
+                    <input type="text" name="inicio" class="input-sm form-control">
+                    <span class="input-group-addon">Hasta</span>
+                    <input type="text" name="fin" class="input-sm form-control">
                 </div>
             </div>
-            <div class="form-group col-md-6" id="fecha_nacimiento">
-                <label class="font-normal">Fecha fin</label>
+            <div class=" col-md-4 form-group" id="data_2">
+                <label class="font-normal">Mes:</label>
                 <div class="input-group date">
-                    <span class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                    </span>
-                    <input type="text" name="fin" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="mes">
                 </div>
             </div>
-            <legend>Cliente </legend>
+            <div class=" col-md-4 form-group" id="data_1">
+                <label class="font-normal">Año:</label>
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="annio">
+                </div>
+            </div>
+            <legend>Pacientes</legend>
             <div class="form-group col-md-12">
                 <label class="control-label">Paciente</label>
                 <select class="chosen-select"  name="paciente">
-                    <option value="0">Seleccione paciente</option>
+                    <option selected disabled>Seleccione paciente</option>
                     <?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($paciente->id); ?>"> <?php echo e($paciente->name); ?> </option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
-            <legend>Doctor </legend>
+            <legend>Doctores</legend>
             <div class="form-group col-md-6">
                 <label class="control-label">Doctor</label>
                 <select class="chosen-select"  name="doctor">
-                    <option value="0">Seleccione doctor</option>
+                    <option selected disabled>Seleccione doctor</option>
                     <?php $__currentLoopData = $doctores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($doctor->id); ?>"> <?php echo e($doctor->nombre); ?> </option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -73,6 +75,7 @@
                     <th>Doctor</th>
                     <th>Recibido</th>
                     <th>Entregado</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,6 +86,9 @@
                         <td><?php echo e($biopsia->doctor_name); ?></td>
                         <td><?php echo e($biopsia->recibido); ?></td>
                         <td><?php echo e($biopsia->entregado); ?></td>
+                        <td>
+                            <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Ver detalle</a>
+                        </td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
@@ -132,8 +138,27 @@
         ]
     });
 
-     $('#fecha_nacimiento .input-group.date').datepicker({
-        startView: 1,
+     $('#data_1 .input-group.date').datepicker({
+        minViewMode: 2,
+        keyboardNavigation: false,
+        forceParse: false,
+        forceParse: false,
+        autoclose: true,
+        todayHighlight: true,
+        format: "dd-mm-yyyy"
+    });
+
+    $('#data_2 .input-group.date').datepicker({
+        minViewMode: 1,
+        keyboardNavigation: false,
+        forceParse: false,
+        forceParse: false,
+        autoclose: true,
+        todayHighlight: true,
+        format: "dd-mm-yyyy"
+    });
+
+    $('#data_3 .input-daterange').datepicker({
         keyboardNavigation: false,
         forceParse: false,
         autoclose: true,

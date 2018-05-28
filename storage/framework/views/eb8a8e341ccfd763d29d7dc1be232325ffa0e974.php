@@ -11,32 +11,34 @@
         <div class="ibox-content">
         <div class="panel-body">
         <form role="form" method="get" action="<?php echo e(url('/reportes/grupo')); ?>">
-            <legend>Fecha</legend>
             <?php echo e(csrf_field()); ?>
 
-            <div class="form-group col-md-6" id="fecha_nacimiento">
-                <label class="font-normal">Fecha inicio</label>
-                <div class="input-group date">
-                    <span class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                    </span>
-                    <input type="text" name="inicio" class="form-control">
+            <legend>Busqueda por fecha</legend>
+            <div class="col-md-4 form-group" id="data_3">
+                <label class="font-normal">Rango:</label>
+                <div class="input-daterange input-group">
+                    <input type="text" name="inicio" class="input-sm form-control">
+                    <span class="input-group-addon">Hasta</span>
+                    <input type="text" name="fin" class="input-sm form-control">
                 </div>
             </div>
-            <div class="form-group col-md-6" id="fecha_nacimiento">
-                <label class="font-normal">Fecha fin</label>
+            <div class=" col-md-4 form-group" id="data_2">
+                <label class="font-normal">Mes:</label>
                 <div class="input-group date">
-                    <span class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                    </span>
-                    <input type="text" name="fin" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="mes">
+                </div>
+            </div>
+            <div class=" col-md-4 form-group" id="data_1">
+                <label class="font-normal">Año:</label>
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="annio">
                 </div>
             </div>
             <legend>Grupo</legend>
             <div class="form-group col-md-12">
                 <label class="control-label">Grupo</label>
                 <select class="chosen-select"  name="grupo">
-                    <option value="0">Seleccione grupo</option>
+                    <option selected disabled>Seleccione grupo</option>
                     <?php $__currentLoopData = $grupos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $grupo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($grupo->id); ?>"> <?php echo e($grupo->nombre); ?> </option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -120,8 +122,27 @@
         ]
     });
 
-     $('#fecha_nacimiento .input-group.date').datepicker({
-        startView: 1,
+     $('#data_1 .input-group.date').datepicker({
+        minViewMode: 2,
+        keyboardNavigation: false,
+        forceParse: false,
+        forceParse: false,
+        autoclose: true,
+        todayHighlight: true,
+        format: "dd-mm-yyyy"
+    });
+
+    $('#data_2 .input-group.date').datepicker({
+        minViewMode: 1,
+        keyboardNavigation: false,
+        forceParse: false,
+        forceParse: false,
+        autoclose: true,
+        todayHighlight: true,
+        format: "dd-mm-yyyy"
+    });
+
+    $('#data_3 .input-daterange').datepicker({
         keyboardNavigation: false,
         forceParse: false,
         autoclose: true,
