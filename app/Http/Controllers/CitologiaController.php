@@ -88,7 +88,7 @@ class CitologiaController extends Controller
           $citologia->estado_pago = $request->estado_pago;
           $citologia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
           $citologia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
-          $citologia->informe_preliminar = $request->preliminar;
+          $citologia->informe_preliminar = $request->dpreliminar;
           $citologia->informe = $informe;
           $citologia->save();
 
@@ -120,23 +120,9 @@ class CitologiaController extends Controller
           $ct->facturacion = $request->facturacion;
           $ct->save();
 
-          if($request->has('micro_id')){
-            foreach($request->micro_id as $micro){
-              $this->createDetalle($citologia->id, 'micro', $micro);
-            }
-          }
-
-          if($request->has('macro_id')){
-            foreach($request->macro_id as $macro){
-              $this->createDetalle($citologia->id, 'macro', $macro);
-            }
-          }
-
-          if($request->has('preliminar_id')){
-            foreach($request->preliminar_id as $preliminar){
-              $this->createDetalle($citologia->id, 'preliminar', $preliminar);
-            }
-          }
+          $this->createDetalle($citologia->id, 'micro', $request->micro);
+          $this->createDetalle($citologia->id, 'macro', $request->macro);
+          $this->createDetalle($citologia->id, 'preliminar', $request->preliminar);
 
       } catch (\Exception $e) {
         DB::rollback();
@@ -164,15 +150,15 @@ class CitologiaController extends Controller
     $data['macro'] = Citologia_detalle::where([
       ['citologia_id', '=', $id], 
       ['tipo_detalle', '=', 'macro']
-      ])->get();
+      ])->first();
     $data['micro'] = Citologia_detalle::where([
       ['citologia_id', '=', $id], 
       ['tipo_detalle', '=', 'micro']
-      ])->get();
+      ])->first();
     $data['preliminar'] =Citologia_detalle::where([
       ['citologia_id', '=', $id], 
       ['tipo_detalle', '=', 'preliminar']
-      ])->get();
+      ])->first();
     $data['imagenes'] = Citologia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
       ->where('citologia_id', '=', $id)->get();
     $data['detalle_pago'] = Consulta_transacciones::where([
@@ -242,16 +228,11 @@ class CitologiaController extends Controller
     $doctor->save();
   }
 
-  private function createDetalle($citologia, $tipo_detalle, $opcion_id) {
+  private function createDetalle($citologia, $tipo_detalle, $detalle_texto = '') {
     $detalle = new Citologia_detalle();
     $detalle->citologia_id = $citologia;
     $detalle->tipo_detalle = $tipo_detalle;
-    $detalle->opcion_id = $opcion_id;
+    $detalle->detalle = $detalle_texto;
     $detalle->save();
-  }
-
-  private function deleteDetalle($detalle_id){
-    $detalle = Citologia_detalle::find($detalle_id);
-    $detalle->delete();
   }
 }

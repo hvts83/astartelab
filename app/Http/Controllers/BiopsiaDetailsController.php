@@ -91,6 +91,7 @@ class BiopsiaDetailsController extends Controller
 
     $biopsia = Biopsia::find($preliminar->biopsia_id);
     $biopsia->informe_preliminar = $request->dpreliminar;
+    $biopsia->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
@@ -215,23 +216,6 @@ class BiopsiaDetailsController extends Controller
     ->send(new BiopsiaResults($biopsia));
 
     return redirect('biopsia/'. $id . "/edit");
-  }
-
-  private function createDetalle($biopsia, $tipo_detalle, $opcion_id) {
-    $detalle = new Biopsia_detalle();
-    $detalle->biopsia_id = $biopsia;
-    $detalle->tipo_detalle = $tipo_detalle;
-    $detalle->opcion_id = $opcion_id;
-    $detalle->save();
-  }
-
-  private function deleteDetalle($biopsia, $tipo_detalle, $detalle_id){
-    $detalle = Biopsia_detalle::where([
-      ['biopsia_id', '=', $biopsia],
-      ['tipo_detalle', '=', $tipo_detalle]
-    ])
-    ->whereIn('opcion_id', $detalle_id)
-    ->delete();
   }
 
 }

@@ -50,6 +50,7 @@ Route::post('/biopsia-details/imagen/delete/{id}', 'BiopsiaDetailsController@ima
 Route::post('/biopsia-details/abono/{id}', 'BiopsiaDetailsController@abono');
 Route::get('/biopsia-details/send/{id}', 'BiopsiaDetailsController@send');
 //Citologia
+Route::post('/citologia-details/macro/{id}', 'CitologiaDetailsController@macro');
 Route::post('/citologia-details/micro/{id}', 'CitologiaDetailsController@micro');
 Route::post('/citologia-details/preliminar/{id}', 'CitologiaDetailsController@preliminar');
 Route::post('/citologia-details/imagen/{id}', 'CitologiaDetailsController@imagen');

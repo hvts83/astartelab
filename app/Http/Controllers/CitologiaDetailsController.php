@@ -29,99 +29,75 @@ class CitologiaDetailsController extends Controller
   public function macro(Request $request, $id)
   {
     $this->validate($request, [
-      'macro_id' =>'required',
+      'macro' =>'required',
     ]);
 
     DB::beginTransaction();
     try {
-    $macros = Citologia_detalle::where([
+    $macro = Citologia_detalle::where([
       ['tipo_detalle', '=', 'macro'],
-      ['citologia_id', '=', $id]
-    ])->pluck('opcion_id');
-    $macros = collect($macros)->all();
-    //Valores Nuevos
-    $nuevos = array_diff($request->macro_id, $macros);
-    //Valores a eliminar
-    $eliminar = array_diff($macros, $request->macro_id);
-
-    foreach ($nuevos as $value) {
-      $this->createDetalle( $id, 'macro', $value);
-    }
-    $this->deleteDetalle($id, 'macro', $eliminar);
-
+      ['id', '=', $id]
+    ])->first();
+    
+    $macro->detalle = $request->macro;
+    $macro->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
     DB::commit();
-    return redirect('citologia/'. $id . "/edit");
+    return redirect('citologia/'. $macro->citologia_id . "/edit");
   }
 
   public function micro(Request $request, $id)
   {
     $this->validate($request, [
-      'micro_id' =>'required',
+      'micro' =>'required',
     ]);
 
     DB::beginTransaction();
     try {
-    $micros = Citologia_detalle::where([
+    $micro = Citologia_detalle::where([
       ['tipo_detalle', '=', 'micro'],
-      ['citologia_id', '=', $id]
-    ])->pluck('opcion_id');
-    $micros = collect($micros)->all();
-    //Valores Nuevos
-    $nuevos = array_diff($request->micro_id, $micros);
-    //Valores a eliminar
-    $eliminar = array_diff($micros, $request->micro_id);
-
-    foreach ($nuevos as $value) {
-      $this->createDetalle( $id, 'micro', $value);
-    }
-    $this->deleteDetalle($id, 'micro', $eliminar);
-
+      ['id', '=', $id]
+    ])->first();
+    
+    $micro->detalle = $request->micro;
+    $micro->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
     DB::commit();
-    return redirect('citologia/'. $id . "/edit");
+    return redirect('citologia/'. $micro->citologia_id . "/edit");
   }
 
   public function preliminar(Request $request, $id)
   {
     $this->validate($request, [
-      'preliminar_id' =>'required',
-      'preliminar' => 'required',
+      'preliminar' =>'required',
+      'dpreliminar' => 'required',
     ]);
 
     DB::beginTransaction();
     try {
-     $citologia  = Citologia::find($id);
-     $citologia->informe_preliminar = $request->preliminar;
-     $citologia->save(); 
-
-    $preliminars = Citologia_detalle::where([
+    $preliminar = Citologia_detalle::where([
       ['tipo_detalle', '=', 'preliminar'],
-      ['citologia_id', '=', $id]
-    ])->pluck('opcion_id');
-    $preliminars = collect($preliminars)->all();
-    //Valores Nuevos
-    $nuevos = array_diff($request->preliminar_id, $preliminars);
-    //Valores a eliminar
-    $eliminar = array_diff($preliminars, $request->preliminar_id);
+      ['id', '=', $id]
+    ])->first();
+    
+    $preliminar->detalle = $request->preliminar;
+    $preliminar->save();
 
-    foreach ($nuevos as $value) {
-      $this->createDetalle( $id, 'preliminar', $value);
-    }
-    $this->deleteDetalle($id, 'preliminar', $eliminar);
-
+    $citologia = Citologia::find($preliminar->citologia_id);
+    $citologia->informe_preliminar = $request->dpreliminar;
+    $citologia->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
     DB::commit();
-    return redirect('citologia/'. $id . "/edit");
+    return redirect('citologia/'. $preliminar->citologia_id . "/edit");
   }
 
   public function imagen(Request $request, $id)

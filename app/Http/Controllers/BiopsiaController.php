@@ -240,8 +240,4 @@ class BiopsiaController extends Controller
     $detalle->save();
   }
 
-  private function deleteDetalle($detalle_id){
-    $detalle = Biopsia_detalle::find($detalle_id);
-    $detalle->delete();
-  }
 }
