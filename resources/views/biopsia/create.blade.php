@@ -133,11 +133,17 @@
             <div class="panel-body">
                 <div class="form-group">
                   <label class="control-label">Frases</label>
-                  <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="macro_id[]">
-                    @foreach ($frases as $frase)
-                      <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
-                    @endforeach
-                  </select>
+                  <div class="input-group">
+                    <select class="chosen-select" data-placeholder="Selecciondiagnosticoses" id="select_macro">
+                      @foreach ($frases as $frase)
+                        <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                      @endforeach
+                    </select>
+                    <span class="input-group-btn"> <button type="button" id="add_macro" class="btn btn-primary">Agregar</button></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" id="macro" name="macro"></textarea>
                 </div>
             </div>
           </div>
@@ -145,11 +151,17 @@
             <div class="panel-body">
                 <div class="form-group">
                   <label class="control-label">Frases</label>
-                  <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="micro_id[]">
-                    @foreach ($frases as $frase)
-                      <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
-                    @endforeach
-                  </select>
+                  <div class="input-group">
+                    <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
+                      @foreach ($frases as $frase)
+                        <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                      @endforeach
+                    </select>
+                    <span class="input-group-btn"> <button type="button" id="add_micro" class="btn btn-primary">Agregar</button></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" id="micro" name="micro"></textarea>
                 </div>
             </div>
           </div>
@@ -157,30 +169,42 @@
             <div class="panel-body">
               <div class="form-group">
                 <label class="control-label">Diagnóstico</label>
-                <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="preliminar_id[]">
-                  @foreach ($diagnosticos as $diagnostico)
-                      <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
-                  @endforeach
-                </select>
+                <div class="input-group">
+                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
+                    @foreach ($diagnosticos as $diagnostico)
+                      <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                    @endforeach
+                  </select>
+                  <span class="input-group-btn"> <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button></span>
+                </div>
+              </div>
+              <div class="form-group">
+                  <textarea class="form-control" rows="5" id="preliminar" name="preliminar"></textarea>
               </div>
               <div class="form-group">
                 <label class="control-label">¿Es diagnóstico preeliminar?</label>
                 <br>
-                <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
-                <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar">No</label>
+                <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="dpreliminar">Si</label>
+                <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="dpreliminar">No</label>
               </div>
             </div>
           </div>
           <div id="tab-6" class="tab-pane">
             <div class="panel-body">
-              <div class="form-group">
-                <label class="control-label">Diagnóstico</label>
-                <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="inmuno_id[]">
-                  @foreach ($diagnosticos as $diagnostico)
-                      <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
-                  @endforeach
-                </select>
-              </div>
+                <div class="form-group">
+                    <label class="control-label">Diagnóstico</label>
+                    <div class="input-group">
+                      <select class="chosen-select" data-placeholder="Seleccione frases" id="select_inmuno">
+                        @foreach ($diagnosticos as $diagnostico)
+                          <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                        @endforeach
+                      </select>
+                      <span class="input-group-btn"> <button type="button" id="add_inmuno" class="btn btn-primary">Agregar</button></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <textarea class="form-control" rows="5" id="inmuno" name="inmuno"></textarea>
+                  </div>
             </div>
           </div>
         </div>
@@ -222,6 +246,20 @@
     $('.chosen-select').chosen({
       width: "100%",
       no_results_text: "No se encontró resultados"
+    });
+  </script>
+  <script>
+    $('#add_macro').on('click', function(){
+      $('#macro').append( $('#select_macro').val() );   
+    });
+    $('#add_micro').on('click', function(){
+      $('#micro').append( $('#select_micro').val() );   
+    });
+    $('#add_preliminar').on('click', function(){
+      $('#preliminar').append( $('#select_preliminar').val() );   
+    });
+    $('#add_inmuno').on('click', function(){
+      $('#inmuno').append( $('#select_inmuno').val() );   
     });
   </script>
 @endsection

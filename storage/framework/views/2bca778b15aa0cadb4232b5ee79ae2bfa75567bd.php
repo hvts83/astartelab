@@ -132,11 +132,17 @@
             <div class="panel-body">
                 <div class="form-group">
                   <label class="control-label">Frases</label>
-                  <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="macro_id[]">
-                    <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <option value="<?php echo e($frase->id); ?>"> <?php echo e($frase->nombre); ?> </option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                  </select>
+                  <div class="input-group">
+                    <select class="chosen-select" data-placeholder="Selecciondiagnosticoses" id="select_macro">
+                      <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($frase->nombre); ?>"> <?php echo e($frase->nombre); ?> </option>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                    <span class="input-group-btn"> <button type="button" id="add_macro" class="btn btn-primary">Agregar</button></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" id="macro" name="macro"></textarea>
                 </div>
             </div>
           </div>
@@ -144,11 +150,17 @@
             <div class="panel-body">
                 <div class="form-group">
                   <label class="control-label">Frases</label>
-                  <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="micro_id[]">
-                    <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <option value="<?php echo e($frase->id); ?>"> <?php echo e($frase->nombre); ?> </option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                  </select>
+                  <div class="input-group">
+                    <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
+                      <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($frase->nombre); ?>"> <?php echo e($frase->nombre); ?> </option>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                    <span class="input-group-btn"> <button type="button" id="add_micro" class="btn btn-primary">Agregar</button></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" id="micro" name="micro"></textarea>
                 </div>
             </div>
           </div>
@@ -156,30 +168,42 @@
             <div class="panel-body">
               <div class="form-group">
                 <label class="control-label">Diagnóstico</label>
-                <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="preliminar_id[]">
-                  <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <option value="<?php echo e($diagnostico->id); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
-                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </select>
+                <div class="input-group">
+                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
+                    <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <option value="<?php echo e($diagnostico->nombre); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  </select>
+                  <span class="input-group-btn"> <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button></span>
+                </div>
+              </div>
+              <div class="form-group">
+                  <textarea class="form-control" rows="5" id="preliminar" name="preliminar"></textarea>
               </div>
               <div class="form-group">
                 <label class="control-label">¿Es diagnóstico preeliminar?</label>
                 <br>
-                <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
-                <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar">No</label>
+                <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="dpreliminar">Si</label>
+                <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="dpreliminar">No</label>
               </div>
             </div>
           </div>
           <div id="tab-6" class="tab-pane">
             <div class="panel-body">
-              <div class="form-group">
-                <label class="control-label">Diagnóstico</label>
-                <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="inmuno_id[]">
-                  <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <option value="<?php echo e($diagnostico->id); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
-                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </select>
-              </div>
+                <div class="form-group">
+                    <label class="control-label">Diagnóstico</label>
+                    <div class="input-group">
+                      <select class="chosen-select" data-placeholder="Seleccione frases" id="select_inmuno">
+                        <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <option value="<?php echo e($diagnostico->nombre); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      </select>
+                      <span class="input-group-btn"> <button type="button" id="add_inmuno" class="btn btn-primary">Agregar</button></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <textarea class="form-control" rows="5" id="inmuno" name="inmuno"></textarea>
+                  </div>
             </div>
           </div>
         </div>
@@ -221,6 +245,20 @@
     $('.chosen-select').chosen({
       width: "100%",
       no_results_text: "No se encontró resultados"
+    });
+  </script>
+  <script>
+    $('#add_macro').on('click', function(){
+      $('#macro').append( $('#select_macro').val() );   
+    });
+    $('#add_micro').on('click', function(){
+      $('#micro').append( $('#select_micro').val() );   
+    });
+    $('#add_preliminar').on('click', function(){
+      $('#preliminar').append( $('#select_preliminar').val() );   
+    });
+    $('#add_inmuno').on('click', function(){
+      $('#inmuno').append( $('#select_inmuno').val() );   
     });
   </script>
 <?php $__env->stopSection(); ?>

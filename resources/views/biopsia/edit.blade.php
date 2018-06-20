@@ -176,27 +176,22 @@
             </div>
             <div id="tab-3" class="tab-pane">
               <div class="panel-body">
-                <form role="form" method="post" action="{{ url('/biopsia-details/macro/'. $biopsia->id ) }}">
+                <form role="form" method="post" action="{{ url('/biopsia-details/macro/'. $macro->id ) }}">
                      {{ csrf_field() }}
                      <div class="form-group">
-                       <label class="control-label">Frases</label>
-                       <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="macro_id[]">
-                         <option>Seleccione Frase</option>
-                         @foreach ($frases as $frase)
-                           @if ($macro != null)
-                            @foreach($macro as $mac)
-                              @if ($frase->id == $mac->opcion_id)
-                                <option value="{{ $frase->id }}" selected> {{  $frase->nombre }} </option>
-                              @else
-                                <option value="{{ $frase->id }}"> {{ $frase->nombre }} </option>
-                              @endif
-                             @endforeach
-                           @else
-                             <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
-                           @endif
-                         @endforeach
-                       </select>
-                     </div>
+                        <label class="control-label">Frases</label>
+                        <div class="input-group">
+                          <select class="chosen-select" data-placeholder="Selecciondiagnosticoses" id="select_macro">
+                            @foreach ($frases as $frase)
+                              <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                            @endforeach
+                          </select>
+                          <span class="input-group-btn"> <button type="button" id="add_macro" class="btn btn-primary">Agregar</button></span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                      <textarea class="form-control" rows="5" id="macro" name="macro">{{ $macro->detalle }}</textarea>
+                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                     </div>
@@ -205,27 +200,22 @@
             </div>
             <div id="tab-4" class="tab-pane">
               <div class="panel-body">
-                <form role="form" method="post" action="{{ url('/biopsia-details/micro/'. $biopsia->id ) }}">
+                <form role="form" method="post" action="{{ url('/biopsia-details/micro/'. $micro->id ) }}">
                      {{ csrf_field() }}
                      <div class="form-group">
-                       <label class="control-label">Frases</label>
-                       <select class="chosen-select" data-placeholder="Seleccione frases" multiple name="micro_id[]">
-                         <option>Seleccione Frase</option>
-                         @foreach ($frases as $frase)
-                           @if ($micro != null)
-                            @foreach($micro as $mic)
-                             @if ($frase->id == $mic->opcion_id)
-                               <option value="{{ $frase->id }}" selected> {{  $frase->nombre }} </option>
-                             @else
-                               <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
-                             @endif
+                        <label class="control-label">Frases</label>
+                        <div class="input-group">
+                          <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
+                            @foreach ($frases as $frase)
+                              <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
                             @endforeach
-                           @else
-                             <option value="{{ $frase->id }}"> {{  $frase->nombre }} </option>
-                           @endif
-                         @endforeach
-                       </select>
-                     </div>
+                          </select>
+                          <span class="input-group-btn"> <button type="button" id="add_micro" class="btn btn-primary">Agregar</button></span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                      <textarea class="form-control" rows="5" id="micro" name="micro">{{ $micro->detalle }}</textarea>
+                      </div>
                     <div>
                         <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                     </div>
@@ -234,36 +224,31 @@
             </div>
             <div id="tab-5" class="tab-pane">
               <div class="panel-body">
-                <form role="form" method="post" action="{{ url('/biopsia-details/preliminar/'. $biopsia->id ) }}">
+                <form role="form" method="post" action="{{ url('/biopsia-details/preliminar/'. $preliminar->id ) }}">
                      {{ csrf_field() }}
                      <div class="form-group">
-                       <label class="control-label">Diagnóstico</label>
-                       <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="preliminar_id[]">
-                         <option>Seleccione diagnóstico</option>
-                         @foreach ($diagnosticos as $diagnostico)
-                           @if ($preliminar != null)
-                            @foreach($preliminar as $pre)
-                             @if ($diagnostico->id == $pre->opcion_id)
-                               <option value="{{ $diagnostico->id }}" selected> {{  $diagnostico->nombre }} </option>
-                             @else
-                               <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
-                             @endif
-                             @endforeach
-                           @else
-                             <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
-                           @endif
-                         @endforeach
-                       </select>
-                     </div>
+                        <label class="control-label">Diagnóstico</label>
+                        <div class="input-group">
+                          <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
+                            @foreach ($diagnosticos as $diagnostico)
+                              <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                            @endforeach
+                          </select>
+                          <span class="input-group-btn"> <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button></span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                      <textarea class="form-control" rows="5" id="preliminar" name="preliminar">{{ $preliminar->detalle }}</textarea>
+                      </div>
                      <div class="form-group">
                         <label class="control-label">¿Es diagnóstico preeliminar?</label>
                         <br>
                         @if($biopsia->informe_preliminar == '1')
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar" checked>Si</label>
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar">No</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="dpreliminar" checked>Si</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="dpreliminar">No</label>
                         @else
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="preliminar">Si</label>
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="preliminar" checked>No</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="dpreliminar">Si</label>
+                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="dpreliminar" checked>No</label>
                         @endIf
                       </div>
                     <div>
@@ -275,27 +260,22 @@
             <div id="tab-6" class="tab-pane">
               <div class="panel-body">
                 <div class="row">
-                  <form role="form" method="post" action="{{ url('/biopsia-details/inmunohistoquimica/'. $biopsia->id ) }}">
+                  <form role="form" method="post" action="{{ url('/biopsia-details/inmunohistoquimica/'. $inmunohistoquimica->id ) }}">
                     {{ csrf_field() }}
                     <div class="form-group">
-                      <label class="control-label">Diagnóstico</label>
-                      <select class="chosen-select" data-placeholder="Seleccione diagnóstico" multiple name="inmuno_id[]">
-                              <option>Seleccione diagnóstico</option>
-                              @foreach ($diagnosticos as $diagnostico)
-                                @if ($inmunohistoquimica != null)
-                                  @foreach($inmunohistoquimica as $inmuno)
-                                  @if ($diagnostico->id == $inmuno->opcion_id)
-                                    <option value="{{ $diagnostico->id }}" selected> {{  $diagnostico->nombre }} </option>
-                                  @else
-                                    <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
-                                  @endif
-                                  @endforeach
-                                @else
-                                  <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
-                                @endif
-                              @endforeach
-                            </select>
-                          </div>
+                        <label class="control-label">Diagnóstico</label>
+                        <div class="input-group">
+                          <select class="chosen-select" data-placeholder="Seleccione frases" id="select_inmuno">
+                            @foreach ($diagnosticos as $diagnostico)
+                              <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                            @endforeach
+                          </select>
+                          <span class="input-group-btn"> <button type="button" id="add_inmuno" class="btn btn-primary">Agregar</button></span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                      <textarea class="form-control" rows="5" id="inmuno" name="inmuno">{{ $inmunohistoquimica->detalle }}</textarea>
+                      </div>
                    
                     <div>
                       <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
@@ -438,4 +418,18 @@
         });
     });
   </script>
+    <script>
+        $('#add_macro').on('click', function(){
+          $('#macro').append( $('#select_macro').val() );   
+        });
+        $('#add_micro').on('click', function(){
+          $('#micro').append( $('#select_micro').val() );   
+        });
+        $('#add_preliminar').on('click', function(){
+          $('#preliminar').append( $('#select_preliminar').val() );   
+        });
+        $('#add_inmuno').on('click', function(){
+          $('#inmuno').append( $('#select_inmuno').val() );   
+        });
+      </script>
 @endsection
