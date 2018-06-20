@@ -75,7 +75,6 @@ class CitologiaController extends Controller
 
       $correlativo=  Consulta_transacciones::whereRaw('tipo = "C" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
       $informe = "C" . date('y') . date('m') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
-      //dd($informe);
       $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 
       DB::beginTransaction();
@@ -94,7 +93,7 @@ class CitologiaController extends Controller
           $citologia->save();
 
           $ct = new Consulta_transacciones();
-          $ct->tipo = "B";
+          $ct->tipo = "C";
           $ct->consulta = $citologia->id;
           $ct->estado_pago = $citologia->estado_pago;
           switch ($citologia->estado_pago) {
@@ -177,7 +176,7 @@ class CitologiaController extends Controller
     $data['imagenes'] = Citologia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
       ->where('citologia_id', '=', $id)->get();
     $data['detalle_pago'] = Consulta_transacciones::where([
-      ['tipo', '=', 'B'],
+      ['tipo', '=', 'C'],
       ['consulta', '=', $id]
     ])->orderBy('created_at', 'DESC')->get();
     $data['page_title']  = "Detalle " . $data['citologia']->informe;
@@ -204,11 +203,16 @@ class CitologiaController extends Controller
     $citologia = Citologia::find($id);
     $this->validate($request, [
       'diagnostico_id' =>'required',
+      'informe' => 'unique:citologia|required'
     ]);
 
     //Inicio de las inserciones en la base de datos
     DB::beginTransaction();
       try {
+        if($request->informe !== $citologia->informe ){
+          Consulta_transacciones::where('informe', '=', $citologia->informe)->update(['informe' => $request->informe]);
+          $citologia->informe = $request->informe;
+        }
         $citologia->diagnostico_id = $request->diagnostico_id;
         $citologia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
         $citologia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);

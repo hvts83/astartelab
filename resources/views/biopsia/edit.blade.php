@@ -56,6 +56,10 @@
                   <form role="form" method="post" action="{{ url('/biopsia/'. $biopsia->id ) }}">
                        {{ csrf_field() }}
                        <input name="_method" type="hidden" value="PUT">
+                       <div class="form-group col-md-12">
+                          <label class="font-normal">Codigo de Informe</label>
+                          <input type="text" name="informe" class="form-control" value="{{$biopsia->informe}}">
+                      </div>
                        <div class="form-group col-md-6" id="fecha_nacimiento">
                            <label class="font-normal">Recibido</label>
                            <div class="input-group date">

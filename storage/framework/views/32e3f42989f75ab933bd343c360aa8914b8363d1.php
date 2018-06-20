@@ -38,6 +38,10 @@
               <label>Télefono</label>
               <input type="text" placeholder="Télefono"  class="form-control" data-mask="(999)-9999-9999" name="telefono" value="<?php echo e($paciente->telefono); ?>">
             </div>
+            <div class="form-group">
+              <label>Documento</label>
+              <input type="text" placeholder="Documento"  class="form-control" name="documento" value="<?php echo e($paciente->documento); ?>">
+            </div>
             <div class="form-group"><label class="control-label">Sexo</label>
               <br>
               <?php if($paciente->sexo == 1): ?>
@@ -55,8 +59,9 @@
                     <input type="text" name="fecha_nacimiento" class="form-control" value="<?php echo e($paciente->fecha_nacimiento); ?>">
                 </div>
             </div>
-            <div>
-                <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+            <div class="div-btn">
+                <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
+                <a href="<?php echo e(url('pacientes/')); ?>" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a>
             </div>
         </form>
       </div>

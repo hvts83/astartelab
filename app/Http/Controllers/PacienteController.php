@@ -62,6 +62,7 @@ class PacienteController extends Controller
             $paciente->email = $request->email;
             $paciente->name = $request->name;
             $paciente->sexo = $request->sexo;
+            $paciente->documento = $request->documento;
             $paciente->fecha_nacimiento = Carbon::createFromFormat('d-m-Y', $request->fecha_nacimiento);
             $paciente->telefono = $request->telefono;
             $paciente->save();
@@ -111,6 +112,7 @@ class PacienteController extends Controller
           $paciente->email = $request->email;
           $paciente->name = $request->name;
           $paciente->sexo = $request->sexo;
+          $paciente->documento = $request->documento;
           $paciente->fecha_nacimiento = Carbon::createFromFormat('d-m-Y', $request->fecha_nacimiento);
           $paciente->telefono = $request->telefono;
           $paciente->save();

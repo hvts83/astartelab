@@ -38,6 +38,10 @@
               <label>Télefono</label>
               <input type="text" placeholder="Télefono"  class="form-control" data-mask="(999)-9999-9999" name="telefono">
             </div>
+            <div class="form-group">
+                <label>Documento</label>
+                <input type="text" placeholder="Documento"  class="form-control" name="documento">
+              </div>
             <div class="form-group"><label class="control-label">Sexo</label>
               <br>
               <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="sexo">Masculino</label>

@@ -39,6 +39,10 @@
               <label>Télefono</label>
               <input type="text" placeholder="Télefono"  class="form-control" data-mask="(999)-9999-9999" name="telefono" value="{{ $paciente->telefono }}">
             </div>
+            <div class="form-group">
+              <label>Documento</label>
+              <input type="text" placeholder="Documento"  class="form-control" name="documento" value="{{ $paciente->documento }}">
+            </div>
             <div class="form-group"><label class="control-label">Sexo</label>
               <br>
               @if ($paciente->sexo == 1)

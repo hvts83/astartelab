@@ -75,7 +75,6 @@ class BiopsiaController extends Controller
 
       $correlativo=  Consulta_transacciones::whereRaw('tipo = "B" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
       $informe = "B" . date('y') . date('m') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
-      //dd($informe);
       $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 
       DB::beginTransaction();
@@ -214,11 +213,16 @@ class BiopsiaController extends Controller
     $biopsia = Biopsia::find($id);
     $this->validate($request, [
       'diagnostico_id' =>'required',
+      'informe' => 'unique:biopsias|required'
     ]);
 
     //Inicio de las inserciones en la base de datos
     DB::beginTransaction();
       try {
+        if($request->informe !== $biopsia->informe ){
+          Consulta_transacciones::where('informe', '=', $biopsia->informe)->update(['informe' => $request->informe]);
+          $biopsia->informe = $request->informe;
+        }
         $biopsia->diagnostico_id = $request->diagnostico_id;
         $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
         $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
