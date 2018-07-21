@@ -46,6 +46,7 @@
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Ver detalle</a>
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/pdf" )); ?>">PDF</a>
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/envelope" )); ?>">Imprimir</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/sobre" )); ?>">Sobre</a>
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/sm" )); ?>">Sin Membrete</a>
                   
                 </td>
