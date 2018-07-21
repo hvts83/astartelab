@@ -22,6 +22,7 @@ use App\Models\Biopsia;
 use App\Models\Biopsia_detalle;
 use App\Models\Biopsia_imagen;
 use App\Models\Doctor_transaccion;
+use PDF;
 
 
 class BiopsiaController extends Controller
@@ -74,7 +75,7 @@ class BiopsiaController extends Controller
       ]);
 
       $correlativo=  Consulta_transacciones::whereRaw('tipo = "B" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
-      $informe = "B" . date('y') . date('m') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
+      $informe = "B" . date('y') . date('n') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
       $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 
       DB::beginTransaction();
@@ -180,6 +181,163 @@ class BiopsiaController extends Controller
     $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
     return view('biopsia.edit', $data);
   }
+
+
+  
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function pdf($id)
+  {
+    $data['biopsia'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, grupos.nombre as grupo')
+      ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
+      ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
+      ->join('grupos', 'biopsias.grupo_id', '=', 'grupos.id')
+      ->where('biopsias.id', '=', $id)
+      ->first();
+    if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
+    $data['macro'] = Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'macro']
+      ])->first();
+    $data['micro'] = Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'micro']
+      ])->first();
+    $data['preliminar'] =Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'preliminar']
+      ])->first();
+    $data['inmunohistoquimica'] =Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'inmunohistoquimica']
+      ])->first();
+    $data['imagenes'] = Biopsia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
+      ->where('biopsia_id', '=', $id)->get();
+    $data['detalle_pago'] = Consulta_transacciones::where([
+      ['tipo', '=', 'B'],
+      ['consulta', '=', $id]
+    ])->orderBy('created_at', 'DESC')->get();
+    $data['page_title']  = "Detalle " . $data['biopsia']->informe;
+    $data['pacienteConsulta'] = Paciente::find($data['biopsia']->paciente_id);
+    $data['precios'] = Precio::where('tipo', '=', 'B')->get();
+    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
+    $data['frases'] = Frase::where('tipo', '=', 'B')->get();
+    $data['pagos'] = General::getCondicionPago();
+    $data['facturacion'] = General::getFacturacion();
+    $data['biopsia']->recibido = General::formatoFecha( $data['biopsia']->recibido );
+    $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
+    $pdf = PDF::loadView('/biopsia/pdf', $data);
+    return $pdf->download( $data['biopsia']->informe .'.pdf');
+  }
+
+
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function sm($id)
+  {
+    $data['biopsia'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, grupos.nombre as grupo')
+      ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
+      ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
+      ->join('grupos', 'biopsias.grupo_id', '=', 'grupos.id')
+      ->where('biopsias.id', '=', $id)
+      ->first();
+    if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
+    $data['macro'] = Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'macro']
+      ])->first();
+    $data['micro'] = Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'micro']
+      ])->first();
+    $data['preliminar'] =Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'preliminar']
+      ])->first();
+    $data['inmunohistoquimica'] =Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'inmunohistoquimica']
+      ])->first();
+    $data['imagenes'] = Biopsia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
+      ->where('biopsia_id', '=', $id)->get();
+    $data['detalle_pago'] = Consulta_transacciones::where([
+      ['tipo', '=', 'B'],
+      ['consulta', '=', $id]
+    ])->orderBy('created_at', 'DESC')->get();
+    $data['page_title']  = "Detalle " . $data['biopsia']->informe;
+    $data['pacienteConsulta'] = Paciente::find($data['biopsia']->paciente_id);
+    $data['precios'] = Precio::where('tipo', '=', 'B')->get();
+    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
+    $data['frases'] = Frase::where('tipo', '=', 'B')->get();
+    $data['pagos'] = General::getCondicionPago();
+    $data['facturacion'] = General::getFacturacion();
+    $data['biopsia']->recibido = General::formatoFecha( $data['biopsia']->recibido );
+    $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
+    $pdf = PDF::loadView('/biopsia/sm', $data);
+    return $pdf->download( $data['biopsia']->informe .'.pdf');
+  }
+
+  
+
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function envelope($id)
+  {
+    $data['biopsia'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, grupos.nombre as grupo')
+      ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
+      ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
+      ->join('grupos', 'biopsias.grupo_id', '=', 'grupos.id')
+      ->where('biopsias.id', '=', $id)
+      ->first();
+    if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
+    $data['macro'] = Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'macro']
+      ])->first();
+    $data['micro'] = Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'micro']
+      ])->first();
+    $data['preliminar'] =Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'preliminar']
+      ])->first();
+    $data['inmunohistoquimica'] =Biopsia_detalle::where([
+      ['biopsia_id', '=', $id], 
+      ['tipo_detalle', '=', 'inmunohistoquimica']
+      ])->first();
+    $data['imagenes'] = Biopsia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
+      ->where('biopsia_id', '=', $id)->get();
+    $data['detalle_pago'] = Consulta_transacciones::where([
+      ['tipo', '=', 'B'],
+      ['consulta', '=', $id]
+    ])->orderBy('created_at', 'DESC')->get();
+    $data['page_title']  = "Detalle " . $data['biopsia']->informe;
+    $data['pacienteConsulta'] = Paciente::find($data['biopsia']->paciente_id);
+    $data['precios'] = Precio::where('tipo', '=', 'B')->get();
+    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
+    $data['frases'] = Frase::where('tipo', '=', 'B')->get();
+    $data['pagos'] = General::getCondicionPago();
+    $data['facturacion'] = General::getFacturacion();
+    $data['biopsia']->recibido = General::formatoFecha( $data['biopsia']->recibido );
+    $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
+    $pdf = PDF::loadView('/biopsia/envelope', $data)->setPaper('DL');
+    return $pdf->download($data['biopsia']->informe . '-sobre' .'.pdf');
+  }
+
+
 
   /**
    * Update the specified resource in storage.

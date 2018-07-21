@@ -7,6 +7,8 @@
 @endsection
 
 @section('actions')
+    <a href="{{ url('/doctores/create') }}" class="btn btn-primary">Nuevo Doctor</a>
+    <a href="{{ url('/pacientes/create') }}" class="btn btn-primary">Nuevo Paciente</a>
     <a href="{{ url('/citologia/create') }}" class="btn btn-primary">Nueva Citología</a>
 @endsection
 
@@ -43,6 +45,11 @@
                 <td>{{ $citologia->entregado }}</td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/edit" ) }}">Ver detalle</a>
+                  <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/pdf" ) }}">PDF</a>
+                  <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/pdf" ) }}">Imprimir</a>
+                  <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/envelope" ) }}">Sobre</a>
+                  <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/sm" ) }}">Sin Membrete</a>
+
                 </td>
               </tr>
             @endforeach
@@ -51,6 +58,7 @@
       </div>
       <div class="div-btn">
         <a href="{{ url('/citologia/create') }}" class="btn btn-primary pull-right">Nueva Citología</a>
+        
       </div>
     </div>
   </div>

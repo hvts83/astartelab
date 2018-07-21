@@ -5,6 +5,8 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('actions'); ?>
+  <a href="<?php echo e(url('/doctores/create')); ?>" class="btn btn-primary">Nuevo Doctor</a>
+  <a href="<?php echo e(url('/pacientes/create')); ?>" class="btn btn-primary">Nuevo Paciente</a>
   <a href="<?php echo e(url('/biopsia/create')); ?>" class="btn btn-primary">Nueva Biopsia</a>
 <?php $__env->stopSection(); ?>
 
@@ -42,6 +44,10 @@
                 <td><?php echo e($biopsia->entregado); ?></td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Ver detalle</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/pdf" )); ?>">PDF</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/envelope" )); ?>">Imprimir</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/sm" )); ?>">Sin Membrete</a>
+                  
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -50,6 +56,7 @@
       </div>
       <div class="div-btn">
         <a href="<?php echo e(url('/biopsia/create')); ?>" class="btn btn-primary pull-right">Nueva Biopsia</a>
+        
       </div>
     </div>
   </div>

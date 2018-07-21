@@ -12,12 +12,13 @@
       <div class="ibox-content">
         <div class="panel-body">
         <form role="form" method="get" action="<?php echo e(url('/reportes/citologia')); ?>">
-            <legend>Busqueda por fecha</legend>
             <?php echo e(csrf_field()); ?>
 
+            <legend>Busqueda por fecha</legend>
             <div class="col-md-4 form-group" id="data_3">
                 <label class="font-normal">Rango:</label>
                 <div class="input-daterange input-group">
+                    <span class="input-group-addon">Desde</span>
                     <input type="text" name="inicio" class="input-sm form-control">
                     <span class="input-group-addon">Hasta</span>
                     <input type="text" name="fin" class="input-sm form-control">
@@ -36,10 +37,10 @@
                 </div>
             </div>
             <legend>Pacientes</legend>
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
                 <label class="control-label">Paciente</label>
                 <select class="chosen-select"  name="paciente">
-                    <option value="0">Seleccione paciente</option>
+                    <option selected disabled>Seleccione paciente</option>
                     <?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($paciente->id); ?>"> <?php echo e($paciente->name); ?> </option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -49,14 +50,14 @@
             <div class="form-group col-md-6">
                 <label class="control-label">Doctor</label>
                 <select class="chosen-select"  name="doctor">
-                    <option value="0">Seleccione doctor</option>
+                    <option selected disabled>Seleccione doctor</option>
                     <?php $__currentLoopData = $doctores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($doctor->id); ?>"> <?php echo e($doctor->nombre); ?> </option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
             <div class="form-group col-md-12">
-                <button class="btn btn-primary">Enviar</button>
+                <button class="btn btn-primary">Buscar</button>
             </div>
         </form>
         </div>

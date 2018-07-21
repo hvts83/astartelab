@@ -16,6 +16,7 @@ use App\Models\Biopsia;
 use App\Models\Citologia;
 use App\Models\Grupo;
 use App\Models\Consulta_transacciones;
+use PDF;
 
 
 class TablasController extends Controller
@@ -32,7 +33,7 @@ class TablasController extends Controller
     $data['pacientes'] = Paciente::all();
 
     if( count($request->all()) > 0 ){
-      $query = Biopsia::select('biopsias.*', 'doctores.nombre as doctor_name', 'pacientes.name as paciente_name')
+      $query = Biopsia::select('biopsias.*','doctores.nombre as doctor_name', 'pacientes.name as paciente_name')
       ->join('doctores', 'doctores.id', '=', 'doctor_id')
       ->join('pacientes', 'pacientes.id', '=', 'paciente_id');
       
@@ -48,10 +49,10 @@ class TablasController extends Controller
             Carbon::createFromFormat('d-m-Y', $request->inicio), 
             Carbon::createFromFormat('d-m-Y', $request->fin) 
           ]);
-      }elseif($request->mes != ''){
+        }elseif($request->mes != ''){
         $query->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
          [
-          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes),
           Carbon::createFromFormat('d-m-Y', $request->mes)
           ]);
       }elseif($request->annio != ''){
@@ -178,14 +179,43 @@ class TablasController extends Controller
           ]);
       }elseif($request->annio != ''){
         $query->whereRaw('YEAR(?) = YEAR(created_at)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
-      }
-      
+      }      
       $data['cpagos'] = $query->get();
-
     }
-
     return view('reportes.ingresos')->with($data);
   }
+
+  public function controldiario(Request $request){
+    $data['page_title'] = "Control Diario";
+    $data['facturacion'] = General::getFacturacion();
+    $data['pagos'] = General::getCondicionPago();
+    
+    if( count($request->all()) > 0 ){
+      $query = Consulta_transacciones::where('monto', '>=', 0);
+      
+      if($request->inicio != '' and $request->fin != '' ){
+        $query->whereBetween('created_at', 
+          [ 
+            Carbon::createFromFormat('d-m-Y', $request->inicio), 
+            Carbon::createFromFormat('d-m-Y', $request->fin) 
+          ]);
+      }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(created_at) AND YEAR(?) = YEAR(created_at)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->dia != ''){
+        $query->whereRaw('date(?) = date(created_at)', [Carbon  ::createFromFormat('d-m-Y', $request->dia)]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(created_at)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
+      }  
+      $data['cpagos'] = $query->get();
+    }
+    return view('reportes.control-diario')->with($data);
+  }
+
+
 
   public function prepagados(Request $request){
     $data['page_title'] = "Reportes de prepagados";

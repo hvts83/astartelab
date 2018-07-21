@@ -18,6 +18,7 @@
             <div class="col-md-4 form-group" id="data_3">
                 <label class="font-normal">Rango:</label>
                 <div class="input-daterange input-group">
+                    <span class="input-group-addon">Desde</span>
                     <input type="text" name="inicio" class="input-sm form-control">
                     <span class="input-group-addon">Hasta</span>
                     <input type="text" name="fin" class="input-sm form-control">
@@ -63,7 +64,7 @@
                     <tr>
                         <td>{{ $cpago->created_at }}</td>
                         <td>{{ $cpago->informe }}</td>
-                        <td>{{ $cpago->tipo === 'B' ? 'Biopsia' : 'citologia' }}</td>
+                        <td>{{ $cpago->tipo === 'B' ? 'Biopsia' : 'Citolog&iacute;a' }}</td>
                         <td>
                             @foreach ($pagos as $espa)
                                 @if ($espa['value'] == $cpago->estado_pago)

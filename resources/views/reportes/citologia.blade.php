@@ -19,6 +19,7 @@
             <div class="col-md-4 form-group" id="data_3">
                 <label class="font-normal">Rango:</label>
                 <div class="input-daterange input-group">
+                    <span class="input-group-addon">Desde</span>
                     <input type="text" name="inicio" class="input-sm form-control">
                     <span class="input-group-addon">Hasta</span>
                     <input type="text" name="fin" class="input-sm form-control">
@@ -36,8 +37,8 @@
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="annio">
                 </div>
             </div>
-            <legend>Pacientes</legend>
-            <div class="form-group col-md-12">
+            
+            <div class="form-group col-md-6">
                 <label class="control-label">Paciente</label>
                 <select class="chosen-select"  name="paciente">
                     <option selected disabled>Seleccione paciente</option>
@@ -46,7 +47,7 @@
                     @endforeach
                 </select>
             </div>
-            <legend>Doctores</legend>
+            
             <div class="form-group col-md-6">
                 <label class="control-label">Doctor</label>
                 <select class="chosen-select"  name="doctor">
@@ -57,7 +58,7 @@
                 </select>
             </div>
             <div class="form-group col-md-12">
-                <button class="btn btn-primary">Enviar</button>
+                <button class="btn btn-primary">Buscar</button>
             </div>
         </form>
         </div>

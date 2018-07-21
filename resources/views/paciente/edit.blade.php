@@ -53,11 +53,11 @@
                 <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="sexo" checked="checked">Femenino</label>
               @endif
             </div>
-            <div class="form-group" id="fecha_nacimiento">
+            <div class="form-group" id="edad">
                 <label class="font-normal">Fecha nacimiento</label>
-                <div class="input-group date">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" name="fecha_nacimiento" class="form-control" value="{{ $paciente->fecha_nacimiento }}">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                    <input type="text" name="edad" class="form-control" value="{{ $paciente->edad}}">
                 </div>
             </div>
             <div class="div-btn">
@@ -85,12 +85,6 @@
           });
       });
 
-    $('#fecha_nacimiento .input-group.date').datepicker({
-        startView: 1,
-        keyboardNavigation: false,
-        forceParse: false,
-        autoclose: true,
-        format: "dd-mm-yyyy"
-    });
+  
   </script>
 @endsection

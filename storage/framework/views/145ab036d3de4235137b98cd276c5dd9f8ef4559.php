@@ -281,7 +281,7 @@
                       <div class="form-group">
                       <textarea class="form-control" rows="5" id="inmuno" name="inmuno"><?php echo e($inmunohistoquimica->detalle); ?></textarea>
                       </div>
-                   
+
                     <div>
                       <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
                     </div>
@@ -321,7 +321,7 @@
                             <?php $__currentLoopData = $imagenes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                               <a href="<?php echo e(asset($img->url)); ?>" ><img src="<?php echo e(asset($img->url)); ?>" style="height=auto;width: 200px;"/></a>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                          
+
                       </div>
                       <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
                   </div>
@@ -427,16 +427,16 @@
   </script>
     <script>
         $('#add_macro').on('click', function(){
-          $('#macro').append( $('#select_macro').val() );   
+          $('#macro').append( $('#select_macro').val() );
         });
         $('#add_micro').on('click', function(){
-          $('#micro').append( $('#select_micro').val() );   
+          $('#micro').append( $('#select_micro').val() );
         });
         $('#add_preliminar').on('click', function(){
-          $('#preliminar').append( $('#select_preliminar').val() );   
+          $('#preliminar').append( $('#select_preliminar').val() );
         });
         $('#add_inmuno').on('click', function(){
-          $('#inmuno').append( $('#select_inmuno').val() );   
+          $('#inmuno').append( $('#select_inmuno').val() );
         });
       </script>
 <?php $__env->stopSection(); ?>

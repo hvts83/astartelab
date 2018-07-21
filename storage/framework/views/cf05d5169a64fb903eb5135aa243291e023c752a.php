@@ -5,6 +5,8 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('actions'); ?>
+    <a href="<?php echo e(url('/doctores/create')); ?>" class="btn btn-primary">Nuevo Doctor</a>
+    <a href="<?php echo e(url('/pacientes/create')); ?>" class="btn btn-primary">Nuevo Paciente</a>
     <a href="<?php echo e(url('/citologia/create')); ?>" class="btn btn-primary">Nueva Citología</a>
 <?php $__env->stopSection(); ?>
 
@@ -42,6 +44,11 @@
                 <td><?php echo e($citologia->entregado); ?></td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/edit" )); ?>">Ver detalle</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/pdf" )); ?>">PDF</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/pdf" )); ?>">Imprimir</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/envelope" )); ?>">Sobre</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/sm" )); ?>">Sin Membrete</a>
+
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -50,6 +57,7 @@
       </div>
       <div class="div-btn">
         <a href="<?php echo e(url('/citologia/create')); ?>" class="btn btn-primary pull-right">Nueva Citología</a>
+        
       </div>
     </div>
   </div>

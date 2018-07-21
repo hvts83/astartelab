@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
               <label>Télefono</label>
-              <input type="text" placeholder="Télefono"  class="form-control" data-mask="(999)-9999-9999" name="telefono">
+              <input type="text" placeholder="Télefono"  class="form-control" data-mask="9999-9999" name="telefono">
             </div>
             <div class="form-group">
                 <label>Documento</label>
@@ -47,10 +47,10 @@
               <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="sexo">Masculino</label>
               <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="sexo">Femenino</label>
             </div>
-            <div class="form-group" id="fecha_nacimiento">
-                <label class="font-normal">Fecha nacimiento</label>
-                <div class="input-group date">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="fecha_nacimiento" class="form-control" value="01-01-2000">
+            <div class="form-group" id="edad">
+                <label class="font-normal">Edad</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><input type="text" name="edad" class="form-control">
                 </div>
             </div>
             <div class="div-btn">
@@ -65,7 +65,7 @@
 
 @section('css')
   <link href="{{ asset('css/iCheck/custom.css')}}" rel="stylesheet">
-  <link href="{{ asset('css/datepicker/datepicker3.css')}}" rel="stylesheet">
+  
 @endsection
 
 @section('scripts')
@@ -77,13 +77,6 @@
               radioClass: 'iradio_square-green',
           });
       });
-
-    $('#fecha_nacimiento .input-group.date').datepicker({
-        startView: 1,
-        keyboardNavigation: false,
-        forceParse: false,
-        autoclose: true,
-        format: "dd-mm-yyyy"
-    });
+      
   </script>
 @endsection

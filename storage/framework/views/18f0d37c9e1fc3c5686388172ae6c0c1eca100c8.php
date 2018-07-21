@@ -17,6 +17,7 @@
             <div class="col-md-4 form-group" id="data_3">
                 <label class="font-normal">Rango:</label>
                 <div class="input-daterange input-group">
+                    <span class="input-group-addon">Desde</span>
                     <input type="text" name="inicio" class="input-sm form-control">
                     <span class="input-group-addon">Hasta</span>
                     <input type="text" name="fin" class="input-sm form-control">
@@ -62,7 +63,7 @@
                     <tr>
                         <td><?php echo e($cpago->created_at); ?></td>
                         <td><?php echo e($cpago->informe); ?></td>
-                        <td><?php echo e($cpago->tipo === 'B' ? 'Biopsia' : 'citologia'); ?></td>
+                        <td><?php echo e($cpago->tipo === 'B' ? 'Biopsia' : 'Citolog&iacute;a'); ?></td>
                         <td>
                             <?php $__currentLoopData = $pagos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $espa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php if($espa['value'] == $cpago->estado_pago): ?>

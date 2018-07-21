@@ -7,6 +7,8 @@
 @endsection
 
 @section('actions')
+  <a href="{{ url('/doctores/create') }}" class="btn btn-primary">Nuevo Doctor</a>
+  <a href="{{ url('/pacientes/create') }}" class="btn btn-primary">Nuevo Paciente</a>
   <a href="{{ url('/biopsia/create') }}" class="btn btn-primary">Nueva Biopsia</a>
 @endsection
 
@@ -43,6 +45,10 @@
                 <td>{{ $biopsia->entregado }}</td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/edit" ) }}">Ver detalle</a>
+                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/pdf" ) }}">PDF</a>
+                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/envelope" ) }}">Imprimir</a>
+                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/sm" ) }}">Sin Membrete</a>
+                  
                 </td>
               </tr>
             @endforeach
@@ -51,6 +57,7 @@
       </div>
       <div class="div-btn">
         <a href="{{ url('/biopsia/create') }}" class="btn btn-primary pull-right">Nueva Biopsia</a>
+        
       </div>
     </div>
   </div>

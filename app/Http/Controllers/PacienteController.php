@@ -51,9 +51,8 @@ class PacienteController extends Controller
     {
       $this->validate($request, [
         'name' => 'max:64|required',
-        'email'    => 'required|email|max:64',
         'sexo' => 'required',
-        'fecha_nacimiento' => 'required',
+        'edad' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -63,7 +62,7 @@ class PacienteController extends Controller
             $paciente->name = $request->name;
             $paciente->sexo = $request->sexo;
             $paciente->documento = $request->documento;
-            $paciente->fecha_nacimiento = Carbon::createFromFormat('d-m-Y', $request->fecha_nacimiento);
+            $paciente->edad = $request->edad;
             $paciente->telefono = $request->telefono;
             $paciente->save();
         } catch (\Exception $e) {
@@ -85,10 +84,11 @@ class PacienteController extends Controller
       $data['page_title']  = "Editar Paciente";
       $data['paciente'] =  Paciente::find($id);
       if ($data['paciente']  == null) { return redirect('pacientes'); } //Verificación para evitar errores
-      $data['paciente']->fecha_nacimiento = General::formatoFecha( $data['paciente']->fecha_nacimiento );
+      $data['paciente']->edad = $data['paciente']->edad;
       return view('paciente.edit', $data);
     }
 
+   
     /**
      * Update the specified resource in storage.
      *
@@ -101,9 +101,9 @@ class PacienteController extends Controller
       $paciente = Paciente::find($id);
       $this->validate($request, [
         'name' => 'max:64|required',
-        'email'    => 'required|email|max:64',
+        'email'    => 'email|max:64',
         'sexo' => 'required',
-        'fecha_nacimiento' => 'required',
+        'edad' => 'required',
         ]);
 
       //Inicio de las inserciones en la base de datos
@@ -113,7 +113,7 @@ class PacienteController extends Controller
           $paciente->name = $request->name;
           $paciente->sexo = $request->sexo;
           $paciente->documento = $request->documento;
-          $paciente->fecha_nacimiento = Carbon::createFromFormat('d-m-Y', $request->fecha_nacimiento);
+          $paciente->edad = $request->edad;
           $paciente->telefono = $request->telefono;
           $paciente->save();
       } catch (\Exception $e) {

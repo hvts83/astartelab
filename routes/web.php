@@ -63,3 +63,11 @@ Route::get('/reportes/grupo', 'TablasController@grupo');
 Route::get('/reportes/ingresos', 'TablasController@ingresos');
 Route::get('/reportes/pendientes', 'TablasController@pendientes');
 Route::get('/reportes/prepagados', 'TablasController@prepagados');
+Route::get('/reportes/control-diario', 'TablasController@controldiario');
+//Impresiones
+Route::get('/biopsia/{id}/pdf', 'BiopsiaController@pdf');
+Route::get('/biopsia/{id}/sm', 'BiopsiaController@sm');
+Route::get('/biopsia/{id}/envelope', 'BiopsiaController@envelope');
+Route::get('/citologia/{id}/pdf', 'CitologiaController@pdf');
+Route::get('/citologia/{id}/sm', 'CitologiaController@sm');
+Route::get('/citologia/{id}/envelope', 'CitologiaController@envelope');

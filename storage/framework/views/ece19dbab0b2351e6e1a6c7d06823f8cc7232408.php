@@ -28,6 +28,7 @@
               <th>Nombre</th>
               <th>Correo</th>
               <th>Teléfono</th>
+              <th>Edad</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -38,6 +39,7 @@
                 <td><?php echo e($paciente->name); ?></td>
                 <td><?php echo e($paciente->email); ?></td>
                 <td><?php echo e($paciente->telefono); ?></td>
+                <td><?php echo e($paciente->edad); ?> a&ntilde;os</td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/pacientes/' .  $paciente->id . "/edit" )); ?>">Editar</a>
                 </td>
