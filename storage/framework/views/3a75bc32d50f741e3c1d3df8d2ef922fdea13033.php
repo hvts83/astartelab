@@ -38,8 +38,14 @@
                 <td><?php echo e($doctor->nombre); ?></td>
                 <td><?php echo e($doctor->email); ?></td>
                 <td><?php echo e($doctor->telefono); ?></td>
-                <td>
+                <td nowrap>
                   <a class="btn btn-default" href="<?php echo e(url('/doctores/' .  $doctor->id . "/edit" )); ?>">Editar</a>
+                  <form action="<?php echo e(route('doctores.destroy', $doctor->id)); ?>" method="post">
+                    <?php echo e(csrf_field()); ?>
+
+                    <input name="_method" type="hidden" value="DELETE">
+                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                  </form>
                   <a class="btn btn-default" href="<?php echo e(url('/doctor-account/' .  $doctor->id )); ?>">Fondos</a>
                 </td>
               </tr>

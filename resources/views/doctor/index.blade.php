@@ -41,6 +41,11 @@
                 <td>{{ $doctor->telefono }}</td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/doctores/' .  $doctor->id . "/edit" ) }}">Editar</a>
+                  <form action="{{route('doctores.destroy', $doctor->id)}}" method="post">
+                    {{ csrf_field() }}
+                    <input name="_method" type="hidden" value="DELETE">
+                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                  </form>
                   <a class="btn btn-default" href="{{ url('/doctor-account/' .  $doctor->id ) }}">Fondos</a>
                 </td>
               </tr>
