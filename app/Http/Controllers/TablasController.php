@@ -49,7 +49,11 @@ class TablasController extends Controller
             Carbon::createFromFormat('d-m-Y', $request->inicio), 
             Carbon::createFromFormat('d-m-Y', $request->fin) 
           ]);
-        }elseif($request->mes != ''){
+      }elseif($request->desde != '' and $request->hasta != '' ){
+        $query->whereRaw("CAST( REPLACE(REPLACE(informe, '-', ''), 'B', '') as int) 
+          between  CAST( REPLACE(REPLACE('". $request->desde . "', '-', ''), 'B', '') as int) 
+          and  CAST( REPLACE(REPLACE('". $request->hasta . "', '-', ''), 'B', '') as int)");
+      }elseif($request->mes != ''){
         $query->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
          [
           Carbon::createFromFormat('d-m-Y', $request->mes),
@@ -86,7 +90,11 @@ class TablasController extends Controller
             Carbon::createFromFormat('d-m-Y', $request->inicio), 
             Carbon::createFromFormat('d-m-Y', $request->fin) 
           ]);
-      }elseif($request->mes != ''){
+        }elseif($request->desde != '' and $request->hasta != '' ){
+          $query->whereRaw("CAST( REPLACE(REPLACE(informe, '-', ''), 'C', '') as int) 
+            between  CAST( REPLACE(REPLACE('". $request->desde . "', '-', ''), 'C', '') as int) 
+            and  CAST( REPLACE(REPLACE('". $request->hasta . "', '-', ''), 'C', '') as int)");
+        }elseif($request->mes != ''){
         $query->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
          [
           Carbon::createFromFormat('d-m-Y', $request->mes), 

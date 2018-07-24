@@ -15,7 +15,7 @@
             <?php echo e(csrf_field()); ?>
 
             <legend>Busqueda por fecha</legend>
-            <div class="col-md-4 form-group" id="data_3">
+            <div class="col-md-6 form-group" id="data_3">
                 <label class="font-normal">Rango:</label>
                 <div class="input-daterange input-group">
                     <span class="input-group-addon">Desde</span>
@@ -24,21 +24,28 @@
                     <input type="text" name="fin" class="input-sm form-control">
                 </div>
             </div>
-            <div class=" col-md-4 form-group" id="data_2">
+            <div class=" col-md-3 form-group" id="data_2">
                 <label class="font-normal">Mes:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="mes">
                 </div>
             </div>
-            <div class=" col-md-4 form-group" id="data_1">
+            <div class=" col-md-3 form-group" id="data_1">
                 <label class="font-normal">Año:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="annio">
                 </div>
-            </div>           
-           
-             
-            <div class="form-group col-md-6">
+            </div>    
+            <div class="col-md-6 form-group">
+                <label class="font-normal">Entre</label>
+                <div class="input-daterange input-group">
+                    <span class="input-group-addon">Desde</span>
+                    <input type="text" name="desde" class="input-sm form-control" placeholder="Desde B181-001">
+                    <span class="input-group-addon">Hasta</span>
+                    <input type="text" name="hasta" class="input-sm form-control" placeholder="Hasta B181-002">
+                </div>
+            </div>       
+            <div class="form-group col-md-3">
                 <label class="control-label">Paciente</label>
                 <select class="chosen-select"  name="paciente">
                     <option selected disabled>Seleccione paciente</option>
@@ -47,8 +54,7 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
-            
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3">
                 <label class="control-label">Doctor</label>
                 <select class="chosen-select"  name="doctor">
                     <option selected disabled>Seleccione doctor</option>
@@ -57,7 +63,7 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-12">
                 <button class="btn btn-primary">Buscar</button>
             </div>
         </form>
