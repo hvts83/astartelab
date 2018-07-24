@@ -51,9 +51,7 @@ class DoctorController extends Controller
   {
     $this->validate($request, [
       'nombre' => 'max:64|required',
-      'telefono' => 'required',
-      'email'    => 'required|email|max:64',
-      'direccion' => 'required'
+      'email' => 'email|max:64',
       ]);
 
       DB::beginTransaction();
@@ -99,9 +97,7 @@ class DoctorController extends Controller
     $doctor = Doctor::find($id);
     $this->validate($request, [
       'nombre' => 'max:64|required',
-      'telefono' => 'required',
-      'email'    => 'required|email|max:64',
-      'direccion' => 'required'
+      'email'    => 'email|max:64',
       ]);
 
     //Inicio de las inserciones en la base de datos
@@ -119,4 +115,12 @@ class DoctorController extends Controller
    DB::commit();
      return redirect('doctores/'. $id . "/edit");
   }
+
+    public function destroy($id)
+    { 
+      $doctor = Doctor::find($id);
+      $doctor->delete();
+      return redirect('/doctores');
+    }
+
 }
