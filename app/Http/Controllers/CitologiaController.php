@@ -277,15 +277,9 @@ class CitologiaController extends Controller
 
 
   
-   /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function envelope($id)
+   public function envelope($id)
   {
-    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.fecha_nacimiento as nacimiento, grupos.nombre as grupo')
+    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, grupos.nombre as grupo')
       ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
       ->join('grupos', 'citologia.grupo_id', '=', 'grupos.id')
@@ -319,10 +313,10 @@ class CitologiaController extends Controller
     $data['facturacion'] = General::getFacturacion();
     $data['citologia']->recibido = General::formatoFecha( $data['citologia']->recibido );
     $data['citologia']->entregado = General::formatoFecha( $data['citologia']->entregado );
-    $data['citologia']->edad = Carbon::parse($data['citologia']->nacimiento)->age;
     $pdf = PDF::loadView('/citologia/envelope', $data)->setPaper('DL');
     return $pdf->download( $data['citologia']->informe . '-sobre'.'.pdf');
-  }
+    }
+    
 
   /**
    * Update the specified resource in storage.

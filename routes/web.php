@@ -66,6 +66,7 @@ Route::get('/reportes/prepagados', 'TablasController@prepagados');
 Route::get('/reportes/control-diario', 'TablasController@controldiario');
 //Impresiones
 Route::get('/biopsia/{id}/pdf', 'BiopsiaController@pdf');
+Route::get('/biopsia/{id}/print', 'BiopsiaController@print');
 Route::get('/biopsia/{id}/sm', 'BiopsiaController@sm');
 Route::get('/biopsia/{id}/envelope', 'BiopsiaController@envelope');
 Route::get('/citologia/{id}/pdf', 'CitologiaController@pdf');

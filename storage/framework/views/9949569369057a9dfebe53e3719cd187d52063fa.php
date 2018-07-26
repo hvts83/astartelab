@@ -19,6 +19,7 @@
     </div>
 <?php endif; ?>
 
+
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="ibox-content">
@@ -45,8 +46,8 @@
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Ver detalle</a>
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/pdf" )); ?>">PDF</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/envelope" )); ?>">Imprimir</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/sobre" )); ?>">Sobre</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/print" )); ?>" target="_blank">Imprimir</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/envelope" )); ?>">Sobre</a>
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/sm" )); ?>">Sin Membrete</a>
                   
                 </td>

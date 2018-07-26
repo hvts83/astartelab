@@ -78,6 +78,7 @@
             <table id="tblbiopsia" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th><input type="checkbox" name="checkbox[]"></th>
                     <th>Informe</th>
                     <th>Paciente</th>
                     <th>Doctor</th>
@@ -89,6 +90,7 @@
                 <tbody>
                 <?php $__currentLoopData = $biopsias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $biopsia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
+                        <td><input type="checkbox" name="checkbox[]"></td>
                         <td><?php echo e($biopsia->informe); ?></td>
                         <td><?php echo e($biopsia->paciente_name); ?></td>
                         <td><?php echo e($biopsia->doctor_name); ?></td>
