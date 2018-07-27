@@ -57,6 +57,7 @@ Route::post('/citologia-details/preliminar/{id}', 'CitologiaDetailsController@pr
 Route::post('/citologia-details/imagen/{id}', 'CitologiaDetailsController@imagen');
 Route::post('/citologia-details/abono/{id}', 'CitologiaDetailsController@abono');
 Route::get('/citologia-details/send/{id}', 'CitologiaDetailsController@send');
+Route::post('/citologia-details/primer_pago/{id}', 'CitologiaDetailsController@primer_pago');
 //Reportes
 Route::get('/reportes/biopsia', 'TablasController@biopsia');
 Route::get('/reportes/citologia', 'TablasController@citologia');
@@ -72,4 +73,5 @@ Route::get('/biopsia/{id}/sm', 'BiopsiaController@sm');
 Route::get('/biopsia/{id}/envelope', 'BiopsiaController@envelope');
 Route::get('/citologia/{id}/pdf', 'CitologiaController@pdf');
 Route::get('/citologia/{id}/sm', 'CitologiaController@sm');
+Route::get('/citologia/{id}/print', 'CitologiaController@print');
 Route::get('/citologia/{id}/envelope', 'CitologiaController@envelope');

@@ -47,11 +47,8 @@ class BiopsiaController extends Controller
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
     $data['grupos'] = Grupo::all();
-    $data['precios'] = Precio::where('tipo', '=', 'B')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
     $data['frases'] = Frase::where('tipo', '=', 'B')->get();
-    $data['pagos'] = General::getCondicionPago();
-    $data['facturacion'] = General::getFacturacion();
     return view('biopsia.create', $data);
   }
 

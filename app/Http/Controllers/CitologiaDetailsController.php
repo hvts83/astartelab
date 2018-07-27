@@ -14,6 +14,7 @@ use App\Helpers\General;
 use App\Models\Diagnostico;
 use App\Models\Citologia;
 use App\Models\Imagen;
+use App\Models\Precio;
 use App\Models\Citologia_detalle;
 use App\Models\Citologia_imagen;
 use App\Models\Consulta_transacciones;
@@ -210,6 +211,56 @@ class CitologiaDetailsController extends Controller
     ])
     ->whereIn('opcion_id', $detalle_id)
     ->delete();
+  }
+
+  public function primer_pago(Request $request, $id){
+    $this->validate($request, [
+      'precio_id' => 'required',
+      'estado_pago' => 'required',
+      'facturacion' => 'required',
+      ]);
+
+    $citologia = Citologia::find($id);
+    $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
+
+    DB::beginTransaction();
+    try {
+      $citologia->precio_id = $request->precio_id;
+      $citologia->save();
+
+      $ct = new Consulta_transacciones();
+      $ct->tipo = "C";
+      $ct->consulta = $citologia->id;
+      $ct->estado_pago = $citologia->estado_pago;
+      switch ($citologia->estado_pago) {
+        case 'PP':
+          $this->pagoDoctor( $request->doctor_id, $precioPagar->monto);
+          $ct->monto = $precioPagar->monto;
+          $ct->saldo = 0;
+          break;
+        case 'AP':
+          $ct->monto = 0;
+          $ct->saldo = $precioPagar->monto;
+          break;
+        case 'AC':
+          $ct->monto = $precioPagar->monto;
+          $ct->saldo = 0;
+          break;
+        case 'PE':
+          $ct->monto = 0;
+          $ct->saldo = $precioPagar->monto;
+          break;
+      }
+      $ct->total = $precioPagar->monto;
+      $ct->informe = $citologia->informe;
+      $ct->facturacion = $request->facturacion;
+      $ct->save();
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
+    return redirect('citologia/'. $id . "/edit");
   }
 
 }

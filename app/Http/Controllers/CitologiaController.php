@@ -47,11 +47,8 @@ class CitologiaController extends Controller
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
     $data['grupos'] = Grupo::all();
-    $data['precios'] = Precio::where('tipo', '=', 'C')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'C')->get();
     $data['frases'] = Frase::where('tipo', '=', 'C')->get();
-    $data['pagos'] = General::getCondicionPago();
-    $data['facturacion'] = General::getFacturacion();
     return view('citologia.create', $data);
   }
 
@@ -69,14 +66,10 @@ class CitologiaController extends Controller
       'paciente_id' => 'required',
       'grupo_id' => 'required',
       'diagnostico_id' =>'required',
-      'precio_id' => 'required',
-      'estado_pago' => 'required',
-      'facturacion' => 'required',
       ]);
 
       $correlativo=  Consulta_transacciones::whereRaw('tipo = "C" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
       $informe = "C" . date('y') . date('n') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
-      $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 
       DB::beginTransaction();
         try {
@@ -84,42 +77,12 @@ class CitologiaController extends Controller
           $citologia->doctor_id = $request->doctor_id;
           $citologia->paciente_id = $request->paciente_id;
           $citologia->grupo_id = $request->grupo_id;
-          $citologia->precio_id = $request->precio_id;
           $citologia->diagnostico_id = $request->diagnostico_id;
-          $citologia->estado_pago = $request->estado_pago;
           $citologia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
           $citologia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
           $citologia->informe_preliminar = $request->dpreliminar;
           $citologia->informe = $informe;
           $citologia->save();
-
-          $ct = new Consulta_transacciones();
-          $ct->tipo = "C";
-          $ct->consulta = $citologia->id;
-          $ct->estado_pago = $citologia->estado_pago;
-          switch ($citologia->estado_pago) {
-            case 'PP':
-              $this->pagoDoctor( $request->doctor_id, $precioPagar->monto);
-              $ct->monto = $precioPagar->monto;
-              $ct->saldo = 0;
-              break;
-            case 'AP':
-              $ct->monto = 0;
-              $ct->saldo = $precioPagar->monto;
-              break;
-            case 'AC':
-              $ct->monto = $precioPagar->monto;
-              $ct->saldo = 0;
-              break;
-            case 'PE':
-              $ct->monto = 0;
-              $ct->saldo = $precioPagar->monto;
-              break;
-          }
-          $ct->total = $precioPagar->monto;
-          $ct->informe = $citologia->informe;
-          $ct->facturacion = $request->facturacion;
-          $ct->save();
 
           $this->createDetalle($citologia->id, 'micro', $request->micro);
           $this->createDetalle($citologia->id, 'macro', $request->macro);

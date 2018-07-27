@@ -23,7 +23,6 @@
         <?php endif; ?>
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#tab-1">Datos de consulta</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-2">Pago</a></li>
             <li class=""><a data-toggle="tab" href="#tab-3">Reporte Macro</a></li>
             <li class=""><a data-toggle="tab" href="#tab-4">Reporte Micro</a></li>
             <li class=""><a data-toggle="tab" href="#tab-5">Reporte Informe preliminar</a></li>
@@ -92,40 +91,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div id="tab-2" class="tab-pane">
-            <div class="panel-body">  
-              <div class="form-group col-md-4">
-                  <label class="control-label">Precio</label>
-                  <div class="input-group m-b">
-                    <span class="input-group-addon">$</span>
-                    <select  class="form-control"  name="precio_id">
-                      <option disabled selected>Seleccione precio</option>
-                      <?php $__currentLoopData = $precios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $precio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($precio->id); ?>"> <?php echo e($precio->nombre . ' - $' . $precio->monto); ?> </option>
-                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group col-md-4">
-                  <label class="control-label">Condición de pago</label>
-                  <select class="form-control m-b" name="estado_pago">
-                    <option disabled selected>Seleccione condición</option>
-                    <?php $__currentLoopData = $pagos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pago): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <option value="<?php echo e($pago['value']); ?>"> <?php echo e($pago['text']); ?> </option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label class="control-label">Facturación</label>
-                  <select class="form-control m-b" name="facturacion">
-                    <option disabled selected>Seleccione facturación</option>
-                    <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <option value="<?php echo e($factu['value']); ?>"> <?php echo e($factu['text']); ?> </option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                  </select>
-                </div>
-              </div>
           </div>
           <div id="tab-3" class="tab-pane">
             <div class="panel-body">
