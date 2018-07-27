@@ -88,14 +88,16 @@
   </tr>
 </table>
 
-<hr>
+    <hr>
+    <table>
+      <tr>
+        <td width="400px">Fin del Informe</td>
+        <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO </p></td>
+      </tr>
+    </table>
 
-
-<table>
-  <tr>
-    <td width="400px">Fin del Informe</td>
-    <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO </p></td>
-  </tr>
-</table>
-</body>
+    <script type="text/javascript"> 
+      this.print(); 
+    </script> 
+  </body>
 </html>

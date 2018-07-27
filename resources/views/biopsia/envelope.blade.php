@@ -19,7 +19,9 @@
 <p>{{$biopsia->paciente}}</p> 
 
 
-
+<script type="text/javascript"> 
+    this.print(); 
+  </script> 
 </body>
 </html>
 
