@@ -18,7 +18,9 @@
 <p>Dr(a) <?php echo e($citologia->doctor); ?></p>
 <p><?php echo e($citologia->paciente); ?></p> 
 
-
+<script type="text/javascript"> 
+      this.print(); 
+</script
 
 </body>
 </html>

@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <link href="/css/print.css" rel="stylesheet" media="print" type="text/css">
- 
 </head>
 <body>
 <p>&nbsp;</p>
@@ -92,8 +90,8 @@
     <td width="400px">Fin del Informe</td>
   </tr>
 </table>
- <script>$('.print-window').click(function() {
-    window.print();
-});</script>
+<script type="text/javascript"> 
+      this.print(); 
+</script> 
 </body>
 

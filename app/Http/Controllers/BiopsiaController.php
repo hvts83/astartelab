@@ -245,7 +245,7 @@ class BiopsiaController extends Controller
     $data['biopsia']->recibido = General::formatoFecha( $data['biopsia']->recibido );
     $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
     $pdf = PDF::loadView('/biopsia/sm', $data);
-    return $pdf->download( $data['biopsia']->informe .'.pdf');
+    return $pdf->stream( $data['biopsia']->informe .'.pdf');
   }
 
   /**

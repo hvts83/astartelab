@@ -18,7 +18,9 @@
 <p>Dr(a) {{$citologia->doctor}}</p>
 <p>{{$citologia->paciente}}</p> 
 
-
+<script type="text/javascript"> 
+      this.print(); 
+</script
 
 </body>
 </html>

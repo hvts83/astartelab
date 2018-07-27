@@ -72,6 +72,6 @@ Route::get('/biopsia/{id}/print', 'BiopsiaController@print');
 Route::get('/biopsia/{id}/sm', 'BiopsiaController@sm');
 Route::get('/biopsia/{id}/envelope', 'BiopsiaController@envelope');
 Route::get('/citologia/{id}/pdf', 'CitologiaController@pdf');
-Route::get('/citologia/{id}/sm', 'CitologiaController@sm');
 Route::get('/citologia/{id}/print', 'CitologiaController@print');
+Route::get('/citologia/{id}/sm', 'CitologiaController@sm');
 Route::get('/citologia/{id}/envelope', 'CitologiaController@envelope');

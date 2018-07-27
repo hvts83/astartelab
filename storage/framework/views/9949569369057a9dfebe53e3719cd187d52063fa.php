@@ -47,8 +47,8 @@
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Ver detalle</a>
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/pdf" )); ?>">PDF</a>
                   <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/print" )); ?>" target="_blank">Imprimir</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/envelope" )); ?>">Sobre</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/sm" )); ?>">Sin Membrete</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/envelope" )); ?>" target="_blank">Sobre</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/sm" )); ?>" target="_blank">Sin Membrete</a>
                   
                 </td>
               </tr>

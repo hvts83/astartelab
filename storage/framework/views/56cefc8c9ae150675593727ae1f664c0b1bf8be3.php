@@ -11,6 +11,8 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 <hr>
 <table>
   <tr>
@@ -88,5 +90,8 @@
     <td width="400px">Fin del Informe</td>
   </tr>
 </table>
+<script type="text/javascript"> 
+      this.print(); 
+    </script> 
 </body>
 </html>

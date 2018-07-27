@@ -95,5 +95,8 @@
     <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO </p></td>
   </tr>
 </table>
+<script type="text/javascript"> 
+      this.print(); 
+</script> 
 </body>
 
