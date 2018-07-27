@@ -105,73 +105,109 @@
             </div>
             <div id="tab-2" class="tab-pane">
               <div class="panel-body">
-                <div class="row">
-                  @php
-                    foreach ($precios as $precio) {
-                      if ($precio->id == $biopsia->precio_id) {
-                        $totalPagar = $precio->monto;
+                @if($biopsia->precio_id != null)
+                  <div class="row">
+                    @php
+                      foreach ($precios as $precio) {
+                        if ($precio->id == $biopsia->precio_id) {
+                          $totalPagar = $precio->monto;
+                        }
                       }
-                    }
-                  @endphp
-                  <table class="table">
-                    <tr>
-                      <td><strong>Total</strong></td>
-                      <td>{{ $totalPagar  }}</td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="row">
-                  <table class="table">
-                    <thead>
+                    @endphp
+                    <table class="table">
                       <tr>
-                        <th>Fecha pago</th>
-                        <th>Facturación</th>
-                        <th>Monto pagado</th>
-                        <th>Saldo</th>
+                        <td><strong>Total</strong></td>
+                        <td>{{ $totalPagar  }}</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($detalle_pago as $detp)
+                    </table>
+                  </div>
+                  <div class="row">
+                    <table class="table">
+                      <thead>
                         <tr>
-                          <td>{{ $detp->created_at }}</td>
-                          <td>
-                            @foreach ($facturacion as $factu)
-                              @if ($factu['value'] == $detp->facturacion)
-                                {{  $factu['text'] }}
-                              @endif
-                            @endforeach
-                          </td>
-                          <td>{{ $detp->monto }}</td>
-                          <td>{{ $detp->saldo }}</td>
+                          <th>Fecha pago</th>
+                          <th>Facturación</th>
+                          <th>Monto pagado</th>
+                          <th>Saldo</th>
                         </tr>
-                      @endforeach
-                    <tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        @foreach ($detalle_pago as $detp)
+                          <tr>
+                            <td>{{ $detp->created_at }}</td>
+                            <td>
+                              @foreach ($facturacion as $factu)
+                                @if ($factu['value'] == $detp->facturacion)
+                                  {{  $factu['text'] }}
+                                @endif
+                              @endforeach
+                            </td>
+                            <td>{{ $detp->monto }}</td>
+                            <td>{{ $detp->saldo }}</td>
+                          </tr>
+                        @endforeach
+                      <tbody>
+                    </table>
+                  </div>
 
-                @if ($biopsia->estado_pago == 'AP' || $biopsia->estado_pago == 'PE')
-                  <form role="form" method="post" action="{{ url('/biopsia-details/abono/'. $biopsia->id ) }}">
-                  {{ csrf_field() }}
-                  <label class="control-label"> Abono </label>
-                  <div class="input-group">
-                    <span class="input-group-addon">$</span>
-                    <input type="number" placeholder="Abono" required class="form-control" name="monto" step="0.01" min="0.01" max="{{ $detalle_pago[0]->saldo }}">
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label">Facturación</label>
-                    <select class="form-control m-b" name="facturacion">
-                      <option>Seleccione facturación</option>
-                      @foreach ($facturacion as $factu)
-                        <option value="{{ $factu['value'] }}"> {{  $factu['text'] }} </option>
-                      @endforeach
-                    </select>
-                  </div>
-                  <div>
-                      <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
-                  </div>
-                </form>
-                @endif
-
+                  @if ($biopsia->estado_pago == 'AP' || $biopsia->estado_pago == 'PE')
+                    <form role="form" method="post" action="{{ url('/biopsia-details/abono/'. $biopsia->id ) }}">
+                    {{ csrf_field() }}
+                    <label class="control-label"> Abono </label>
+                    <div class="input-group">
+                      <span class="input-group-addon">$</span>
+                      <input type="number" placeholder="Abono" required class="form-control" name="monto" step="0.01" min="0.01" max="{{ $detalle_pago[0]->saldo }}">
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Facturación</label>
+                      <select class="form-control m-b" name="facturacion">
+                        <option>Seleccione facturación</option>
+                        @foreach ($facturacion as $factu)
+                          <option value="{{ $factu['value'] }}"> {{  $factu['text'] }} </option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
+                    </div>
+                  </form>
+                  @endif
+                  @else
+                  <form role="form" method="post" action="{{ url('/biopsia-details/primer_pago/'. $biopsia->id ) }}">
+                    {{ csrf_field() }}
+                      <div class="form-group col-md-4">
+                          <label class="control-label">Precio</label>
+                          <div class="input-group m-b">
+                            <span class="input-group-addon">$</span>
+                            <select  class="form-control"  name="precio_id">
+                              <option disabled selected>Seleccione precio</option>
+                              @foreach ($precios as $precio)
+                                <option value="{{ $precio->id }}"> {{ $precio->nombre . ' - $' . $precio->monto }} </option>
+                              @endforeach
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label class="control-label">Condición de pago</label>
+                          <select class="form-control m-b" name="estado_pago">
+                            <option disabled selected>Seleccione condición</option>
+                            @foreach ($pagos as $pago)
+                              <option value="{{ $pago['value'] }}"> {{  $pago['text'] }} </option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label class="control-label">Facturación</label>
+                          <select class="form-control m-b" name="facturacion">
+                            <option disabled selected>Seleccione facturación</option>
+                            @foreach ($facturacion as $factu)
+                              <option value="{{ $factu['value'] }}"> {{  $factu['text'] }} </option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Pagar</button>
+                  </form>
+                  @endif
               </div>
             </div>
             <div id="tab-3" class="tab-pane">

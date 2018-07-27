@@ -69,14 +69,10 @@ class BiopsiaController extends Controller
       'paciente_id' => 'required',
       'grupo_id' => 'required',
       'diagnostico_id' =>'required',
-      'precio_id' => 'required',
-      'estado_pago' => 'required',
-      'facturacion' => 'required',
       ]);
 
       $correlativo=  Consulta_transacciones::whereRaw('tipo = "B" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
       $informe = "B" . date('y') . date('n') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
-      $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
 
       DB::beginTransaction();
         try {
@@ -84,42 +80,12 @@ class BiopsiaController extends Controller
           $biopsia->doctor_id = $request->doctor_id;
           $biopsia->paciente_id = $request->paciente_id;
           $biopsia->grupo_id = $request->grupo_id;
-          $biopsia->precio_id = $request->precio_id;
           $biopsia->diagnostico_id = $request->diagnostico_id;
-          $biopsia->estado_pago = $request->estado_pago;
           $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
           $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
           $biopsia->informe_preliminar = $request->dpreliminar;
           $biopsia->informe = $informe;
           $biopsia->save();
-
-          $ct = new Consulta_transacciones();
-          $ct->tipo = "B";
-          $ct->consulta = $biopsia->id;
-          $ct->estado_pago = $biopsia->estado_pago;
-          switch ($biopsia->estado_pago) {
-            case 'PP':
-              $this->pagoDoctor( $request->doctor_id, $precioPagar->monto);
-              $ct->monto = $precioPagar->monto;
-              $ct->saldo = 0;
-              break;
-            case 'AP':
-              $ct->monto = 0;
-              $ct->saldo = $precioPagar->monto;
-              break;
-            case 'AC':
-              $ct->monto = $precioPagar->monto;
-              $ct->saldo = 0;
-              break;
-            case 'PE':
-              $ct->monto = 0;
-              $ct->saldo = $precioPagar->monto;
-              break;
-          }
-          $ct->total = $precioPagar->monto;
-          $ct->informe = $biopsia->informe;
-          $ct->facturacion = $request->facturacion;
-          $ct->save();
 
           $this->createDetalle($biopsia->id, 'micro', $request->micro);
           $this->createDetalle($biopsia->id, 'macro', $request->macro);

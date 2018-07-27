@@ -14,6 +14,7 @@ use App\Helpers\General;
 use App\Models\Diagnostico;
 use App\Models\Biopsia;
 use App\Models\Imagen;
+use App\Models\Precio;
 use App\Models\Biopsia_detalle;
 use App\Models\Biopsia_imagen;
 use App\Models\Consulta_transacciones;
@@ -215,6 +216,56 @@ class BiopsiaDetailsController extends Controller
     Mail::to($biopsia->correoPaciente, $biopsia->correoDoctor )
     ->send(new BiopsiaResults($biopsia));
 
+    return redirect('biopsia/'. $id . "/edit");
+  }
+
+  public function primer_pago(Request $request, $id){
+    $this->validate($request, [
+      'precio_id' => 'required',
+      'estado_pago' => 'required',
+      'facturacion' => 'required',
+      ]);
+
+    $biopsia = Biopsia::find($id);
+    $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
+
+    DB::beginTransaction();
+    try {
+      $biopsia->precio_id = $request->precio_id;
+      $biopsia->save();
+
+      $ct = new Consulta_transacciones();
+      $ct->tipo = "B";
+      $ct->consulta = $biopsia->id;
+      $ct->estado_pago = $biopsia->estado_pago;
+      switch ($biopsia->estado_pago) {
+        case 'PP':
+          $this->pagoDoctor( $request->doctor_id, $precioPagar->monto);
+          $ct->monto = $precioPagar->monto;
+          $ct->saldo = 0;
+          break;
+        case 'AP':
+          $ct->monto = 0;
+          $ct->saldo = $precioPagar->monto;
+          break;
+        case 'AC':
+          $ct->monto = $precioPagar->monto;
+          $ct->saldo = 0;
+          break;
+        case 'PE':
+          $ct->monto = 0;
+          $ct->saldo = $precioPagar->monto;
+          break;
+      }
+      $ct->total = $precioPagar->monto;
+      $ct->informe = $biopsia->informe;
+      $ct->facturacion = $request->facturacion;
+      $ct->save();
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
     return redirect('biopsia/'. $id . "/edit");
   }
 
