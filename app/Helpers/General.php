@@ -80,7 +80,9 @@
     public static function getTipoUsuario(){
       $tipo = array(
         array("value" => "A", "text" => "Administrador"),
-        array("value" => "B", "text" => "Empleado"),
+        array("value" => "B", "text" => "Empleado administrativo"),
+        array("value" => "C", "text" => "Empleado basico"),
+        
       );
       return $tipo;
     }
