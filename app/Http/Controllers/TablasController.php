@@ -285,4 +285,87 @@ class TablasController extends Controller
     return view('reportes.pendientes')->with($data);
   }
 
+  public function informeBiopsia(Request $request){
+    
+    $data['page_title'] = "Informe Biopsias";
+    $data['doctores'] = Doctor::all();
+    $data['pacientes'] = Paciente::all();
+
+    if( count($request->all()) > 0 ){
+      $query = Biopsia::select('biopsias.*','doctores.nombre as doctor_name', 'pacientes.name as paciente_name')
+      ->join('doctores', 'doctores.id', '=', 'doctor_id')
+      ->join('pacientes', 'pacientes.id', '=', 'paciente_id');
+      
+      if($request->has('doctor')){
+        $query->where('doctor_id', '=',  $request->doctor);
+      }
+      if($request->has('paciente')){
+        $query->where('paciente_id', '=', $request->paciente);
+      }
+      if($request->inicio != '' and $request->fin != '' ){
+        $query->whereBetween('recibido', 
+          [ 
+            Carbon::createFromFormat('d-m-Y', $request->inicio), 
+            Carbon::createFromFormat('d-m-Y', $request->fin) 
+          ]);
+      }elseif($request->desde != '' and $request->hasta != '' ){
+        $query->whereRaw("CAST( REPLACE(REPLACE(informe, '-', ''), 'B', '') as int) 
+          between  CAST( REPLACE(REPLACE('". $request->desde . "', '-', ''), 'B', '') as int) 
+          and  CAST( REPLACE(REPLACE('". $request->hasta . "', '-', ''), 'B', '') as int)");
+      }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes),
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
+      }
+      $data['biopsias'] = $query->get();
+    }
+    return view('reportes.informe-biopsia')->with($data);
+  }
+
+  public function biopsiaDoctor(Request $request){
+    
+    $data['page_title'] = "Biopsias por Doctores";
+    $data['doctores'] = Doctor::all();
+    $data['pacientes'] = Paciente::all();
+
+    if( count($request->all()) > 0 ){
+      $query = Biopsia::select('biopsias.*','doctores.nombre as doctor_name', 'pacientes.name as paciente_name')
+      ->join('doctores', 'doctores.id', '=', 'doctor_id')
+      ->join('pacientes', 'pacientes.id', '=', 'paciente_id');
+      
+      if($request->has('doctor')){
+        $query->where('doctor_id', '=',  $request->doctor);
+      }
+      if($request->has('paciente')){
+        $query->where('paciente_id', '=', $request->paciente);
+      }
+      if($request->inicio != '' and $request->fin != '' ){
+        $query->whereBetween('recibido', 
+          [ 
+            Carbon::createFromFormat('d-m-Y', $request->inicio), 
+            Carbon::createFromFormat('d-m-Y', $request->fin) 
+          ]);
+      }elseif($request->desde != '' and $request->hasta != '' ){
+        $query->whereRaw("CAST( REPLACE(REPLACE(informe, '-', ''), 'B', '') as int) 
+          between  CAST( REPLACE(REPLACE('". $request->desde . "', '-', ''), 'B', '') as int) 
+          and  CAST( REPLACE(REPLACE('". $request->hasta . "', '-', ''), 'B', '') as int)");
+      }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes),
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
+      }
+      $data['biopsias'] = $query->get();
+    }
+    return view('reportes.biopsia-doctor')->with($data);
+  }
+
+
 }

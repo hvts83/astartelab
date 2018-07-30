@@ -12,8 +12,7 @@
   <tr>
     <td  width="100px"><img src="<?php echo e(asset('img/astartelogobn.jpg')); ?>" height="100px" width="100px"/></td>
     <td nowrrap><h3 align="center">ASTARTE LABORATORIO DE PATOLOGIA</h3>
-        <p align="center">23 Calle Poniente #1249, Colonia Layco, San Salvador, Tel. 2226-9299 <br>
-         Telefax: 2226-9229 E-mail: astarte@elsalvador.com</p>
+        <p align="center">23 Calle Poniente #1249, Colonia Layco, San Salvador, Tel. 2226-9229 <br>
     </td>
   </tr>
 </table>
@@ -63,10 +62,6 @@
 <p align="center">Informe Citolopatologico</p>
 
 <table>
-  <tr>
-    <td>Macro:</td>
-    <td><?php echo e($macro->detalle); ?></td>
-  </tr>
   <tr>
     <td>Micro:</td>
     <td><?php echo e($micro->detalle); ?> </td>

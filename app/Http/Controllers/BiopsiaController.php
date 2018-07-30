@@ -155,7 +155,7 @@ class BiopsiaController extends Controller
    */
   public function pdf($id)
   {
-    $data['biopsia'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, grupos.nombre as grupo')
+    $data['biopsia'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
       ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
       ->join('grupos', 'biopsias.grupo_id', '=', 'grupos.id')
@@ -256,7 +256,7 @@ class BiopsiaController extends Controller
    */
   public function print($id)
   {
-    $data['biopsia'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, grupos.nombre as grupo')
+    $data['biopsia'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
       ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
       ->join('grupos', 'biopsias.grupo_id', '=', 'grupos.id')

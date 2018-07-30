@@ -12,8 +12,8 @@
   <tr>
     <td  width="100px"><img src="{{ asset('img/astartelogobn.jpg') }}" height="100px" width="100px"/></td>
     <td nowrrap><h3 align="center">ASTARTE LABORATORIO DE PATOLOGIA</h3>
-        <p align="center">23 Calle Poniente #1249, Colonia Layco, San Salvador, Tel. 2226-9299 <br>
-         Telefax: 2226-9229 E-mail: astarte@elsalvador.com</p>
+        <p align="center">23 Calle Poniente #1249, Colonia Layco, San Salvador<br>
+         Telefax: 2226-9229 E-mail: astartelaboratorio@gmail.com</p>
     </td>
   </tr>
 </table>
@@ -38,7 +38,7 @@
                         <p>F</p>
                         @endIf</td>
     <td>Edad:</td>
-    <td>{{ $biopsia->edad }} a&ntilde;os</td>
+    <td>{{ $biopsia->edad }} a&ntilde;os {{ $biopsia->meses }} meses</td>
   </tr>
   <tr>
     <td>Diagnostico:</td>

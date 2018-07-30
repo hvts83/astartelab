@@ -52,7 +52,6 @@ class PacienteController extends Controller
       $this->validate($request, [
         'name' => 'max:64|required',
         'sexo' => 'required',
-        'edad' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -63,6 +62,7 @@ class PacienteController extends Controller
             $paciente->sexo = $request->sexo;
             $paciente->documento = $request->documento;
             $paciente->edad = $request->edad;
+            $paciente->meses = $request->meses;
             $paciente->telefono = $request->telefono;
             $paciente->save();
         } catch (\Exception $e) {
@@ -103,7 +103,6 @@ class PacienteController extends Controller
         'name' => 'max:64|required',
         'email'    => 'email|max:64',
         'sexo' => 'required',
-        'edad' => 'required',
         ]);
 
       //Inicio de las inserciones en la base de datos
@@ -114,6 +113,7 @@ class PacienteController extends Controller
           $paciente->sexo = $request->sexo;
           $paciente->documento = $request->documento;
           $paciente->edad = $request->edad;
+          $paciente->meses = $request->meses;
           $paciente->telefono = $request->telefono;
           $paciente->save();
       } catch (\Exception $e) {

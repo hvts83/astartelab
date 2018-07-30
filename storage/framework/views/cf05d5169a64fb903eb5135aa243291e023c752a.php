@@ -45,9 +45,9 @@
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/edit" )); ?>">Ver detalle</a>
                   <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/pdf" )); ?>">PDF</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/print" )); ?>">Imprimir</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/envelope" )); ?>">Sobre</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/sm" )); ?>">Sin Membrete</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/print" )); ?>" target="_blank">Imprimir</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/envelope" )); ?>" target="_blank">Sobre</a>
+                  <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/sm" )); ?>" target="_blank">Sin Membrete</a>
 
                 </td>
               </tr>

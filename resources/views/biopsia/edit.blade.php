@@ -217,9 +217,9 @@
                      <div class="form-group">
                         <label class="control-label">Frases</label>
                         <div class="input-group">
-                          <select class="chosen-select" data-placeholder="Selecciondiagnosticoses" id="select_macro">
+                          <select class="chosen-select" data-placeholder="Selecciondiagnosticoses" id="select_macro" style="height: 24pt">
                             @foreach ($frases as $frase)
-                              <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                              <option value="{{ $frase->nombre }}" style="height: 24pt"> {{  $frase->nombre }} </option>
                             @endforeach
                           </select>
                           <span class="input-group-btn"> <button type="button" id="add_macro" class="btn btn-primary">Agregar</button></span>

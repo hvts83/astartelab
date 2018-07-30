@@ -151,7 +151,7 @@ class CitologiaController extends Controller
    */
   public function pdf($id)
   {
-    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, grupos.nombre as grupo')
+    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
       ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
       ->join('grupos', 'citologia.grupo_id', '=', 'grupos.id')
@@ -198,7 +198,7 @@ class CitologiaController extends Controller
    */
   public function print($id)
   {
-    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, grupos.nombre as grupo')
+    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
       ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
       ->join('grupos', 'citologia.grupo_id', '=', 'grupos.id')

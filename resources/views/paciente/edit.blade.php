@@ -53,12 +53,23 @@
                 <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="sexo" checked="checked">Femenino</label>
               @endif
             </div>
-            <div class="form-group" id="edad">
-                <label class="font-normal">Fecha nacimiento</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                    <input type="text" name="edad" class="form-control" value="{{ $paciente->edad}}">
+            <div class="row">
+                <div class="col-lg-6">
+                <div class="form-group" id="edad">
+                    <label class="font-normal">Edad</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><input type="text" name="edad" class="form-control" value="{{ $paciente->edad }}">
+                    </div>
                 </div>
+            </div>
+            <div class="col-lg-6"> 
+                <div class="form-group" id="meses">
+                    <label class="font-normal">Meses</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><input type="text" name="meses" class="form-control" value="{{ $paciente->meses }}">
+                    </div>
+                </div>
+            </div>
             </div>
             <div class="div-btn">
                 <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>

@@ -47,11 +47,21 @@
               <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="sexo">Masculino</label>
               <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="sexo">Femenino</label>
             </div>
-            <div class="form-group" id="edad">
-                <label class="font-normal">Edad</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><input type="text" name="edad" class="form-control">
+            <div class="row">
+                <div class="col-lg-6">
+                <div class="form-group" id="edad">
+                    <label class="font-normal">Edad</label>
+                   <input type="text" name="edad" class="form-control">
+                    </div>
                 </div>
+            </div>
+            <div class="col-lg-6"> 
+                <div class="form-group" id="meses">
+                    <label class="font-normal">Meses</label>
+                    <input type="text" name="meses" class="form-control">
+                  
+                </div>
+            </div>
             </div>
             <div class="div-btn">
                 <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>

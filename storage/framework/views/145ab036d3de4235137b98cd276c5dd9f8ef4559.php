@@ -220,9 +220,9 @@
                      <div class="form-group">
                         <label class="control-label">Frases</label>
                         <div class="input-group">
-                          <select class="chosen-select" data-placeholder="Selecciondiagnosticoses" id="select_macro">
+                          <select class="chosen-select" data-placeholder="Selecciondiagnosticoses" id="select_macro" style="height: 24pt">
                             <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                              <option value="<?php echo e($frase->nombre); ?>"> <?php echo e($frase->nombre); ?> </option>
+                              <option value="<?php echo e($frase->nombre); ?>" style="height: 24pt"> <?php echo e($frase->nombre); ?> </option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                           </select>
                           <span class="input-group-btn"> <button type="button" id="add_macro" class="btn btn-primary">Agregar</button></span>
