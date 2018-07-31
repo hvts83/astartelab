@@ -92,7 +92,6 @@
         array("value" => "PP", "text" => "Prepagado"),
         array("value" => "AP", "text" => "Abono parcial"),
         array("value" => "AC", "text" => "Abono cancelado"),
-        array("value" => "PE", "text" => "Pendiente de pago"),
       );
       return $tipo;
     }

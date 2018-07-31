@@ -68,8 +68,12 @@ class CitologiaController extends Controller
       'diagnostico_id' =>'required',
       ]);
 
-      $correlativo=  Consulta_transacciones::whereRaw('tipo = "C" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
-      $informe = "C" . date('y') . date('n') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
+      $correlativo=  Citologia::select('informe')
+      ->whereRaw('MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')
+      ->orderBy('informe', 'desc')->first();
+
+      $parte_inicial= "C" . date('y') . date('n') .'-';
+      $informe = $parte_inicial . str_pad((str_replace($parte_inicial, '', $correlativo->informe ) + 1), 3, "0", STR_PAD_LEFT);
 
       DB::beginTransaction();
         try {

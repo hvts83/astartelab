@@ -252,10 +252,6 @@ class BiopsiaDetailsController extends Controller
           $ct->monto = $precioPagar->monto;
           $ct->saldo = 0;
           break;
-        case 'PE':
-          $ct->monto = 0;
-          $ct->saldo = $precioPagar->monto;
-          break;
       }
       $ct->total = $precioPagar->monto;
       $ct->informe = $biopsia->informe;

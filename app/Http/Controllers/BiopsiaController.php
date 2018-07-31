@@ -68,9 +68,12 @@ class BiopsiaController extends Controller
       'diagnostico_id' =>'required',
       ]);
 
-      $correlativo=  Consulta_transacciones::whereRaw('tipo = "B" AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')->count();
-      $informe = "B" . date('y') . date('n') .'-'. str_pad(($correlativo + 1), 3, "0", STR_PAD_LEFT);
+      $correlativo=  Biopsia::select('informe')
+        ->whereRaw('MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')
+        ->orderBy('informe', 'desc')->first();
 
+      $parte_inicial= "B" . date('y') . date('n') .'-';
+      $informe = $parte_inicial . str_pad((str_replace($parte_inicial, '', $correlativo->informe ) + 1), 3, "0", STR_PAD_LEFT);
       DB::beginTransaction();
         try {
           $biopsia = new Biopsia();
