@@ -90,8 +90,8 @@
     public static function getCondicionPago(){
       $tipo = array(
         array("value" => "PP", "text" => "Prepagado"),
-        array("value" => "AP", "text" => "Abono parcial"),
-        array("value" => "AC", "text" => "Abono cancelado"),
+        array("value" => "PE", "text" => "Pendiente"),
+        array("value" => "AC", "text" => "Cancelado"),
       );
       return $tipo;
     }

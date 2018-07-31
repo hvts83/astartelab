@@ -130,49 +130,6 @@ class CitologiaDetailsController extends Controller
     return redirect('citologia/'. $id . "/edit");
   }
 
-  public function abono(Request $request, $id)
-  {
-    $this->validate($request, [
-      'monto' =>'required',
-      'facturacion' => 'required',
-      ]);
-
-      $citologia = Citologia::find($id);
-      $consultaSaldo = Consulta_transacciones::where([
-        ['tipo', '=', 'B'],
-        ['consulta', '=', $id]
-      ])->orderBy('created_at', 'DESC')->first();
-
-      $nuevoSaldo = $consultaSaldo->saldo - $request->monto;
-      $estado = "AP";
-      if ($nuevoSaldo == 0) {
-          $estado = "AC";
-      }
-
-    DB::beginTransaction();
-      try {
-        $ct = new Consulta_transacciones();
-        $ct->tipo = "B";
-        $ct->consulta = $citologia->id;
-        $ct->estado_pago = $estado;
-        $ct->total = $consultaSaldo->total;
-        $ct->monto = $request->monto;
-        $ct->saldo = $nuevoSaldo;
-        $ct->informe = $citologia->informe;
-        $ct->facturacion = $request->facturacion;
-        $ct->save();
-
-        $citologia->estado_pago= $estado;
-        $citologia->save();
-
-    } catch (\Exception $e) {
-      DB::rollback();
-      throw $e;
-    }
-    DB::commit();
-    return redirect('citologia/'. $id . "/edit");
-  }
-
   public function send(Request $request, $id){
     $citologia = Citologia::select(
       'citologias.*',
@@ -226,25 +183,26 @@ class CitologiaDetailsController extends Controller
     DB::beginTransaction();
     try {
       $citologia->precio_id = $request->precio_id;
+      $citologia->estado_pago = $request->estado_pago;
       $citologia->save();
 
       $ct = new Consulta_transacciones();
       $ct->tipo = "C";
       $ct->consulta = $citologia->id;
       $ct->estado_pago = $citologia->estado_pago;
-      switch ($citologia->estado_pago) {
+      switch ($request->estado_pago) {
         case 'PP':
-          $this->pagoDoctor( $request->doctor_id, $precioPagar->monto);
+          $this->pagoDoctor( $citologia->doctor_id, $precioPagar->monto);
           $ct->monto = $precioPagar->monto;
           $ct->saldo = 0;
-          break;
-        case 'AP':
-          $ct->monto = 0;
-          $ct->saldo = $precioPagar->monto;
           break;
         case 'AC':
           $ct->monto = $precioPagar->monto;
           $ct->saldo = 0;
+          break;
+        case 'PE':	
+          $ct->monto = 0;	
+          $ct->saldo = $precioPagar->monto;	
           break;
       }
       $ct->total = $precioPagar->monto;
@@ -257,6 +215,22 @@ class CitologiaDetailsController extends Controller
     }
     DB::commit();
     return redirect('citologia/'. $id . "/edit");
+  }
+
+  protected function pagoDoctor($doctor_id, $monto){
+    $doctor = Doctor::find($doctor_id);
+    $nuevoSaldo = $doctor->saldo - $monto;
+    //Inicio de las inserciones en la base de datos
+    $trans = new Doctor_transaccion();
+    $trans->doctor_id = $doctor->id;
+    $trans->tipo = "E";
+    $trans->monto = $monto;
+    $trans->prev = $doctor->saldo;
+    $trans->actual = $nuevoSaldo;
+    $trans->save();
+
+    $doctor->saldo = $nuevoSaldo;
+    $doctor->save();
   }
 
 }

@@ -71,9 +71,12 @@ class CitologiaController extends Controller
       $correlativo=  Citologia::select('informe')
       ->whereRaw('MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')
       ->orderBy('informe', 'desc')->first();
-
       $parte_inicial= "C" . date('y') . date('n') .'-';
-      $informe = $parte_inicial . str_pad((str_replace($parte_inicial, '', $correlativo->informe ) + 1), 3, "0", STR_PAD_LEFT);
+      if($correlativo== null){
+        $informe = $parte_inicial . str_pad(1, 3, "0", STR_PAD_LEFT);
+      }else{
+        $informe = $parte_inicial . str_pad((str_replace($parte_inicial, '', $correlativo->informe ) + 1), 3, "0", STR_PAD_LEFT);
+      }
 
       DB::beginTransaction();
         try {
@@ -363,22 +366,6 @@ class CitologiaController extends Controller
     }
     DB::commit();
      return redirect('citologia/'. $id . "/edit");
-  }
-
-  protected function pagoDoctor($doctor_id, $monto){
-    $doctor = Doctor::find($doctor_id);
-    $nuevoSaldo = $doctor->saldo - $monto;
-    //Inicio de las inserciones en la base de datos
-    $trans = new Doctor_transaccion();
-    $trans->doctor_id = $doctor->id;
-    $trans->tipo = "E";
-    $trans->monto = $monto;
-    $trans->prev = $doctor->saldo;
-    $trans->actual = $nuevoSaldo;
-    $trans->save();
-
-    $doctor->saldo = $nuevoSaldo;
-    $doctor->save();
   }
 
   private function createDetalle($citologia, $tipo_detalle, $detalle_texto = '') {

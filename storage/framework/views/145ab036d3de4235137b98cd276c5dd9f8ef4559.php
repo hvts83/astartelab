@@ -125,6 +125,7 @@
                       <thead>
                         <tr>
                           <th>Fecha pago</th>
+                          <th>Tipo</th>
                           <th>Facturación</th>
                           <th>Monto pagado</th>
                           <th>Saldo</th>
@@ -134,6 +135,7 @@
                         <?php $__currentLoopData = $detalle_pago; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $detp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                           <tr>
                             <td><?php echo e($detp->created_at); ?></td>
+                            <td><?php echo e($detp->estado_pago); ?></td>
                             <td>
                               <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php if($factu['value'] == $detp->facturacion): ?>
@@ -149,66 +151,43 @@
                       <tbody>
                     </table>
                   </div>
-
-                  <?php if($biopsia->estado_pago == 'AP' || $biopsia->estado_pago == 'PE'): ?>
-                    <form role="form" method="post" action="<?php echo e(url('/biopsia-details/abono/'. $biopsia->id )); ?>">
-                    <?php echo e(csrf_field()); ?>
-
-                    <label class="control-label"> Abono </label>
-                    <div class="input-group">
-                      <span class="input-group-addon">$</span>
-                      <input type="number" placeholder="Abono" required class="form-control" name="monto" step="0.01" min="0.01" max="<?php echo e($detalle_pago[0]->saldo); ?>">
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Facturación</label>
-                      <select class="form-control m-b" name="facturacion">
-                        <option>Seleccione facturación</option>
-                        <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                          <option value="<?php echo e($factu['value']); ?>"> <?php echo e($factu['text']); ?> </option>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                      </select>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button>
-                    </div>
-                  </form>
                   <?php endif; ?>
-                  <?php else: ?>
-                  <form role="form" method="post" action="<?php echo e(url('/biopsia-details/primer_pago/'. $biopsia->id )); ?>">
-                    <?php echo e(csrf_field()); ?>
+                  <?php if($biopsia->estado_pago == 'PE'): ?>
+                    <form role="form" method="post" action="<?php echo e(url('/biopsia-details/primer_pago/'. $biopsia->id )); ?>">
+                      <?php echo e(csrf_field()); ?>
 
-                      <div class="form-group col-md-4">
-                          <label class="control-label">Precio</label>
-                          <div class="input-group m-b">
-                            <span class="input-group-addon">$</span>
-                            <select  class="form-control"  name="precio_id">
-                              <option disabled selected>Seleccione precio</option>
-                              <?php $__currentLoopData = $precios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $precio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($precio->id); ?>"> <?php echo e($precio->nombre . ' - $' . $precio->monto); ?> </option>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Precio</label>
+                            <div class="input-group m-b">
+                              <span class="input-group-addon">$</span>
+                              <select  class="form-control"  name="precio_id">
+                                <option disabled selected>Seleccione precio</option>
+                                <?php $__currentLoopData = $precios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $precio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                  <option value="<?php echo e($precio->id); ?>"> <?php echo e($precio->nombre . ' - $' . $precio->monto); ?> </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label class="control-label">Condición de pago</label>
+                            <select class="form-control m-b" name="estado_pago">
+                              <option disabled selected>Seleccione condición</option>
+                              <?php $__currentLoopData = $pagos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pago): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($pago['value']); ?>"> <?php echo e($pago['text']); ?> </option>
                               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                           </div>
-                        </div>
-                        <div class="form-group col-md-4">
-                          <label class="control-label">Condición de pago</label>
-                          <select class="form-control m-b" name="estado_pago">
-                            <option disabled selected>Seleccione condición</option>
-                            <?php $__currentLoopData = $pagos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pago): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                              <option value="<?php echo e($pago['value']); ?>"> <?php echo e($pago['text']); ?> </option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                          </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                          <label class="control-label">Facturación</label>
-                          <select class="form-control m-b" name="facturacion">
-                            <option disabled selected>Seleccione facturación</option>
-                            <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                              <option value="<?php echo e($factu['value']); ?>"> <?php echo e($factu['text']); ?> </option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                          </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Pagar</button>
-                  </form>
+                          <div class="form-group col-md-4">
+                            <label class="control-label">Facturación</label>
+                            <select class="form-control m-b" name="facturacion">
+                              <option disabled selected>Seleccione facturación</option>
+                              <?php $__currentLoopData = $facturacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($factu['value']); ?>"> <?php echo e($factu['text']); ?> </option>
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Pagar</button>
+                    </form>
                   <?php endif; ?>
               </div>
             </div>

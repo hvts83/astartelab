@@ -17,6 +17,8 @@ use App\Models\Imagen;
 use App\Models\Precio;
 use App\Models\Biopsia_detalle;
 use App\Models\Biopsia_imagen;
+use App\Models\Doctor;
+use App\Models\Doctor_transaccion;
 use App\Models\Consulta_transacciones;
 use App\Mail\BiopsiaResults;
 
@@ -153,72 +155,6 @@ class BiopsiaDetailsController extends Controller
     return redirect('biopsia/'. $id . "/edit");
   }
 
-  public function abono(Request $request, $id)
-  {
-    $this->validate($request, [
-      'monto' =>'required',
-      'facturacion' => 'required',
-      ]);
-
-      $biopsia = Biopsia::find($id);
-      $consultaSaldo = Consulta_transacciones::where([
-        ['tipo', '=', 'B'],
-        ['consulta', '=', $id]
-      ])->orderBy('created_at', 'DESC')->first();
-
-      $nuevoSaldo = $consultaSaldo->saldo - $request->monto;
-      $estado = "AP";
-      if ($nuevoSaldo == 0) {
-          $estado = "AC";
-      }
-
-    DB::beginTransaction();
-      try {
-        $ct = new Consulta_transacciones();
-        $ct->tipo = "B";
-        $ct->consulta = $biopsia->id;
-        $ct->estado_pago = $estado;
-        $ct->total = $consultaSaldo->total;
-        $ct->monto = $request->monto;
-        $ct->saldo = $nuevoSaldo;
-        $ct->informe = $biopsia->informe;
-        $ct->facturacion = $request->facturacion;
-        $ct->save();
-
-        $biopsia->estado_pago= $estado;
-        $biopsia->save();
-
-    } catch (\Exception $e) {
-      DB::rollback();
-      throw $e;
-    }
-    DB::commit();
-    return redirect('biopsia/'. $id . "/edit");
-  }
-
-  public function send(Request $request, $id){
-    $biopsia = Biopsia::select(
-      'biopsias.*',
-      'pacientes.name as nombrePaciente',
-      'pacientes.email as correoPaciente',
-      'doctores.nombre as nombreDoctor',
-      'doctores.email as correoDoctor',
-      'precios.monto',
-      'diagnosticos.nombre as diagnostico'
-    )
-    ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
-    ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
-    ->join('precios', 'biopsias.precio_id', '=', 'precios.id')
-    ->join('diagnosticos', 'biopsias.diagnostico_id', '=', 'diagnosticos.id')
-    ->where('biopsias.id', '=', $id)
-    ->first();
-
-    Mail::to($biopsia->correoPaciente, $biopsia->correoDoctor )
-    ->send(new BiopsiaResults($biopsia));
-
-    return redirect('biopsia/'. $id . "/edit");
-  }
-
   public function primer_pago(Request $request, $id){
     $this->validate($request, [
       'precio_id' => 'required',
@@ -232,25 +168,26 @@ class BiopsiaDetailsController extends Controller
     DB::beginTransaction();
     try {
       $biopsia->precio_id = $request->precio_id;
+      $biopsia->estado_pago = $request->estado_pago;
       $biopsia->save();
 
       $ct = new Consulta_transacciones();
       $ct->tipo = "B";
       $ct->consulta = $biopsia->id;
       $ct->estado_pago = $biopsia->estado_pago;
-      switch ($biopsia->estado_pago) {
+      switch ($request->estado_pago) {
         case 'PP':
-          $this->pagoDoctor( $request->doctor_id, $precioPagar->monto);
+          $this->pagoDoctor( $biopsia->doctor_id, $precioPagar->monto);
           $ct->monto = $precioPagar->monto;
           $ct->saldo = 0;
-          break;
-        case 'AP':
-          $ct->monto = 0;
-          $ct->saldo = $precioPagar->monto;
           break;
         case 'AC':
           $ct->monto = $precioPagar->monto;
           $ct->saldo = 0;
+          break;
+        case 'PE':	
+          $ct->monto = 0;	
+          $ct->saldo = $precioPagar->monto;	
           break;
       }
       $ct->total = $precioPagar->monto;
@@ -263,6 +200,22 @@ class BiopsiaDetailsController extends Controller
     }
     DB::commit();
     return redirect('biopsia/'. $id . "/edit");
+  }
+
+  protected function pagoDoctor($doctor_id, $monto){
+    $doctor = Doctor::find($doctor_id);
+    $nuevoSaldo = $doctor->saldo - $monto;
+    //Inicio de las inserciones en la base de datos
+    $trans = new Doctor_transaccion();
+    $trans->doctor_id = $doctor->id;
+    $trans->tipo = "E";
+    $trans->monto = $monto;
+    $trans->prev = $doctor->saldo;
+    $trans->actual = $nuevoSaldo;
+    $trans->save();
+
+    $doctor->saldo = $nuevoSaldo;
+    $doctor->save();
   }
 
 }
