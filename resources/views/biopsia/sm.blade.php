@@ -5,6 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    h3{
+      margin:0px;
+    }
+    h5{
+      margin:0px;
+    }
+    tr{
+      margin:0px;
+    }
+    td{
+      margin:0px;
+    }
+    p{
+      margin:0px;
+    }  
+  </style>  
 </head>
 <body>
 <p>&nbsp;</p>
@@ -88,7 +105,7 @@
 <table>
   <tr>
     <td width="400px">Fin del Informe</td>
-    <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO </p></td>
+    <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO - JVPM 1711</p></td>
   </tr>
 </table>
 <script type="text/javascript"> 

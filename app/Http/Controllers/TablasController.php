@@ -366,5 +366,88 @@ class TablasController extends Controller
     return view('reportes.biopsia-doctor')->with($data);
   }
 
+  public function informeCitologia(Request $request){
+    
+    $data['page_title'] = "Citologias por Informe";
+    $data['doctores'] = Doctor::all();
+    $data['pacientes'] = Paciente::all();
+
+    if( count($request->all()) > 0 ){
+      $query = Citologia::select('citologia.*', 'doctores.nombre as doctor_name', 'pacientes.name as paciente_name')
+      ->join('doctores', 'doctores.id', '=', 'doctor_id')
+      ->join('pacientes', 'pacientes.id', '=', 'paciente_id');
+      
+      if($request->has('doctor')){
+        $query->where('doctor_id', '=',  $request->doctor);
+      }
+      if($request->has('paciente')){
+        $query->where('paciente_id', '=', $request->paciente);
+      }
+      if($request->inicio != '' and $request->fin != '' ){
+        $query->whereBetween('recibido', 
+          [ 
+            Carbon::createFromFormat('d-m-Y', $request->inicio), 
+            Carbon::createFromFormat('d-m-Y', $request->fin) 
+          ]);
+        }elseif($request->desde != '' and $request->hasta != '' ){
+          $query->whereRaw("CAST( REPLACE(REPLACE(informe, '-', ''), 'C', '') as int) 
+            between  CAST( REPLACE(REPLACE('". $request->desde . "', '-', ''), 'C', '') as int) 
+            and  CAST( REPLACE(REPLACE('". $request->hasta . "', '-', ''), 'C', '') as int)");
+        }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
+      }
+      $data['citologias'] = $query->get();
+    }
+    return view('reportes.informe-citologia')->with($data);
+  }
+
+  public function citologiaDoctor(Request $request){
+    
+    $data['page_title'] = "Informe de Biopsias por Doctores";
+    $data['doctores'] = Doctor::all();
+    $data['pacientes'] = Paciente::all();
+
+    if( count($request->all()) > 0 ){
+      $query = Citologia::select('citologia.*', 'doctores.nombre as doctor_name', 'pacientes.name as paciente_name')
+      ->join('doctores', 'doctores.id', '=', 'doctor_id')
+      ->join('pacientes', 'pacientes.id', '=', 'paciente_id');
+      
+      if($request->has('doctor')){
+        $query->where('doctor_id', '=',  $request->doctor);
+      }
+      if($request->has('paciente')){
+        $query->where('paciente_id', '=', $request->paciente);
+      }
+      if($request->inicio != '' and $request->fin != '' ){
+        $query->whereBetween('recibido', 
+          [ 
+            Carbon::createFromFormat('d-m-Y', $request->inicio), 
+            Carbon::createFromFormat('d-m-Y', $request->fin) 
+          ]);
+        }elseif($request->desde != '' and $request->hasta != '' ){
+          $query->whereRaw("CAST( REPLACE(REPLACE(informe, '-', ''), 'C', '') as int) 
+            between  CAST( REPLACE(REPLACE('". $request->desde . "', '-', ''), 'C', '') as int) 
+            and  CAST( REPLACE(REPLACE('". $request->hasta . "', '-', ''), 'C', '') as int)");
+        }elseif($request->mes != ''){
+        $query->whereRaw('MONTH(?) = MONTH(recibido) AND YEAR(?) = YEAR(recibido)',
+         [
+          Carbon::createFromFormat('d-m-Y', $request->mes), 
+          Carbon::createFromFormat('d-m-Y', $request->mes)
+          ]);
+      }elseif($request->annio != ''){
+        $query->whereRaw('YEAR(?) = YEAR(recibido)', [Carbon::createFromFormat('d-m-Y', $request->annio)]);
+      }
+      $data['citologias'] = $query->get();
+    }
+    return view('reportes.citologia-doctor')->with($data);
+  }
+
+
 
 }

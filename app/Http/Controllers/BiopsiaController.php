@@ -69,8 +69,8 @@ class BiopsiaController extends Controller
       ]);
 
       $correlativo=  Biopsia::select('informe')
-        ->whereRaw('MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')
-        ->orderBy('informe', 'desc')->first();
+      ->whereRaw('MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(NOW())')
+      ->orderBy('informe', 'desc')->first();
       $parte_inicial= "B" . date('y') . date('n') .'-';
       if($correlativo== null){
         $informe = $parte_inicial . str_pad(1, 3, "0", STR_PAD_LEFT);
@@ -78,10 +78,9 @@ class BiopsiaController extends Controller
         $informe = $parte_inicial . str_pad((str_replace($parte_inicial, '', $correlativo->informe ) + 1), 3, "0", STR_PAD_LEFT);
       }
 
-      $informe = $parte_inicial . str_pad((str_replace($parte_inicial, '', $correlativo->informe ) + 1), 3, "0", STR_PAD_LEFT);
       DB::beginTransaction();
         try {
-          $biopsia = new Biopsia();
+          $biopsia = new biopsia();
           $biopsia->doctor_id = $request->doctor_id;
           $biopsia->paciente_id = $request->paciente_id;
           $biopsia->grupo_id = $request->grupo_id;
@@ -95,7 +94,7 @@ class BiopsiaController extends Controller
           $this->createDetalle($biopsia->id, 'micro', $request->micro);
           $this->createDetalle($biopsia->id, 'macro', $request->macro);
           $this->createDetalle($biopsia->id, 'preliminar', $request->preliminar);
-          $this->createDetalle($biopsia->id, 'inmunohistoquimica', $request->inmuno);
+
       } catch (\Exception $e) {
         DB::rollback();
         throw $e;

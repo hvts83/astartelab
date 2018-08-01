@@ -63,6 +63,8 @@ Route::get('/reportes/biopsia', 'TablasController@biopsia');
 Route::get('/reportes/citologia', 'TablasController@citologia');
 Route::get('/reportes/informe-biopsia', 'TablasController@informeBiopsia');
 Route::get('/reportes/biopsia-doctor', 'TablasController@biopsiaDoctor');
+Route::get('/reportes/informe-citologia', 'TablasController@informeCitologia');
+Route::get('/reportes/citologia-doctor', 'TablasController@citologiaDoctor');
 Route::get('/reportes/grupo', 'TablasController@grupo');
 Route::get('/reportes/ingresos', 'TablasController@ingresos');
 Route::get('/reportes/pendientes', 'TablasController@pendientes');

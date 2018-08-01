@@ -5,13 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    h3{
+      margin:0px;
+    }
+    h5{
+      margin:0px;
+    }
+    tr{
+      margin:0px;
+    }
+    td{
+      margin:0px;
+    }
+    p{
+      margin:0px;
+    }  
+  </style>  
 </head>
 <body>
 
 <table align="center" width="80%">
   <tr>
     <td  width="100px"><img src="{{ asset('img/astartelogobn.jpg') }}" height="100px" width="100px"/></td>
-    <td nowrrap><h3 align="center">ASTARTE LABORATORIO DE PATOLOGIA</h3>
+     <td nowrrap align="center"><h3>ASTARTE LABORATORIO DE PATOLOGIA</h3>
+                <h5>INSCRIPCI&Oacute;N C.S.S.P. N° 11</h5>
+                <h3>DR. SALVADOR LOPEZ HERNANDEZ</h3>
+                <h5>MEDICO PATOLOGO - JVPM 1711<br>
+                    PATOLOGIA GENERAL, PEDIATRICA Y NEONATAL <br>
+                    CITOPATOLOGIA, CITOLOGIA POR ASPIRACION CON AGUJA FINA (CAAF)</h5>
         <p align="center">23 Calle Poniente #1249, Colonia Layco, San Salvador<br>
          Telefax: 2226-9229 E-mail: astartelaboratorio@gmail.com</p>
     </td>
@@ -41,17 +63,13 @@
   </tr>
   <tr>
     <td>Diagnostico:</td>
-    <td>@foreach ($diagnosticos as $diagnostico)
-                             @if ($diagnostico->id == $citologia->diagnostico_id)
-                               <option value="{{ $diagnostico->id }}" selected> {{  $diagnostico->nombre }} </option>
-                             @else
-                              <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
-                             @endif
-                           @endforeach</td>
+    <td> </td>
   </tr>
   <tr>
-    <td>Recibido:</td>
+    <td>Recibido:</td> 
     <td>{{ $citologia->recibido }}</td>
+    <td></td>
+    <td></td>
     <td>Entregado: </td>
     <td>{{ $citologia->entregado }}</td>
   
@@ -73,13 +91,7 @@
   </tr>
   <tr>
     <td>Informe Preliminar:</td>
-    <td nowrap>@if($citologia->informe_preliminar == '1')
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="dpreliminar" checked>Si</label>
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="dpreliminar">No</label>
-                        @else
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="dpreliminar">Si</label>
-                        <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="dpreliminar" checked>No</label>
-                        @endIf</td>
+    <td nowrap> </td>
   </tr>
 </table>
 <hr>
@@ -88,7 +100,7 @@
 <table>
   <tr>
     <td width="400px">Fin del Informe</td>
-    <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO </p></td>
+    <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO - JVPM 1711 </p></td>
   </tr>
 </table>
 <script type="text/javascript"> 
