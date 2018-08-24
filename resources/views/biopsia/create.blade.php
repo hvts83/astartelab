@@ -54,7 +54,7 @@
                     <input type="text" name="entregado" class="form-control" value="{{ DATE("d-m-Y") }}">
                   </div>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-12">
                 <label class="control-label">Doctor</label>
                 <select class="chosen-select"  name="doctor_id">
                   <option disabled selected>Seleccione doctor</option>
@@ -81,16 +81,19 @@
                   @endforeach
                 </select>
               </div>
-              <div class="form-group col-md-6">
-                <div class="form-group">
-                  <label class="control-label">Diagnóstico</label>
-                  <select class="chosen-select"  name="diagnostico_id">
-                    <option disabled selected>Seleccione diagnóstico</option>
-                    @foreach ($diagnosticos as $diagnostico)
-                        <option value="{{ $diagnostico->id }}"> {{  $diagnostico->nombre }} </option>
-                    @endforeach
-                  </select>
-                </div>
+              <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Diagnóstico</label>
+                    <select class="chosen-select form-control" data-placeholder="Seleccione diagnóstico" id="select_diagnostico_id">
+                      @foreach ($diagnosticos as $diagnostico)
+                        <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <button type="button" id="add_diagnostico_id" class="btn btn-primary">Agregar</button>
+                  <div class="form-group">
+                      <textarea class="form-control" rows="5" id="diagnostico_id" name="diagnostico_id"></textarea>
+                  </div>
               </div>
             </div>
           </div>
@@ -98,15 +101,13 @@
             <div class="panel-body">
                 <div class="form-group">
                   <label class="control-label">Frases</label>
-                  <div class="input-group">
-                    <select class="chosen-select" data-placeholder="Selecciondiagnosticoses" id="select_macro">
+                  <select class="chosen-select form-control" data-placeholder="Selecciondiagnosticoses" id="select_macro">
                       @foreach ($frases as $frase)
                         <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
                       @endforeach
-                    </select>
-                    <span class="input-group-btn"> <button type="button" id="add_macro" class="btn btn-primary">Agregar</button></span>
-                  </div>
+                  </select>
                 </div>
+                <button type="button" id="add_macro" class="btn btn-primary">Agregar</button>
                 <div class="form-group">
                     <textarea class="form-control" rows="5" id="macro" name="macro"></textarea>
                 </div>
@@ -116,15 +117,13 @@
             <div class="panel-body">
                 <div class="form-group">
                   <label class="control-label">Frases</label>
-                  <div class="input-group">
-                    <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
+                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
                       @foreach ($frases as $frase)
                         <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
                       @endforeach
                     </select>
-                    <span class="input-group-btn"> <button type="button" id="add_micro" class="btn btn-primary">Agregar</button></span>
                   </div>
-                </div>
+                  <button type="button" id="add_micro" class="btn btn-primary">Agregar</button>
                 <div class="form-group">
                     <textarea class="form-control" rows="5" id="micro" name="micro"></textarea>
                 </div>
@@ -134,42 +133,32 @@
             <div class="panel-body">
               <div class="form-group">
                 <label class="control-label">Diagnóstico</label>
-                <div class="input-group">
-                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
+                <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
                     @foreach ($diagnosticos as $diagnostico)
                       <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
                     @endforeach
                   </select>
-                  <span class="input-group-btn"> <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button></span>
                 </div>
-              </div>
+                <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button>
               <div class="form-group">
                   <textarea class="form-control" rows="5" id="preliminar" name="preliminar"></textarea>
-              </div>
-              <div class="form-group">
-                <label class="control-label">¿Es diagnóstico preeliminar?</label>
-                <br>
-                <label class="checkbox-inline i-checks"> <input type="radio" value="1" name="dpreliminar">Si</label>
-                <label class="checkbox-inline i-checks"> <input type="radio" value="2" name="dpreliminar">No</label>
               </div>
             </div>
           </div>
           <div id="tab-6" class="tab-pane">
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="control-label">Diagnóstico</label>
-                    <div class="input-group">
-                      <select class="chosen-select" data-placeholder="Seleccione frases" id="select_inmuno">
-                        @foreach ($diagnosticos as $diagnostico)
-                          <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
-                        @endforeach
-                      </select>
-                      <span class="input-group-btn"> <button type="button" id="add_inmuno" class="btn btn-primary">Agregar</button></span>
-                    </div>
-                  </div>
-                  <div class="form-group">
+                  <label class="control-label">Diagnóstico</label>
+                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_inmuno">
+                      @foreach ($diagnosticos as $diagnostico)
+                        <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                      @endforeach
+                  </select>
+                </div>
+                <button type="button" id="add_inmuno" class="btn btn-primary">Agregar</button>
+                <div class="form-group">
                       <textarea class="form-control" rows="5" id="inmuno" name="inmuno"></textarea>
-                  </div>
+                </div>
             </div>
           </div>
         </div>
@@ -214,6 +203,9 @@
     });
   </script>
   <script>
+    $('#add_diagnostico_id').on('click', function(){
+      $('#diagnostico_id').append( $('#select_diagnostico_id').val() );   
+    });
     $('#add_macro').on('click', function(){
       $('#macro').append( $('#select_macro').val() );   
     });
