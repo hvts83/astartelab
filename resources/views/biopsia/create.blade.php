@@ -92,11 +92,12 @@
                   </div>
                   <button type="button" id="add_diagnostico_id" class="btn btn-primary">Agregar</button>
                   <div class="form-group">
-                      <textarea class="form-control" rows="5" id="diagnostico_id" name="diagnostico_id"></textarea>
+                      <textarea class="form-control" rows="5" id="diagnostico_id" name="diagnostico"></textarea>
                   </div>
               </div>
             </div>
           </div>
+
           <div id="tab-3" class="tab-pane">
             <div class="panel-body">
                 <div class="form-group">
@@ -113,6 +114,7 @@
                 </div>
             </div>
           </div>
+
           <div id="tab-4" class="tab-pane">
             <div class="panel-body">
                 <div class="form-group">
@@ -129,6 +131,7 @@
                 </div>
             </div>
           </div>
+
           <div id="tab-5" class="tab-pane">
             <div class="panel-body">
               <div class="form-group">
@@ -137,14 +140,15 @@
                     @foreach ($diagnosticos as $diagnostico)
                       <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
                     @endforeach
-                  </select>
-                </div>
-                <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button>
+                </select>
+              </div>
+              <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button>
               <div class="form-group">
-                  <textarea class="form-control" rows="5" id="preliminar" name="preliminar"></textarea>
+                <textarea class="form-control" rows="5" id="preliminar" name="preliminar"></textarea>
               </div>
             </div>
           </div>
+
           <div id="tab-6" class="tab-pane">
             <div class="panel-body">
                 <div class="form-group">
