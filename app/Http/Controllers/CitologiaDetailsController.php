@@ -15,8 +15,9 @@ use App\Models\Diagnostico;
 use App\Models\Citologia;
 use App\Models\Imagen;
 use App\Models\Precio;
-use App\Models\Citologia_detalle;
 use App\Models\Citologia_imagen;
+use App\Models\Doctor;
+use App\Models\Doctor_transaccion;
 use App\Models\Consulta_transacciones;
 use App\Mail\CitologiaResults;
 
@@ -27,29 +28,6 @@ class CitologiaDetailsController extends Controller
       $this->middleware('auth');
   }
 
-  public function macro(Request $request, $id)
-  {
-    $this->validate($request, [
-      'macro' =>'required',
-    ]);
-
-    DB::beginTransaction();
-    try {
-    $macro = Citologia_detalle::where([
-      ['tipo_detalle', '=', 'macro'],
-      ['id', '=', $id]
-    ])->first();
-    
-    $macro->detalle = $request->macro;
-    $macro->save();
-    } catch (\Exception $e) {
-      DB::rollback();
-      throw $e;
-    }
-    DB::commit();
-    return redirect('citologia/'. $macro->citologia_id . "/edit");
-  }
-
   public function micro(Request $request, $id)
   {
     $this->validate($request, [
@@ -58,47 +36,34 @@ class CitologiaDetailsController extends Controller
 
     DB::beginTransaction();
     try {
-    $micro = Citologia_detalle::where([
-      ['tipo_detalle', '=', 'micro'],
-      ['id', '=', $id]
-    ])->first();
-    
-    $micro->detalle = $request->micro;
-    $micro->save();
+      $citologia = Citologia::find($id);
+      $citologia->micro = $request->micro;
+      $citologia->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
     DB::commit();
-    return redirect('citologia/'. $micro->citologia_id . "/edit");
+    return redirect('citologia/'. $id . "/edit");
   }
 
   public function preliminar(Request $request, $id)
   {
     $this->validate($request, [
-      'preliminar' =>'required',
-      'dpreliminar' => 'required',
+      'preliminar' =>'required'
     ]);
 
     DB::beginTransaction();
     try {
-    $preliminar = Citologia_detalle::where([
-      ['tipo_detalle', '=', 'preliminar'],
-      ['id', '=', $id]
-    ])->first();
-    
-    $preliminar->detalle = $request->preliminar;
-    $preliminar->save();
-
-    $citologia = Citologia::find($preliminar->citologia_id);
-    $citologia->informe_preliminar = $request->dpreliminar;
-    $citologia->save();
+      $citologia = Citologia::find($id);
+      $citologia->preliminar = $request->preliminar;
+      $citologia->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
     DB::commit();
-    return redirect('citologia/'. $preliminar->citologia_id . "/edit");
+    return redirect('citologia/'. $id . "/edit");
   }
 
   public function imagen(Request $request, $id)
@@ -153,23 +118,6 @@ class CitologiaDetailsController extends Controller
     return redirect('citologia/'. $id . "/edit");
   }
 
-  private function createDetalle($citologia, $tipo_detalle, $opcion_id) {
-    $detalle = new Citologia_detalle();
-    $detalle->citologia_id = $citologia;
-    $detalle->tipo_detalle = $tipo_detalle;
-    $detalle->opcion_id = $opcion_id;
-    $detalle->save();
-  }
-
-  private function deleteDetalle($citologia, $tipo_detalle, $detalle_id){
-    $detalle = Citologia_detalle::where([
-      ['citologia_id', '=', $citologia],
-      ['tipo_detalle', '=', $tipo_detalle]
-    ])
-    ->whereIn('opcion_id', $detalle_id)
-    ->delete();
-  }
-
   public function primer_pago(Request $request, $id){
     $this->validate($request, [
       'precio_id' => 'required',
@@ -179,7 +127,7 @@ class CitologiaDetailsController extends Controller
 
     $citologia = Citologia::find($id);
     $precioPagar = Precio::where('id', '=', $request->precio_id)->first();
-
+    
     DB::beginTransaction();
     try {
       $citologia->precio_id = $request->precio_id;
@@ -199,10 +147,6 @@ class CitologiaDetailsController extends Controller
         case 'AC':
           $ct->monto = $precioPagar->monto;
           $ct->saldo = 0;
-          break;
-        case 'PE':	
-          $ct->monto = 0;	
-          $ct->saldo = $precioPagar->monto;	
           break;
       }
       $ct->total = $precioPagar->monto;

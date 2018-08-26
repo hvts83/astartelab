@@ -65,7 +65,7 @@ class BiopsiaController extends Controller
       'doctor_id' => 'required',
       'paciente_id' => 'required',
       'grupo_id' => 'required',
-      'diagnostico_id' =>'required',
+      'diagnostico' =>'required',
       ]);
 
       $correlativo=  Biopsia::select('informe')
@@ -84,16 +84,15 @@ class BiopsiaController extends Controller
           $biopsia->doctor_id = $request->doctor_id;
           $biopsia->paciente_id = $request->paciente_id;
           $biopsia->grupo_id = $request->grupo_id;
-          $biopsia->diagnostico_id = $request->diagnostico_id;
+          $biopsia->informe = $informe;
           $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
           $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
-          $biopsia->informe_preliminar = $request->dpreliminar;
-          $biopsia->informe = $informe;
+          $biopsia->diagnostico = $request->diagnostico;
+          $biopsia->macro = $request->macro;
+          $biopsia->micro = $request->micro;
+          $biopsia->preliminar = $request->preliminar;
+          $biopsia->inmuno = $request->inmuno;
           $biopsia->save();
-
-          $this->createDetalle($biopsia->id, 'micro', $request->micro);
-          $this->createDetalle($biopsia->id, 'macro', $request->macro);
-          $this->createDetalle($biopsia->id, 'preliminar', $request->preliminar);
 
       } catch (\Exception $e) {
         DB::rollback();
@@ -118,22 +117,6 @@ class BiopsiaController extends Controller
       ->where('biopsias.id', '=', $id)
       ->first();
     if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
-    $data['macro'] = Biopsia_detalle::where([
-      ['biopsia_id', '=', $id], 
-      ['tipo_detalle', '=', 'macro']
-      ])->first();
-    $data['micro'] = Biopsia_detalle::where([
-      ['biopsia_id', '=', $id], 
-      ['tipo_detalle', '=', 'micro']
-      ])->first();
-    $data['preliminar'] =Biopsia_detalle::where([
-      ['biopsia_id', '=', $id], 
-      ['tipo_detalle', '=', 'preliminar']
-      ])->first();
-    $data['inmunohistoquimica'] =Biopsia_detalle::where([
-      ['biopsia_id', '=', $id], 
-      ['tipo_detalle', '=', 'inmunohistoquimica']
-      ])->first();
     $data['imagenes'] = Biopsia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
       ->where('biopsia_id', '=', $id)->get();
     $data['detalle_pago'] = Consulta_transacciones::where([
@@ -152,8 +135,44 @@ class BiopsiaController extends Controller
     return view('biopsia.edit', $data);
   }
 
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
 
-  
+    $biopsia = Biopsia::find($id);
+    $this->validate($request, [
+      'diagnostico' =>'required',
+      'informe' => 'required'
+    ]);
+
+    //Inicio de las inserciones en la base de datos
+    DB::beginTransaction();
+      try {
+        if($request->informe !== $biopsia->informe ){
+          $comprobacion = Biopsia::where('informe')->count();
+          if($comprobacion === 0){
+            Consulta_transacciones::where('informe', '=', $biopsia->informe)->update(['informe' => $request->informe]);
+            $biopsia->informe = $request->informe;
+          }
+        }
+        $biopsia->diagnostico = $request->diagnostico;
+        $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
+        $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
+        $biopsia->save();
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
+     return redirect('biopsia/'. $id . "/edit");
+  }
+
   /**
    * Show the form for editing the specified resource.
    *
@@ -355,51 +374,6 @@ class BiopsiaController extends Controller
     $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
      $pdf = PDF::loadView('/biopsia/envelope', $data)->setPaper('DL');
     return $pdf->stream($data['biopsia']->informe . '-sobre' .'.pdf');
-  }
-   
-
-
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, $id)
-  {
-    $biopsia = Biopsia::find($id);
-    $this->validate($request, [
-      'diagnostico_id' =>'required',
-      'informe' => 'unique:biopsias|required'
-    ]);
-
-    //Inicio de las inserciones en la base de datos
-    DB::beginTransaction();
-      try {
-        if($request->informe !== $biopsia->informe ){
-          Consulta_transacciones::where('informe', '=', $biopsia->informe)->update(['informe' => $request->informe]);
-          $biopsia->informe = $request->informe;
-        }
-        $biopsia->diagnostico_id = $request->diagnostico_id;
-        $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
-        $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
-        $biopsia->save();
-
-    } catch (\Exception $e) {
-      DB::rollback();
-      throw $e;
-    }
-    DB::commit();
-     return redirect('biopsia/'. $id . "/edit");
-  }
-
-  private function createDetalle($biopsia, $tipo_detalle, $detalle_texto = '') {
-    $detalle = new Biopsia_detalle();
-    $detalle->biopsia_id = $biopsia;
-    $detalle->tipo_detalle = $tipo_detalle;
-    $detalle->detalle = $detalle_texto;
-    $detalle->save();
   }
 
 }

@@ -65,7 +65,7 @@ class CitologiaController extends Controller
       'doctor_id' => 'required',
       'paciente_id' => 'required',
       'grupo_id' => 'required',
-      'diagnostico_id' =>'required',
+      'diagnostico' =>'required',
       ]);
 
       $correlativo=  Citologia::select('informe')
@@ -84,16 +84,13 @@ class CitologiaController extends Controller
           $citologia->doctor_id = $request->doctor_id;
           $citologia->paciente_id = $request->paciente_id;
           $citologia->grupo_id = $request->grupo_id;
-          $citologia->diagnostico_id = $request->diagnostico_id;
+          $citologia->informe = $informe;
           $citologia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
           $citologia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
-          $citologia->informe_preliminar = $request->dpreliminar;
-          $citologia->informe = $informe;
+          $citologia->diagnostico = $request->diagnostico;
+          $citologia->micro = $request->micro;
+          $citologia->preliminar = $request->preliminar;
           $citologia->save();
-
-          $this->createDetalle($citologia->id, 'micro', $request->micro);
-          $this->createDetalle($citologia->id, 'macro', $request->macro);
-          $this->createDetalle($citologia->id, 'preliminar', $request->preliminar);
 
       } catch (\Exception $e) {
         DB::rollback();
@@ -118,18 +115,6 @@ class CitologiaController extends Controller
       ->where('citologia.id', '=', $id)
       ->first();
     if ($data['citologia']  == null) { return redirect('citologias'); } //Verificación para evitar errores
-    $data['macro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'macro']
-      ])->first();
-    $data['micro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'micro']
-      ])->first();
-    $data['preliminar'] =Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'preliminar']
-      ])->first();
     $data['imagenes'] = Citologia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
       ->where('citologia_id', '=', $id)->get();
     $data['detalle_pago'] = Consulta_transacciones::where([
@@ -148,6 +133,42 @@ class CitologiaController extends Controller
     return view('citologia.edit', $data);
   }
 
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
+    $citologia = Citologia::find($id);
+    $this->validate($request, [
+      'diagnostico' =>'required',
+      'informe' => 'required'
+    ]);
+
+    //Inicio de las inserciones en la base de datos
+    DB::beginTransaction();
+      try {
+        if($request->informe !== $citologia->informe ){
+          $comprobacion = Citologia::where('informe')->count();
+          if($comprobacion === 0){
+            Consulta_transacciones::where('informe', '=', $citologia->informe)->update(['informe' => $request->informe]);
+            $citologia->informe = $request->informe;
+          }
+        }
+        $citologia->diagnostico = $request->diagnostico;
+        $citologia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
+        $citologia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
+        $citologia->save();
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
+     return redirect('citologia/'. $id . "/edit");
+  }
 
 
    /**
@@ -332,47 +353,4 @@ class CitologiaController extends Controller
     return $pdf->stream( $data['citologia']->informe . '-sobre'.'.pdf');
     }
     
-
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, $id)
-  {
-    $citologia = Citologia::find($id);
-    $this->validate($request, [
-      'diagnostico_id' =>'required',
-      'informe' => 'unique:citologia|required'
-    ]);
-
-    //Inicio de las inserciones en la base de datos
-    DB::beginTransaction();
-      try {
-        if($request->informe !== $citologia->informe ){
-          Consulta_transacciones::where('informe', '=', $citologia->informe)->update(['informe' => $request->informe]);
-          $citologia->informe = $request->informe;
-        }
-        $citologia->diagnostico_id = $request->diagnostico_id;
-        $citologia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
-        $citologia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
-        $citologia->save();
-
-    } catch (\Exception $e) {
-      DB::rollback();
-      throw $e;
-    }
-    DB::commit();
-     return redirect('citologia/'. $id . "/edit");
-  }
-
-  private function createDetalle($citologia, $tipo_detalle, $detalle_texto = '') {
-    $detalle = new Citologia_detalle();
-    $detalle->citologia_id = $citologia;
-    $detalle->tipo_detalle = $tipo_detalle;
-    $detalle->detalle = $detalle_texto;
-    $detalle->save();
-  }
 }

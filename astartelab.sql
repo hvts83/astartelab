@@ -5,42 +5,27 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP DATABASE IF EXISTS `astartelab`;
-CREATE DATABASE `astartelab` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `astartelab`;
-
 DROP TABLE IF EXISTS `biopsias`;
 CREATE TABLE `biopsias` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `doctor_id` int(11) NOT NULL,
   `paciente_id` int(11) NOT NULL,
   `grupo_id` int(11) NOT NULL,
-  `precio_id` int(11) NOT NULL,
-  `estado_pago` char(2) COLLATE utf8_unicode_ci NOT NULL,
-  `diagnostico_id` int(11) NOT NULL,
+  `precio_id` int(11) DEFAULT NULL,
+  `informe` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `estado_pago` char(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'PE',
   `recibido` date DEFAULT NULL,
   `entregado` date DEFAULT NULL,
-  `informe` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `informe_preliminar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `diagnostico` text COLLATE utf8_unicode_ci NOT NULL,
+  `macro` text COLLATE utf8_unicode_ci,
+  `micro` text COLLATE utf8_unicode_ci,
+  `preliminar` text COLLATE utf8_unicode_ci,
+  `inmuno` text COLLATE utf8_unicode_ci,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `biopsias_informe_unique` (`informe`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-INSERT INTO `biopsias` (`id`, `doctor_id`, `paciente_id`, `grupo_id`, `precio_id`, `estado_pago`, `diagnostico_id`, `recibido`, `entregado`, `informe`, `informe_preliminar`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1,	2,	1,	1,	2,	'PP',	1,	'2018-07-24',	'2018-08-22',	'B1805-001',	NULL,	NULL,	'2018-05-28 13:28:05',	'2018-05-28 13:28:05');
-
-DROP TABLE IF EXISTS `biopsia_detalle`;
-CREATE TABLE `biopsia_detalle` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `biopsia_id` int(11) NOT NULL,
-  `tipo_detalle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `opcion_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -61,32 +46,19 @@ CREATE TABLE `citologia` (
   `doctor_id` int(11) NOT NULL,
   `paciente_id` int(11) NOT NULL,
   `grupo_id` int(11) NOT NULL,
-  `precio_id` int(11) NOT NULL,
-  `estado_pago` char(2) COLLATE utf8_unicode_ci NOT NULL,
-  `diagnostico_id` int(11) NOT NULL,
-  `recibido` date DEFAULT NULL,
-  `entregado` date DEFAULT NULL,
+  `precio_id` int(11) DEFAULT NULL,
   `informe` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `informe_preliminar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
+  `estado_pago` char(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'PE',
+  `diagnostico` text COLLATE utf8_unicode_ci NOT NULL,
+  `micro` text COLLATE utf8_unicode_ci,
+  `preliminar` text COLLATE utf8_unicode_ci,
+  `entregado` date DEFAULT NULL,
+  `recibido` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `citologia_informe_unique` (`informe`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-INSERT INTO `citologia` (`id`, `doctor_id`, `paciente_id`, `grupo_id`, `precio_id`, `estado_pago`, `diagnostico_id`, `recibido`, `entregado`, `informe`, `informe_preliminar`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1,	6,	1,	1,	1,	'AC',	4,	'2018-05-28',	'2018-05-28',	'C1805-001',	NULL,	NULL,	'2018-05-28 15:36:35',	'2018-05-28 15:38:38');
-
-DROP TABLE IF EXISTS `citologia_detalle`;
-CREATE TABLE `citologia_detalle` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `citologia_id` int(11) NOT NULL,
-  `tipo_detalle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `opcion_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -117,11 +89,6 @@ CREATE TABLE `consultas_transacciones` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `consultas_transacciones` (`id`, `tipo`, `consulta`, `informe`, `estado_pago`, `facturacion`, `total`, `monto`, `saldo`, `created_at`, `updated_at`) VALUES
-(1,	'B',	1,	'B1805-001',	'PP',	'CF',	10.00,	10.00,	0.00,	'2018-05-28 13:28:05',	'2018-05-28 13:28:05'),
-(2,	'B',	1,	'C1805-001',	'PE',	'CF',	15.00,	0.00,	15.00,	'2018-05-28 15:36:35',	'2018-05-28 15:36:35'),
-(3,	'B',	1,	'C1805-001',	'AP',	'CF',	15.00,	10.00,	5.00,	'2018-05-28 15:38:26',	'2018-05-28 15:38:26'),
-(4,	'B',	1,	'C1805-001',	'AC',	'TC',	15.00,	5.00,	0.00,	'2018-05-28 15:38:38',	'2018-05-28 15:38:38');
 
 DROP TABLE IF EXISTS `cuentas`;
 CREATE TABLE `cuentas` (
@@ -135,8 +102,6 @@ CREATE TABLE `cuentas` (
   UNIQUE KEY `cuentas_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `cuentas` (`id`, `codigo`, `nombre`, `fondo`, `created_at`, `updated_at`) VALUES
-(1,	'CA',	'Cuenta Bancaria A',	100.00,	'2018-03-13 10:30:22',	'2018-05-02 14:59:25');
 
 DROP TABLE IF EXISTS `cuenta_transacciones`;
 CREATE TABLE `cuenta_transacciones` (
@@ -156,14 +121,11 @@ CREATE TABLE `cuenta_transacciones` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `cuenta_transacciones` (`id`, `cuenta_id`, `tipo`, `numero`, `fecha_realizacion`, `lugar`, `concepto`, `paguese`, `monto`, `prev`, `actual`, `created_at`, `updated_at`) VALUES
-(1,	1,	'I',	'223',	'0002-05-18',	'San Salvador',	'Ingreso',	'John Doe',	500.00,	0.00,	500.00,	'2018-05-02 14:58:28',	'2018-05-02 14:58:28'),
-(2,	1,	'E',	'2231',	'0002-05-18',	'San salvador',	'Pago empleado',	'John doe',	400.00,	500.00,	100.00,	'2018-05-02 14:59:25',	'2018-05-02 14:59:25');
 
 DROP TABLE IF EXISTS `diagnosticos`;
 CREATE TABLE `diagnosticos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre` text COLLATE utf8_unicode_ci NOT NULL,
   `tipo` char(1) COLLATE utf8_unicode_ci NOT NULL,
   `detalle` text COLLATE utf8_unicode_ci,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -172,11 +134,11 @@ CREATE TABLE `diagnosticos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `diagnosticos`;
 INSERT INTO `diagnosticos` (`id`, `nombre`, `tipo`, `detalle`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1,	'Diagnostico A',	'B',	'a',	NULL,	'2018-03-27 09:21:20',	'2018-03-27 09:21:20'),
-(2,	'Diagnosgtico B',	'B',	'B',	NULL,	'2018-03-27 09:21:35',	'2018-03-27 09:21:35'),
-(3,	'Diagnostico C',	'C',	'C',	NULL,	'2018-03-27 09:21:48',	'2018-03-27 09:21:48'),
-(4,	'Diagnostico D',	'C',	'D',	NULL,	'2018-03-27 09:22:00',	'2018-03-27 09:22:00');
+(1,	'Diagnostico B1',	'B',	'',	NULL,	'2018-07-29 20:40:44',	'2018-07-29 20:40:44'),
+(2,	'Diagnostico C1',	'C',	'',	NULL,	'2018-07-29 20:41:00',	'2018-07-29 20:41:00'),
+(3,	'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in faucibus mauris. Mauris tincidunt sed neque vel mollis. Cras iaculis mi nec lorem lobortis, non posuere felis iaculis.',	'B',	'un lorem largo',	NULL,	'2018-08-19 22:37:01',	'2018-08-19 22:37:01');
 
 DROP TABLE IF EXISTS `doctores`;
 CREATE TABLE `doctores` (
@@ -192,14 +154,15 @@ CREATE TABLE `doctores` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `doctores`;
 INSERT INTO `doctores` (`id`, `nombre`, `email`, `direccion`, `telefono`, `saldo`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1,	'ADA LUZ MORALES DE PANIAGUA',	'-',	'-',	NULL,	0.00,	NULL,	NULL,	NULL),
-(2,	'ADA MARICRUZ GUEVARA DE RIVERA',	'-',	'-',	NULL,	-10.00,	NULL,	'2018-05-28 13:28:05',	NULL),
-(3,	'ADS CHALATENANGO',	'-',	'-',	NULL,	0.00,	NULL,	NULL,	NULL),
+(2,	'ADA MARICRUZ GUEVARA DE RIVERA',	'-',	'-',	NULL,	-10.00,	NULL,	'2018-05-28 19:28:05',	NULL),
+(3,	'ADS CHALATENANGO',	'-',	'-',	NULL,	-60.00,	NULL,	'2018-08-27 04:30:33',	NULL),
 (4,	'ADS GOTERA',	'-',	'-',	NULL,	0.00,	NULL,	NULL,	NULL),
 (5,	'ADS LA UNION',	'-',	'-',	NULL,	0.00,	NULL,	NULL,	NULL),
 (6,	'ADS MIRALVALLE',	'-',	'-',	NULL,	0.00,	NULL,	NULL,	NULL),
-(7,	'ADS SAN MIGUEL',	'-',	'-',	NULL,	0.00,	NULL,	NULL,	NULL),
+(7,	'ADS SAN MIGUEL',	'-',	'-',	NULL,	-15.00,	NULL,	'2018-07-31 13:19:56',	NULL),
 (8,	'ADS SAN SALVADOR',	'-',	'-',	NULL,	0.00,	NULL,	NULL,	NULL),
 (9,	'ADS SANTA ANA',	'-',	'-',	NULL,	0.00,	NULL,	NULL,	NULL),
 (10,	'ADS SANTA TECLA',	'-',	'-',	NULL,	0.00,	NULL,	NULL,	NULL),
@@ -1613,13 +1576,11 @@ CREATE TABLE `doctor_transacciones` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `doctor_transacciones` (`id`, `doctor_id`, `tipo`, `monto`, `prev`, `actual`, `notas`, `created_at`, `updated_at`) VALUES
-(1,	2,	'E',	10.00,	0.00,	-10.00,	NULL,	'2018-05-28 13:28:05',	'2018-05-28 13:28:05');
 
 DROP TABLE IF EXISTS `frases`;
 CREATE TABLE `frases` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre` text COLLATE utf8_unicode_ci NOT NULL,
   `tipo` char(1) COLLATE utf8_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1627,13 +1588,12 @@ CREATE TABLE `frases` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `frases`;
 INSERT INTO `frases` (`id`, `nombre`, `tipo`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1,	'Frase A',	'B',	NULL,	'2018-03-27 09:26:17',	'2018-03-27 09:26:17'),
-(2,	'Frase B',	'B',	NULL,	'2018-03-27 09:26:36',	'2018-03-27 09:26:36'),
-(3,	'Frase C',	'M',	NULL,	'2018-03-27 09:26:48',	'2018-03-27 09:26:48'),
-(4,	'Frase D',	'M',	NULL,	'2018-03-27 09:26:58',	'2018-03-27 09:26:58'),
-(5,	'Frase E',	'C',	NULL,	'2018-03-27 09:27:14',	'2018-03-27 09:27:14'),
-(6,	'Frase F',	'C',	NULL,	'2018-03-27 09:27:25',	'2018-03-27 09:27:25');
+(1,	'Frase Macro',	'B',	NULL,	'2018-07-29 20:38:58',	'2018-07-29 20:39:28'),
+(2,	'Frase Micro',	'M',	NULL,	'2018-07-29 20:39:18',	'2018-07-29 20:39:18'),
+(3,	'Frase Micro C',	'C',	NULL,	'2018-07-29 20:39:56',	'2018-07-29 20:39:56'),
+(4,	'Apendice cecal con cambios de hiperemia pasiva y marginacion leucocitaria intravascular; moderada hiperplasia del tejido linfoide, mucosa con infiltrado polimorfonuclear y hemorragias focales, lumen con fecalitos y celulas inflamatorias.',	'B',	NULL,	'2018-07-30 02:46:35',	'2018-07-30 02:46:35');
 
 DROP TABLE IF EXISTS `grupos`;
 CREATE TABLE `grupos` (
@@ -1644,8 +1604,6 @@ CREATE TABLE `grupos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `grupos` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
-(1,	'Grupo X',	'2018-03-13 10:41:32',	'2018-03-13 10:41:32');
 
 DROP TABLE IF EXISTS `imagen`;
 CREATE TABLE `imagen` (
@@ -1657,11 +1615,6 @@ CREATE TABLE `imagen` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `imagen` (`id`, `url`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1,	'images/biopsia/15/15img1526196078.PNG',	NULL,	'2018-05-13 13:21:18',	'2018-05-13 13:21:18'),
-(2,	'images/biopsia/15/15img1526197868.PNG',	NULL,	'2018-05-13 13:51:08',	'2018-05-13 13:51:08'),
-(3,	'images/biopsia/15/15img1526197869.PNG',	NULL,	'2018-05-13 13:51:09',	'2018-05-13 13:51:09'),
-(4,	'images/citologia/2/2img1526280082.PNG',	NULL,	'2018-05-14 12:41:23',	'2018-05-14 12:41:23');
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -1671,37 +1624,7 @@ CREATE TABLE `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(49,	'2018_01_28_041915_create_patologia_table',	1),
-(50,	'2018_01_28_043358_create_patologia_micro_table',	1),
-(51,	'2018_01_28_043444_create_patologia_diagnostico_table',	1),
-(95,	'2014_10_12_000000_create_users_table',	2),
-(96,	'2018_01_28_030918_create_doctores_table',	2),
-(97,	'2018_01_28_030945_create_pacientes_table',	2),
-(98,	'2018_01_28_033139_create_biopsias_table',	2),
-(99,	'2018_01_28_034131_create_diagnosticos_table',	2),
-(100,	'2018_01_28_034309_create_grupos_table',	2),
-(101,	'2018_01_28_040100_create_frases_table',	2),
-(102,	'2018_01_28_040241_create_imagen_table',	2),
-(103,	'2018_01_28_040917_create_biopsia_macro_table',	2),
-(104,	'2018_01_28_041050_create_biopsia_micro_table',	2),
-(105,	'2018_01_28_041344_create_biopsia_preliminar_table',	2),
-(106,	'2018_01_28_041524_create_biopsia_inmunohistoquimica_table',	2),
-(107,	'2018_01_28_041650_create_biopsia_inmunohistoquimica_imagen_table',	2),
-(108,	'2018_01_28_041915_create_citologia_table',	2),
-(109,	'2018_01_28_043358_create_citologia_micro_table',	2),
-(110,	'2018_01_28_043444_create_citologia_diagnostico_table',	2),
-(111,	'2018_02_03_222631_create_doctor_transacciones_table',	2),
-(112,	'2018_02_03_223841_create_citologia_imagen_table',	2),
-(113,	'2018_02_03_224944_create_cuenta_table',	2),
-(114,	'2018_02_03_225103_create_cuenta_transacciones_table',	2),
-(115,	'2018_02_04_025938_create_navigation_table',	2),
-(116,	'2018_02_04_030718_create_subnavigation_table',	2),
-(117,	'2018_02_04_031019_create_user_navigation_table',	2),
-(118,	'2018_02_04_051710_create_precios_table',	2),
-(119,	'2018_02_06_041825_create_consultas_transacciones_table',	2),
-(120,	'2018_02_25_224316_create_tipo_biopsia_table',	2),
-(121,	'2018_02_25_224342_create_tipo_citologia_table',	2);
+TRUNCATE `migrations`;
 
 DROP TABLE IF EXISTS `navigation`;
 CREATE TABLE `navigation` (
@@ -1712,13 +1635,17 @@ CREATE TABLE `navigation` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `navigation`;
 INSERT INTO `navigation` (`id`, `label`, `icon`, `orden`) VALUES
 (1,	'Biopsias',	'fa-folder',	1),
 (2,	'Citologías',	'fa-folder',	2),
 (3,	'Reportes de Lab.',	'fa-file',	4),
 (4,	'Reportes financieros',	'fa-briefcase',	5),
-(5,	'Panel de Control',	'fa-cog',	6),
-(6,	'Pacientes',	'fa-user',	3);
+(5,	'Panel de Control',	'fa-cog',	7),
+(6,	'Pacientes',	'fa-user',	3),
+(7,	'Manejo administrativo',	'fa-money-bill',	7),
+(8,	'Control de precios',	'fa-money-bill-alt',	8),
+(10,	'Control de precios',	'fa-money-bill-alt',	8);
 
 DROP TABLE IF EXISTS `pacientes`;
 CREATE TABLE `pacientes` (
@@ -1727,15 +1654,19 @@ CREATE TABLE `pacientes` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `telefono` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sexo` char(1) COLLATE utf8_unicode_ci NOT NULL,
-  `fecha_nacimiento` date NOT NULL,
+  `edad` int(3) DEFAULT NULL,
+  `meses` int(2) NOT NULL,
+  `documento` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `pacientes` (`id`, `name`, `email`, `telefono`, `sexo`, `fecha_nacimiento`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1,	'Angel Peraza',	'a.peraza@test.com',	'(503)-2222-2222',	'1',	'1995-06-25',	'2018-03-13 10:29:04',	'2018-03-13 10:29:04',	NULL);
+TRUNCATE `pacientes`;
+INSERT INTO `pacientes` (`id`, `name`, `email`, `telefono`, `sexo`, `edad`, `meses`, `documento`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1,	'Jose Navas',	'',	'',	'1',	32,	2,	'',	'2018-07-29 20:53:05',	'2018-07-29 21:20:37',	NULL),
+(2,	'Denis Perez',	'',	'',	'1',	12,	0,	'',	'2018-07-29 21:20:22',	'2018-07-29 21:20:22',	NULL);
 
 DROP TABLE IF EXISTS `precios`;
 CREATE TABLE `precios` (
@@ -1749,9 +1680,10 @@ CREATE TABLE `precios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `precios`;
 INSERT INTO `precios` (`id`, `tipo_id`, `tipo`, `nombre`, `monto`, `created_at`, `updated_at`) VALUES
-(1,	1,	'C',	'Precio 1 C',	15.00,	'2018-04-03 12:28:10',	'2018-05-02 15:18:09'),
-(2,	1,	'B',	'Tipo AB',	10.00,	'2018-04-03 12:43:25',	'2018-04-03 12:43:25');
+(1,	1,	'B',	'Biopia 15',	15.00,	'2018-07-30 01:49:50',	'2018-07-30 01:49:50'),
+(2,	1,	'C',	'Citologia 60',	60.00,	'2018-07-30 07:00:18',	'2018-07-30 07:00:18');
 
 DROP TABLE IF EXISTS `subnavigation`;
 CREATE TABLE `subnavigation` (
@@ -1764,6 +1696,7 @@ CREATE TABLE `subnavigation` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `subnavigation`;
 INSERT INTO `subnavigation` (`id`, `navigation_id`, `label`, `link`, `link_extended`, `orden`) VALUES
 (1,	1,	'Biopsias',	'/biopsia',	'biopsia.index',	NULL),
 (2,	1,	'Nueva biopsia',	'/biopsia/create',	'biopsia.create',	NULL),
@@ -1779,13 +1712,18 @@ INSERT INTO `subnavigation` (`id`, `navigation_id`, `label`, `link`, `link_exten
 (13,	5,	'Grupos',	'/grupos',	'grupos.index',	2),
 (14,	5,	'Diagnósticos',	'/diagnosticos',	'diagnosticos.index',	9),
 (15,	5,	'Frases',	'/frases',	'frases.index',	8),
-(16,	5,	'Precios',	'/precios',	'precios.index',	7),
-(17,	5,	'Cuentas',	'/cuentas',	'cuentas.index',	4),
+(16,	8,	'Precios',	'/precios',	'precios.index',	7),
+(17,	7,	'Cuentas',	'/cuentas',	'cuentas.index',	1),
 (18,	5,	'Usuarios',	'/usuarios',	'usuarios.index',	3),
 (19,	6,	'Pacientes',	'/pacientes',	'pacientes.index',	NULL),
 (20,	6,	'Nuevo Paciente',	'/pacientes/create',	'pacientes.create',	NULL),
-(21,	5,	'Tipo de Biopsia',	'/tipo-biopsia',	'tipo-biopsia.index',	5),
-(22,	5,	'Tipo de Citología',	'/tipo-citologia',	'tipo-citologia.index',	6);
+(21,	8,	'Tipo de Biopsia',	'/tipo-biopsia',	'tipo-biopsia.index',	7),
+(22,	8,	'Tipo de Citología',	'/tipo-citologia',	'tipo-citologia.index',	7),
+(24,	4,	'Control Diario',	'reportes/control-diario',	'reportes.control-diario',	NULL),
+(26,	3,	'Informe por Biopsia',	'reportes/informe-biopsia',	'reportes.informe-biopsia',	NULL),
+(27,	3,	'Biopsias por Doctor',	'reportes/biopsia-doctor',	'reportes.biopsia-doctor',	NULL),
+(28,	3,	'Informe por Citologia',	'reportes/informe-citologia',	'reportes.informe-citologia',	NULL),
+(29,	3,	'Citologia por Doctor',	'reportes/citologia-doctor',	'reportes.citologia-doctor',	NULL);
 
 DROP TABLE IF EXISTS `tipo_biopsia`;
 CREATE TABLE `tipo_biopsia` (
@@ -1796,8 +1734,9 @@ CREATE TABLE `tipo_biopsia` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `tipo_biopsia`;
 INSERT INTO `tipo_biopsia` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
-(1,	'Tipo AB',	'2018-04-03 02:28:34',	'2018-04-03 02:31:07');
+(1,	'Biopsia 1',	'2018-07-30 01:49:18',	'2018-07-30 01:49:18');
 
 DROP TABLE IF EXISTS `tipo_citologia`;
 CREATE TABLE `tipo_citologia` (
@@ -1808,8 +1747,9 @@ CREATE TABLE `tipo_citologia` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `tipo_citologia`;
 INSERT INTO `tipo_citologia` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
-(1,	'Citologia C',	'2018-04-03 02:36:06',	'2018-04-03 02:36:14');
+(1,	'Citologia 1',	'2018-07-30 06:59:03',	'2018-07-30 06:59:03');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -1827,9 +1767,12 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_usuario_unique` (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `users`;
 INSERT INTO `users` (`id`, `nombre`, `apellido`, `usuario`, `password`, `rol`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1,	'Administrador',	'Maestro',	'admin',	'$2y$10$2GidQJigbkl9hl4eaZw0HuF8K9sXJ5WEg1MBwmXHb.weRh.PVxRo2',	'A',	'x61JGeDPuscLsexQev4xXtg9oHk7Rh831bKvFQMX62KwFo6RIcbM2t8wUTVw',	NULL,	NULL,	NULL),
-(2,	'Tecnico',	'Test',	'technician',	'$2y$10$AJeHjD8VmQTl6VEZgVbrBu32dl1lqKyTkofmIn/mPxdd0DpHjjq/i',	'B',	NULL,	'2018-05-02 13:23:13',	'2018-05-02 14:12:10',	NULL);
+(1,	'Administrador',	'Maestro',	'admin',	'$2y$10$2GidQJigbkl9hl4eaZw0HuF8K9sXJ5WEg1MBwmXHb.weRh.PVxRo2',	'A',	'ojPbt0qsg75HTNfA6sbCHMiQKmbw90NzYWEUgT3ibmvhJgLXsGgUHv0dxrdr',	NULL,	NULL,	NULL),
+(2,	'Tecnico',	'Test',	'test',	'$2y$10$0wJxjcliXtZjKpRleL50V.oH7975Xa.FrnUYc1zMF2XzfxGFj.2WC',	'B',	NULL,	'2018-05-02 19:23:13',	'2018-07-31 09:55:55',	NULL),
+(3,	'Elizabeth',	'Chaccon',	'echacon',	'$2y$10$yEMmJX8ddhUDecw4FIwuWOsN9yxSTmWcuZTeU4ckp.w.dDW0d7uhG',	'B',	'3Iq7lXd4NgNDmIHPzuIbiFsPz3ucp0bOHixIG5z2WtVSjVe9TlDhA52kkSuj',	'2018-07-30 07:20:12',	'2018-07-30 07:20:12',	NULL),
+(4,	'Guadalupe',	'Estrada',	'gestrada',	'$2y$10$Sk/HvasbDbBQ2cSUXh09SuyUfrT/93V0ZoIhC350OO0wrNZLdB0FC',	'C',	NULL,	'2018-07-30 07:20:46',	'2018-07-30 07:20:46',	NULL);
 
 DROP TABLE IF EXISTS `user_navigation`;
 CREATE TABLE `user_navigation` (
@@ -1839,6 +1782,7 @@ CREATE TABLE `user_navigation` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+TRUNCATE `user_navigation`;
 INSERT INTO `user_navigation` (`id`, `tipo`, `navigation_id`) VALUES
 (1,	'A',	1),
 (2,	'A',	2),
@@ -1848,6 +1792,28 @@ INSERT INTO `user_navigation` (`id`, `tipo`, `navigation_id`) VALUES
 (6,	'A',	6),
 (7,	'B',	1),
 (8,	'B',	2),
-(9,	'B',	3);
+(9,	'B',	3),
+(10,	'A',	7),
+(11,	'A',	8),
+(12,	'B',	4),
+(13,	'B',	5),
+(14,	'B',	6),
+(15,	'B',	8),
+(16,	'C',	1),
+(17,	'C',	2),
+(18,	'C',	3),
+(19,	'C',	5),
+(20,	'C',	6),
+(23,	'B',	4),
+(24,	'B',	5),
+(25,	'B',	6),
+(26,	'B',	8),
+(27,	'C',	1),
+(28,	'C',	2),
+(29,	'C',	3),
+(30,	'C',	5),
+(31,	'C',	6),
+(32,	'A',	11),
+(33,	'A',	9);
 
--- 2018-05-28 09:41:02
+-- 2018-08-26 22:33:31

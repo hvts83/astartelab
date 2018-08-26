@@ -15,7 +15,6 @@ use App\Models\Diagnostico;
 use App\Models\Biopsia;
 use App\Models\Imagen;
 use App\Models\Precio;
-use App\Models\Biopsia_detalle;
 use App\Models\Biopsia_imagen;
 use App\Models\Doctor;
 use App\Models\Doctor_transaccion;
@@ -37,19 +36,15 @@ class BiopsiaDetailsController extends Controller
 
     DB::beginTransaction();
     try {
-    $macro = Biopsia_detalle::where([
-      ['tipo_detalle', '=', 'macro'],
-      ['id', '=', $id]
-    ])->first();
-    
-    $macro->detalle = $request->macro;
-    $macro->save();
+      $biopsia = Biopsia::find($id);
+      $biopsia->macro = $request->macro;
+      $biopsia->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
     DB::commit();
-    return redirect('biopsia/'. $macro->biopsia_id . "/edit");
+    return redirect('biopsia/'. $id . "/edit");
   }
 
   public function micro(Request $request, $id)
@@ -60,47 +55,34 @@ class BiopsiaDetailsController extends Controller
 
     DB::beginTransaction();
     try {
-    $micro = Biopsia_detalle::where([
-      ['tipo_detalle', '=', 'micro'],
-      ['id', '=', $id]
-    ])->first();
-    
-    $micro->detalle = $request->micro;
-    $micro->save();
+      $biopsia = Biopsia::find($id);
+      $biopsia->micro = $request->micro;
+      $biopsia->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
     DB::commit();
-    return redirect('biopsia/'. $micro->biopsia_id . "/edit");
+    return redirect('biopsia/'. $id . "/edit");
   }
 
   public function preliminar(Request $request, $id)
   {
     $this->validate($request, [
-      'preliminar' =>'required',
-      'dpreliminar' => 'required',
+      'preliminar' =>'required'
     ]);
 
     DB::beginTransaction();
     try {
-    $preliminar = Biopsia_detalle::where([
-      ['tipo_detalle', '=', 'preliminar'],
-      ['id', '=', $id]
-    ])->first();
-    
-    $preliminar->detalle = $request->preliminar;
-    $preliminar->save();
-
-    $biopsia = Biopsia::find($preliminar->biopsia_id);
-    $biopsia->informe_preliminar = $request->dpreliminar;
-    $biopsia->save();
+      $biopsia = Biopsia::find($id);
+      $biopsia->preliminar = $request->preliminar;
+      $biopsia->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
     DB::commit();
-    return redirect('biopsia/'. $preliminar->biopsia_id . "/edit");
+    return redirect('biopsia/'. $id . "/edit");
   }
 
   public function inmunohistoquimica(Request $request, $id)
@@ -111,19 +93,15 @@ class BiopsiaDetailsController extends Controller
 
     DB::beginTransaction();
     try {
-    $inmunohistoquimica = Biopsia_detalle::where([
-      ['tipo_detalle', '=', 'inmunohistoquimica'],
-      ['id', '=', $id]
-    ])->first();
-    
-    $inmunohistoquimica->detalle = $request->inmuno;
-    $inmunohistoquimica->save();
+      $biopsia = Biopsia::find($id);
+      $biopsia->inmuno = $request->inmuno;
+      $biopsia->save();
     } catch (\Exception $e) {
       DB::rollback();
       throw $e;
     }
     DB::commit();
-    return redirect('biopsia/'. $inmunohistoquimica->biopsia_id . "/edit");
+    return redirect('biopsia/'. $id . "/edit");
   }
 
   public function imagen(Request $request, $id)
@@ -184,10 +162,6 @@ class BiopsiaDetailsController extends Controller
         case 'AC':
           $ct->monto = $precioPagar->monto;
           $ct->saldo = 0;
-          break;
-        case 'PE':	
-          $ct->monto = 0;	
-          $ct->saldo = $precioPagar->monto;	
           break;
       }
       $ct->total = $precioPagar->monto;
