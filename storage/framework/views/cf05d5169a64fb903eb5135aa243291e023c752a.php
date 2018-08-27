@@ -22,10 +22,12 @@
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="ibox-content">
+      <form role="form" method="get" action="<?php echo e(url('/citologia/show')); ?>">
       <div class="table-responsive">
         <table id="tblcitologia" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>Seleccionar</th>
               <th>Informe</th>
               <th>Paciente</th>
               <th>Doctor</th>
@@ -37,6 +39,7 @@
           <tbody>
             <?php $__currentLoopData = $citologias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $citologia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               <tr>
+                <th><input type="checkbox" name="id[]" value="<?php echo e($citologia->id); ?>" ></th> 
                 <td><?php echo e($citologia->informe); ?></td>
                 <td><?php echo e($citologia->paciente_name); ?></td>
                 <td><?php echo e($citologia->doctor_name); ?></td>
@@ -56,9 +59,10 @@
         </table>
       </div>
       <div class="div-btn">
+        <button type="submit" class="btn btn-primary"> Imprimir </button>
         <a href="<?php echo e(url('/citologia/create')); ?>" class="btn btn-primary pull-right">Nueva Citología</a>
-        
       </div>
+      </form>
     </div>
   </div>
 </div>

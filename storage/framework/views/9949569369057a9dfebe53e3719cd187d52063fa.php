@@ -23,43 +23,46 @@
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="ibox-content">
+      <form role="form" method="get" action="<?php echo e(url('/biopsia/show')); ?>">
       <div class="table-responsive">
-        <table id="tblbiopsia" class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>Informe</th>
-              <th>Paciente</th>
-              <th>Doctor</th>
-              <th>Recibido</th>
-              <th>Entregado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php $__currentLoopData = $biopsias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $biopsia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          <table id="tblbiopsia" class="table table-bordered table-striped">
+            <thead>
               <tr>
-                <td><?php echo e($biopsia->informe); ?></td>
-                <td><?php echo e($biopsia->paciente_name); ?></td>
-                <td><?php echo e($biopsia->doctor_name); ?></td>
-                <td><?php echo e($biopsia->recibido); ?></td>
-                <td><?php echo e($biopsia->entregado); ?></td>
-                <td>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Ver detalle</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/pdf" )); ?>">PDF</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/print" )); ?>" target="_blank">Imprimir</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/envelope" )); ?>" target="_blank">Sobre</a>
-                  <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/sm" )); ?>" target="_blank">Sin Membrete</a>
-                  
-                </td>
+                <th>Seleccionar</th>
+                <th>Informe</th>
+                <th>Paciente</th>
+                <th>Doctor</th>
+                <th>Recibido</th>
+                <th>Entregado</th>
+                <th>Acciones</th>
               </tr>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-          </tbody>
-        </table>
-      </div>
-      <div class="div-btn">
-        <a href="<?php echo e(url('/biopsia/create')); ?>" class="btn btn-primary pull-right">Nueva Biopsia</a>
-        
-      </div>
+            </thead>
+            <tbody>
+              <?php $__currentLoopData = $biopsias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $biopsia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <tr>
+                  <th><input type="checkbox" name="id[]" value="<?php echo e($biopsia->id); ?>" ></th>
+                  <td><?php echo e($biopsia->informe); ?></td>
+                  <td><?php echo e($biopsia->paciente_name); ?></td>
+                  <td><?php echo e($biopsia->doctor_name); ?></td>
+                  <td><?php echo e($biopsia->recibido); ?></td>
+                  <td><?php echo e($biopsia->entregado); ?></td>
+                  <td>
+                    <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Ver detalle</a>
+                    <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/pdf" )); ?>">PDF</a>
+                    <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/print" )); ?>" target="_blank">Imprimir</a>
+                    <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/envelope" )); ?>" target="_blank">Sobre</a>
+                    <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/sm" )); ?>" target="_blank">Sin Membrete</a>
+                  </td>
+                </tr>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+          </table>
+        </div>
+        <div class="div-btn">
+          <button type="submit" class="btn btn-primary"> Imprimir </button>
+          <a href="<?php echo e(url('/biopsia/create')); ?>" class="btn btn-primary pull-right">Nueva Biopsia</a>
+        </div>
+      </form>
     </div>
   </div>
 </div>

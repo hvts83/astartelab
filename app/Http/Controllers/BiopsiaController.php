@@ -254,4 +254,15 @@ class BiopsiaController extends Controller
     return $pdf->stream($data['biopsia']->informe . '-sobre' .'.pdf');
   }
 
+  public function show(Request $request){
+    $data['biopsias'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
+      ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
+      ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
+      ->join('grupos', 'biopsias.grupo_id', '=', 'grupos.id')
+      ->whereIn('biopsias.id', $request->id )
+      ->get();
+    $pdf = PDF::loadView('/biopsia/select_print', $data);
+    return $pdf->stream('reporte.pdf');
+  }
+
 }

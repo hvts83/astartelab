@@ -24,43 +24,46 @@
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="ibox-content">
+      <form role="form" method="get" action="{{ url('/biopsia/show') }}">
       <div class="table-responsive">
-        <table id="tblbiopsia" class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>Informe</th>
-              <th>Paciente</th>
-              <th>Doctor</th>
-              <th>Recibido</th>
-              <th>Entregado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($biopsias as $key => $biopsia)
+          <table id="tblbiopsia" class="table table-bordered table-striped">
+            <thead>
               <tr>
-                <td>{{ $biopsia->informe }}</td>
-                <td>{{ $biopsia->paciente_name }}</td>
-                <td>{{ $biopsia->doctor_name}}</td>
-                <td>{{ $biopsia->recibido }}</td>
-                <td>{{ $biopsia->entregado }}</td>
-                <td>
-                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/edit" ) }}">Ver detalle</a>
-                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/pdf" ) }}">PDF</a>
-                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/print" ) }}" target="_blank">Imprimir</a>
-                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/envelope" ) }}" target="_blank">Sobre</a>
-                  <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/sm" ) }}" target="_blank">Sin Membrete</a>
-                  
-                </td>
+                <th>Seleccionar</th>
+                <th>Informe</th>
+                <th>Paciente</th>
+                <th>Doctor</th>
+                <th>Recibido</th>
+                <th>Entregado</th>
+                <th>Acciones</th>
               </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-      <div class="div-btn">
-        <a href="{{ url('/biopsia/create') }}" class="btn btn-primary pull-right">Nueva Biopsia</a>
-        
-      </div>
+            </thead>
+            <tbody>
+              @foreach ($biopsias as $key => $biopsia)
+                <tr>
+                  <th><input type="checkbox" name="id[]" value="{{ $biopsia->id }}" ></th>
+                  <td>{{ $biopsia->informe }}</td>
+                  <td>{{ $biopsia->paciente_name }}</td>
+                  <td>{{ $biopsia->doctor_name}}</td>
+                  <td>{{ $biopsia->recibido }}</td>
+                  <td>{{ $biopsia->entregado }}</td>
+                  <td>
+                    <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/edit" ) }}">Ver detalle</a>
+                    <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/pdf" ) }}">PDF</a>
+                    <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/print" ) }}" target="_blank">Imprimir</a>
+                    <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/envelope" ) }}" target="_blank">Sobre</a>
+                    <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/sm" ) }}" target="_blank">Sin Membrete</a>
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        <div class="div-btn">
+          <button type="submit" class="btn btn-primary"> Imprimir </button>
+          <a href="{{ url('/biopsia/create') }}" class="btn btn-primary pull-right">Nueva Biopsia</a>
+        </div>
+      </form>
     </div>
   </div>
 </div>

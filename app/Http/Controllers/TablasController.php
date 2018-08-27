@@ -222,8 +222,6 @@ class TablasController extends Controller
     return view('reportes.control-diario')->with($data);
   }
 
-
-
   public function prepagados(Request $request){
     $data['page_title'] = "Reportes de prepagados";
     $data['facturacion'] = General::getFacturacion();

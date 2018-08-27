@@ -235,8 +235,7 @@ class CitologiaController extends Controller
   }
 
   
-   public function envelope($id)
-  {
+  public function envelope($id){
     $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
       ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
@@ -246,6 +245,17 @@ class CitologiaController extends Controller
     if ($data['citologia']  == null) { return redirect('citologias'); } //Verificación para evitar errores
     $pdf = PDF::loadView('/citologia/envelope', $data)->setPaper('DL');
     return $pdf->stream( $data['citologia']->informe . '-sobre'.'.pdf');
-    }
+  }
+
+  public function show(Request $request){
+    $data['citologias'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
+      ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
+      ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
+      ->join('grupos', 'citologia.grupo_id', '=', 'grupos.id')
+      ->whereIn('citologia.id', $request->id )
+      ->get();
+    $pdf = PDF::loadView('/citologia/select_print', $data);
+    return $pdf->stream('reporte.pdf');
+  }
     
 }
