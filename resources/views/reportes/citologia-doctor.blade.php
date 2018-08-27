@@ -82,7 +82,8 @@
                 <tr>
                     <th>Informe</th>
                     <th>Paciente</th>
-                    <th>Entregado</th>
+                    <th>Diagnostico</th>
+                    <th>Recibido</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -90,6 +91,7 @@
                     <tr>
                         <td>{{ $citologia->informe }}</td>
                         <td>{{ $citologia->paciente_name }}</td>
+                        <td>{{ $citologia->diagnostico }} </td>
                         <td>{{ $citologia->recibido }}</td>
                     </tr>
                 @endforeach

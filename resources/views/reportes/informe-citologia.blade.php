@@ -91,7 +91,7 @@
                     <tr>
                         <td>{{ $citologia->informe }}</td>
                         <td>{{ $citologia->paciente_name }}</td>
-                        <td> </td>
+                        <td> {{ $citologia->diagnostico }} </td>
                         <td>{{ $citologia->recibido }}</td>
                     </tr>
                 @endforeach

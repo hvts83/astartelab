@@ -90,7 +90,7 @@
                     <tr>
                         <td><?php echo e($citologia->informe); ?></td>
                         <td><?php echo e($citologia->paciente_name); ?></td>
-                        <td> </td>
+                        <td> <?php echo e($citologia->diagnostico); ?> </td>
                         <td><?php echo e($citologia->recibido); ?></td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

@@ -92,7 +92,7 @@
                         <td><input type="checkbox" name="checkbox[]"></td>
                         <td>{{ $biopsia->informe }}</td>
                         <td>{{ $biopsia->paciente_name }}</td>
-                        <td> </td>
+                        <td>{{ $biopsia->diagnostico }} </td>
                         <td>{{ $biopsia->recibido }}</td>
                     </tr>
                 @endforeach

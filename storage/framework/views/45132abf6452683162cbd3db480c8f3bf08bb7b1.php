@@ -91,7 +91,7 @@
                         <td><input type="checkbox" name="checkbox[]"></td>
                         <td><?php echo e($biopsia->informe); ?></td>
                         <td><?php echo e($biopsia->paciente_name); ?></td>
-                        <td> </td>
+                        <td><?php echo e($biopsia->diagnostico); ?> </td>
                         <td><?php echo e($biopsia->recibido); ?></td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
