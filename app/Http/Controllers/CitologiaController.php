@@ -177,8 +177,7 @@ class CitologiaController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function pdf($id)
-  {
+  public function pdf($id){
     $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
       ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
@@ -186,31 +185,6 @@ class CitologiaController extends Controller
       ->where('citologia.id', '=', $id)
       ->first();
     if ($data['citologia']  == null) { return redirect('citologias'); } //Verificación para evitar errores
-    $data['macro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'macro']
-      ])->first();
-    $data['micro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'micro']
-      ])->first();
-    $data['preliminar'] =Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'preliminar']
-      ])->first();
-    $data['imagenes'] = Citologia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
-      ->where('citologia_id', '=', $id)->get();
-    $data['detalle_pago'] = Consulta_transacciones::where([
-      ['tipo', '=', 'C'],
-      ['consulta', '=', $id]
-    ])->orderBy('created_at', 'DESC')->get();
-    $data['page_title']  = "Detalle " . $data['citologia']->informe;
-    $data['pacienteConsulta'] = Paciente::find($data['citologia']->paciente_id);
-    $data['precios'] = Precio::where('tipo', '=', 'C')->get();
-    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'C')->get();
-    $data['frases'] = Frase::where('tipo', '=', 'C')->get();
-    $data['pagos'] = General::getCondicionPago();
-    $data['facturacion'] = General::getFacturacion();
     $data['citologia']->recibido = General::formatoFecha( $data['citologia']->recibido );
     $data['citologia']->entregado = General::formatoFecha( $data['citologia']->entregado );
     $pdf = PDF::loadView('/citologia/pdf', $data);
@@ -233,38 +207,11 @@ class CitologiaController extends Controller
       ->where('citologia.id', '=', $id)
       ->first();
     if ($data['citologia']  == null) { return redirect('citologias'); } //Verificación para evitar errores
-    $data['macro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'macro']
-      ])->first();
-    $data['micro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'micro']
-      ])->first();
-    $data['preliminar'] =Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'preliminar']
-      ])->first();
-    $data['imagenes'] = Citologia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
-      ->where('citologia_id', '=', $id)->get();
-    $data['detalle_pago'] = Consulta_transacciones::where([
-      ['tipo', '=', 'C'],
-      ['consulta', '=', $id]
-    ])->orderBy('created_at', 'DESC')->get();
-    $data['page_title']  = "Detalle " . $data['citologia']->informe;
-    $data['pacienteConsulta'] = Paciente::find($data['citologia']->paciente_id);
-    $data['precios'] = Precio::where('tipo', '=', 'C')->get();
-    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'C')->get();
-    $data['frases'] = Frase::where('tipo', '=', 'C')->get();
-    $data['pagos'] = General::getCondicionPago();
-    $data['facturacion'] = General::getFacturacion();
     $data['citologia']->recibido = General::formatoFecha( $data['citologia']->recibido );
     $data['citologia']->entregado = General::formatoFecha( $data['citologia']->entregado );
     $pdf = PDF::loadView('/citologia/print', $data);
     return $pdf->stream( $data['citologia']->informe . '.pdf');
   }
-
-
 
   /**
    * Show the form for editing the specified resource.
@@ -274,38 +221,13 @@ class CitologiaController extends Controller
    */
   public function sm($id)
   {
-    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, grupos.nombre as grupo')
+    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
       ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
       ->join('grupos', 'citologia.grupo_id', '=', 'grupos.id')
       ->where('citologia.id', '=', $id)
       ->first();
     if ($data['citologia']  == null) { return redirect('citologias'); } //Verificación para evitar errores
-    $data['macro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'macro']
-      ])->first();
-    $data['micro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'micro']
-      ])->first();
-    $data['preliminar'] =Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'preliminar']
-      ])->first();
-    $data['imagenes'] = Citologia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
-      ->where('citologia_id', '=', $id)->get();
-    $data['detalle_pago'] = Consulta_transacciones::where([
-      ['tipo', '=', 'C'],
-      ['consulta', '=', $id]
-    ])->orderBy('created_at', 'DESC')->get();
-    $data['page_title']  = "Detalle " . $data['citologia']->informe;
-    $data['pacienteConsulta'] = Paciente::find($data['citologia']->paciente_id);
-    $data['precios'] = Precio::where('tipo', '=', 'C')->get();
-    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'C')->get();
-    $data['frases'] = Frase::where('tipo', '=', 'C')->get();
-    $data['pagos'] = General::getCondicionPago();
-    $data['facturacion'] = General::getFacturacion();
     $data['citologia']->recibido = General::formatoFecha( $data['citologia']->recibido );
     $data['citologia']->entregado = General::formatoFecha( $data['citologia']->entregado );
     $pdf = PDF::loadView('/citologia/sm', $data);
@@ -315,40 +237,13 @@ class CitologiaController extends Controller
   
    public function envelope($id)
   {
-    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, grupos.nombre as grupo')
+    $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
       ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
       ->join('grupos', 'citologia.grupo_id', '=', 'grupos.id')
       ->where('citologia.id', '=', $id)
       ->first();
     if ($data['citologia']  == null) { return redirect('citologias'); } //Verificación para evitar errores
-    $data['macro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'macro']
-      ])->first();
-    $data['micro'] = Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'micro']
-      ])->first();
-    $data['preliminar'] =Citologia_detalle::where([
-      ['citologia_id', '=', $id], 
-      ['tipo_detalle', '=', 'preliminar']
-      ])->first();
-    $data['imagenes'] = Citologia_imagen::join('imagen', 'imagen_id', '=', 'imagen.id')
-      ->where('citologia_id', '=', $id)->get();
-    $data['detalle_pago'] = Consulta_transacciones::where([
-      ['tipo', '=', 'C'],
-      ['consulta', '=', $id]
-    ])->orderBy('created_at', 'DESC')->get();
-    $data['page_title']  = "Detalle " . $data['citologia']->informe;
-    $data['pacienteConsulta'] = Paciente::find($data['citologia']->paciente_id);
-    $data['precios'] = Precio::where('tipo', '=', 'C')->get();
-    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'C')->get();
-    $data['frases'] = Frase::where('tipo', '=', 'C')->get();
-    $data['pagos'] = General::getCondicionPago();
-    $data['facturacion'] = General::getFacturacion();
-    $data['citologia']->recibido = General::formatoFecha( $data['citologia']->recibido );
-    $data['citologia']->entregado = General::formatoFecha( $data['citologia']->entregado );
     $pdf = PDF::loadView('/citologia/envelope', $data)->setPaper('DL');
     return $pdf->stream( $data['citologia']->informe . '-sobre'.'.pdf');
     }

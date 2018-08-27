@@ -54,53 +54,53 @@
     <td>{{$biopsia->paciente}}</td>
   </tr>
   <tr>
-    <td>Sexo:</td>
-    <td>@if($biopsia->sexo == '1')
-                        <p>M</p>
-                        @else
-                        <p>F</p>
-                        @endIf</td>
-    <td>Edad:</td>
-    <td>{{ $biopsia->edad }} a&ntilde;os {{ $biopsia->meses }} meses</td>
-  </tr>
-  <tr>
-    <td>Diagnostico:</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Recibido:</td>
-    <td>{{ $biopsia->recibido }}</td>
-    <td></td>
-    <td></td>
-    <td>Entregado: </td>
-    <td>{{ $biopsia->entregado }}</td>
+      <td>Sexo:</td>
+      <td>
+        @if($biopsia->sexo == '1')
+          <p>M</p>
+        @else
+          <p>F</p>
+        @endIf
+      </td>
+      <td>Edad:</td>
+      <td>{{ $biopsia->edad }} a&ntilde;os {{ $biopsia->meses }} meses</td>
+    </tr>
+    <tr>
+      <td>Diagnostico:</td>
+      <td>{{ $biopsia->diagnostico }}</td>
+    </tr>
+    <tr>
+      <td>Recibido:</td>
+      <td>{{ $biopsia->recibido }}</td>
+      <td></td>
+      <td></td>
+      <td>Entregado: </td>
+      <td>{{ $biopsia->entregado }}</td>
+    </tr>
+  </table>
+  <hr>
   
-  </tr>
-</table>
-<hr>
-
-<p align="center">Informe Histopatologico</p>
+  <p align="center">Informe Histopatologico</p>
 
 <table>
-  <tr>
-    <td>Macro</td>
-    <td>{{ $macro->detalle }}</td>
-  </tr>
-  <tr>
-    <td>Micro</td>
-    <td>{{ $micro->detalle }}</td>
-  </tr>
-  <tr>
-    <td>Diagnostico</td>
-    <td>{{ $preliminar->detalle }}</td>
-  </tr>
-  <tr>
-    <td>Informe Preliminar:</td>
-    <td> </td>
-  </tr>
-</table>
-
-    <hr>
+    <tr>
+      <td>Macro</td>
+      <td>{{ $biopsia->macro }}</td>
+    </tr>
+    <tr>
+      <td>Micro</td>
+      <td>{{ $biopsia->micro }}</td>
+    </tr>
+    <tr>
+      <td>Diagnostico</td>
+      <td>{{ $biopsia->preliminar }}</td>
+    </tr>
+    <tr>
+      <td>Informe Preliminar:</td>
+      <td></td>
+    </tr>
+  </table>
+  <hr>
     <table>
       <tr>
         <td width="400px">Fin del Informe</td>

@@ -54,53 +54,53 @@
     <td><?php echo e($biopsia->paciente); ?></td>
   </tr>
   <tr>
-    <td>Sexo:</td>
-    <td><?php if($biopsia->sexo == '1'): ?>
-                        <p>M</p>
-                        <?php else: ?>
-                        <p>F</p>
-                        <?php endif; ?></td>
-    <td>Edad:</td>
-    <td><?php echo e($biopsia->edad); ?> a&ntilde;os <?php echo e($biopsia->meses); ?> meses</td>
-  </tr>
-  <tr>
-    <td>Diagnostico:</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Recibido:</td>
-    <td><?php echo e($biopsia->recibido); ?></td>
-    <td></td>
-    <td></td>
-    <td>Entregado: </td>
-    <td><?php echo e($biopsia->entregado); ?></td>
+      <td>Sexo:</td>
+      <td>
+        <?php if($biopsia->sexo == '1'): ?>
+          <p>M</p>
+        <?php else: ?>
+          <p>F</p>
+        <?php endif; ?>
+      </td>
+      <td>Edad:</td>
+      <td><?php echo e($biopsia->edad); ?> a&ntilde;os <?php echo e($biopsia->meses); ?> meses</td>
+    </tr>
+    <tr>
+      <td>Diagnostico:</td>
+      <td><?php echo e($biopsia->diagnostico); ?></td>
+    </tr>
+    <tr>
+      <td>Recibido:</td>
+      <td><?php echo e($biopsia->recibido); ?></td>
+      <td></td>
+      <td></td>
+      <td>Entregado: </td>
+      <td><?php echo e($biopsia->entregado); ?></td>
+    </tr>
+  </table>
+  <hr>
   
-  </tr>
-</table>
-<hr>
-
-<p align="center">Informe Histopatologico</p>
+  <p align="center">Informe Histopatologico</p>
 
 <table>
-  <tr>
-    <td>Macro</td>
-    <td><?php echo e($macro->detalle); ?></td>
-  </tr>
-  <tr>
-    <td>Micro</td>
-    <td><?php echo e($micro->detalle); ?></td>
-  </tr>
-  <tr>
-    <td>Diagnostico</td>
-    <td><?php echo e($preliminar->detalle); ?></td>
-  </tr>
-  <tr>
-    <td>Informe Preliminar:</td>
-    <td> </td>
-  </tr>
-</table>
-
-    <hr>
+    <tr>
+      <td>Macro</td>
+      <td><?php echo e($biopsia->macro); ?></td>
+    </tr>
+    <tr>
+      <td>Micro</td>
+      <td><?php echo e($biopsia->micro); ?></td>
+    </tr>
+    <tr>
+      <td>Diagnostico</td>
+      <td><?php echo e($biopsia->preliminar); ?></td>
+    </tr>
+    <tr>
+      <td>Informe Preliminar:</td>
+      <td></td>
+    </tr>
+  </table>
+  <hr>
     <table>
       <tr>
         <td width="400px">Fin del Informe</td>
