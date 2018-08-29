@@ -40,8 +40,7 @@
     <tr>
       <td>Informe:</td>
       <td>{{$citologia->informe}}</td>
-      <td>Doctor(a):</td>
-      <td>{{$citologia->doctor}}</td>
+      <td>Doctor(a): {{$citologia->doctor}}</td>
     </tr>
     <tr>
       <td>Paciente:</td>
@@ -56,25 +55,22 @@
           <p>F</p>
         @endIf
       </td>
-      <td>Edad:</td>
-      <td>{{ $citologia->edad }}</td>
+      <td>Edad: {{ $citologia->edad }} a&ntilde;os {{ $citologia->meses }} mesess</td>
+      <td> </td>
     </tr>
     <tr>
       <td>Diagnostico:</td>
-      <td>{{ $citologia->diagnostico }} </td>
+      <td colspan="3">{{ $citologia->diagnostico }} </td>
     </tr>
     <tr>
       <td>Recibido:</td>
       <td>{{ $citologia->recibido }}</td>
-      <td></td>
-      <td></td>
-      <td>Entregado: </td>
-      <td>{{ $citologia->entregado }}</td>
+      <td>Entregado: {{ $citologia->entregado }}</td>
     </tr>
   </table>
   <hr>
   
-  <p align="center">Informe Citolopatologico</p>
+  <p align="center">Informe Citopatologico</p>
   
   <table>
     <tr>
@@ -83,7 +79,7 @@
     </tr>
     <tr>
       <td>Diagnostico:</td>
-      <td>{{ $citologia->preliminar }}</td>
+      <td>{{ $citologia->dxlab }}</td>
     </tr>
     <tr>
       <td>Informe Preliminar:</td>

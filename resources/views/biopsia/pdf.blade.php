@@ -87,11 +87,11 @@
   </tr>
   <tr>
     <td>Diagnostico</td>
-    <td>{{ $biopsia->preliminar }}</td>
+    <td>{{ $biopsia->dxlab }}</td>
   </tr>
   <tr>
     <td>Informe Preliminar:</td>
-    <td></td>
+    <td>{{ $biopsia->preliminar }}</td>
   </tr>
 </table>
 <hr>
