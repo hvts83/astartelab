@@ -421,11 +421,17 @@
         $('#add_diagnostico_id').on('click', function(){
           $('#diagnostico_id').append( $('#select_diagnostico_id').val() );   
         });
+        $('#add_macro').on('click', function(){
+          $('#macro').append( $('#select_macro').val() );   
+        });
         $('#add_micro').on('click', function(){
-          $('#micro').append( $('#select_micro').val() );
+          $('#micro').append( $('#select_micro').val() );   
         });
         $('#add_preliminar').on('click', function(){
-          $('#preliminar').append( $('#select_preliminar').val() );
+          $('#preliminar').append( $('#select_preliminar').val() );   
+        });
+        $('#add_inmuno').on('click', function(){
+          $('#inmuno').append( $('#select_inmuno').val() );   
         });
       </script>
 @endsection
