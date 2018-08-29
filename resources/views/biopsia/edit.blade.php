@@ -199,7 +199,7 @@
                      {{ csrf_field() }}
                      <div class="form-group">
                         <label class="control-label">Frases</label>
-                        <select class="chosen-select" data-placeholder="Selecciondiagnosticoses" id="select_macro" style="height: 24pt">
+                        <select class="chosen-select" data-placeholder="seleccione frases" id="select_macro" style="height: 24pt">
                           @foreach ($frases as $frase)
                             <option value="{{ $frase->nombre }}" style="height: 24pt"> {{  $frase->nombre }} </option>
                           @endforeach

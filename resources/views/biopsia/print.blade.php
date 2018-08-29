@@ -7,20 +7,12 @@
   <link href="/css/print.css" rel="stylesheet" media="print" type="text/css">
   <title>Document</title>
   <style>
-    h3{
-      margin:0px;
-    }
-    h5{
-      margin:0px;
-    }
-    tr{
-      margin:0px;
-    }
-    td{
-      margin:0px;
-    }
-    p{
-      margin:0px;
+    body{ font-size:12px;}
+    h3{ margin:0px;}
+    h5{ margin:0px;}
+    tr{ margin:0px;}
+    td{ margin:0px;}
+    p{ margin:0px;
     }  
   </style>  
 </head>
@@ -97,7 +89,7 @@
     </tr>
     <tr>
       <td>Informe Preliminar:</td>
-      <td></td>
+      <td>{{ $biopsia->inmuno }}</td>
     </tr>
   </table>
   <hr>

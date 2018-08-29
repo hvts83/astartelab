@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
+    body{ font-size: 12px; }
     h3{ margin:0px; }
     h5{ margin:0px; }
     tr{ margin:0px; }
