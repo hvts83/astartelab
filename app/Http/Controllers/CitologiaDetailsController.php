@@ -47,6 +47,28 @@ class CitologiaDetailsController extends Controller
     return redirect('citologia/'. $id . "/edit");
   }
 
+
+  public function dxlab(Request $request, $id)
+  {
+    $this->validate($request, [
+      'dxlab' =>'required'
+    ]);
+
+    DB::beginTransaction();
+    try {
+      $citologia = Citologia::find($id);
+      $citologia->dxlab = $request->dxlab;
+      $citologia->save();
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
+    return redirect('citologia/'. $id . "/edit");
+  }
+
+
+
   public function preliminar(Request $request, $id)
   {
     $this->validate($request, [

@@ -89,6 +89,7 @@ class CitologiaController extends Controller
           $citologia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
           $citologia->diagnostico = $request->diagnostico;
           $citologia->micro = $request->micro;
+          $citologia->dxlab = $request->dxlab;
           $citologia->preliminar = $request->preliminar;
           $citologia->save();
 
