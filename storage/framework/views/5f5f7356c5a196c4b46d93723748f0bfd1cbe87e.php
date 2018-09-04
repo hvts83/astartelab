@@ -94,8 +94,17 @@
                         <td>$<?php echo e($cpago->monto); ?></td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                 <h3>Total $<?php echo e($cpagos->sum('monto')); ?> </h3>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>Total</th>
+                        <th>$<?php echo e($cpagos->sum('monto')); ?></th>
+                    </tr>
+                </tfoot>
             </table>
            
             </div>
@@ -137,8 +146,11 @@
       "info": true,
       "autoWidth": false,
       'dom': 'Bfrtip',
-      'buttons': [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+      "buttons": [
+            { extend: 'copyHtml5', footer: true },
+            { extend: 'excelHtml5', footer: true },
+            { extend: 'csvHtml5', footer: true },
+            { extend: 'pdfHtml5', footer: true }
         ]
     });
 
