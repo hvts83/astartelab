@@ -66,6 +66,26 @@ class BiopsiaDetailsController extends Controller
     return redirect('biopsia/'. $id . "/edit");
   }
 
+
+  public function dxlab(Request $request, $id)
+  {
+    $this->validate($request, [
+      'dxlab' =>'required'
+    ]);
+
+    DB::beginTransaction();
+    try {
+      $biopsia = Biopsia::find($id);
+      $biopsia->dxlab= $request->dxlab;
+      $biopsia->save();
+    } catch (\Exception $e) {
+      DB::rollback();
+      throw $e;
+    }
+    DB::commit();
+    return redirect('biopsia/'. $id . "/edit");
+  }
+
   public function preliminar(Request $request, $id)
   {
     $this->validate($request, [

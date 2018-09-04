@@ -46,8 +46,9 @@
             <li class="active"><a data-toggle="tab" href="#tab-1">Datos de consulta</a></li>
             <li class=""><a data-toggle="tab" href="#tab-2">Pago</a></li>
             <li class=""><a data-toggle="tab" href="#tab-4">Reporte Micro</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-5">Reporte Informe preliminar</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-6">Imagenes</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-5">Diagnostico Lab</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-6">Informe preliminar</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-7">Imagenes</a></li>
         </ul>
         <div class="tab-content">
             <div id="tab-1" class="tab-pane active">
@@ -212,7 +213,35 @@
                   </form>
                 </div>
               </div>
+
+
+
               <div id="tab-5" class="tab-pane">
+                  <div class="panel-body">
+                    <form role="form" method="post" action="{{ url('/citologia-details/dxlab/'. $citologia->id ) }}">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                          <label class="control-label">Diagnóstico</label>
+                          <div class="input-group">
+                            <select class="chosen-select" data-placeholder="Seleccione frases" id="select_dxlab">
+                              @foreach ($diagnosticos as $diagnostico)
+                                <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                              @endforeach
+                            </select>
+                          </div>
+                        </div>
+                        <button type="button" id="add_dxlab" class="btn btn-primary">Agregar</button>
+                        <div class="form-group">
+                          <textarea class="form-control" rows="5" id="dxlab" name="dxlab">{{ $citologia->dxlab }}</textarea>
+                        </div>
+                        <div><button class="btn btn-primary m-t-n-xs" type="submit"><strong>Guardar</strong></button></div>
+                    </form>
+                  </div>
+                </div>
+
+
+
+              <div id="tab-6" class="tab-pane">
                   <div class="panel-body">
                     <form role="form" method="post" action="{{ url('/citologia-details/preliminar/'. $citologia->id ) }}">
                         {{ csrf_field() }}
@@ -234,7 +263,8 @@
                     </form>
                   </div>
                 </div>
-            <div id="tab-6" class="tab-pane">
+
+            <div id="tab-7" class="tab-pane">
               <div class="panel-body">
                 <div class="row">
                   <fieldset>
@@ -377,6 +407,9 @@
       });
       $('#add_micro').on('click', function(){
         $('#micro').append( $('#select_micro').val() );
+      });
+      $('#add_dxlab').on('click', function(){
+        $('#dxlab').append( $('#select_dxlab').val() );
       });
       $('#add_preliminar').on('click', function(){
         $('#preliminar').append( $('#select_preliminar').val() );

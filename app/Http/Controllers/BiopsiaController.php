@@ -90,6 +90,7 @@ class BiopsiaController extends Controller
           $biopsia->diagnostico = $request->diagnostico;
           $biopsia->macro = $request->macro;
           $biopsia->micro = $request->micro;
+          $biopsia->dxlab = $request->dxlab;
           $biopsia->preliminar = $request->preliminar;
           $biopsia->inmuno = $request->inmuno;
           $biopsia->save();

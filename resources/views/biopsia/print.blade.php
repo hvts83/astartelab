@@ -38,8 +38,7 @@
   <tr>
     <td>Informe:</td>
     <td>{{$biopsia->informe}}</td>
-    <td>Doctor(a):</td>
-    <td>{{$biopsia->doctor}}</td>
+    <td>Doctor(a): {{$biopsia->doctor}}</td>
   </tr>
   <tr>
     <td>Paciente:</td>
@@ -54,20 +53,16 @@
           <p>F</p>
         @endIf
       </td>
-      <td>Edad:</td>
-      <td>{{ $biopsia->edad }} a&ntilde;os {{ $biopsia->meses }} meses</td>
+      <td>Edad: {{ $biopsia->edad }} a&ntilde;os {{ $biopsia->meses }} meses</td>
     </tr>
     <tr>
       <td>Diagnostico:</td>
-      <td>{{ $biopsia->diagnostico }}</td>
+      <td colspan="3">{{ $biopsia->diagnostico }}</td>
     </tr>
     <tr>
       <td>Recibido:</td>
       <td>{{ $biopsia->recibido }}</td>
-      <td></td>
-      <td></td>
-      <td>Entregado: </td>
-      <td>{{ $biopsia->entregado }}</td>
+      <td>Entregado: {{ $biopsia->entregado }} </td>
     </tr>
   </table>
   <hr>
@@ -85,11 +80,11 @@
     </tr>
     <tr>
       <td>Diagnostico</td>
-      <td>{{ $biopsia->preliminar }}</td>
+      <td>{{ $biopsia->dxlab }}</td>
     </tr>
     <tr>
       <td>Informe Preliminar:</td>
-      <td>{{ $biopsia->inmuno }}</td>
+      <td>{{ $biopsia->preliminar }}</td>
     </tr>
   </table>
   <hr>

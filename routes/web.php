@@ -43,6 +43,7 @@ Route::delete('doctor-account/delete/{id}', "DoctorFondosController@deleteDoctor
 //Biopsias
 Route::post('/biopsia-details/macro/{id}', 'BiopsiaDetailsController@macro');
 Route::post('/biopsia-details/micro/{id}', 'BiopsiaDetailsController@micro');
+Route::post('/biopsia-details/dxlab/{id}', 'BiopsiaDetailsController@dxlab');
 Route::post('/biopsia-details/preliminar/{id}', 'BiopsiaDetailsController@preliminar');
 Route::post('/biopsia-details/inmunohistoquimica/{id}', 'BiopsiaDetailsController@inmunohistoquimica');
 Route::post('/biopsia-details/imagen/{id}', 'BiopsiaDetailsController@imagen');
@@ -53,6 +54,7 @@ Route::post('/biopsia-details/primer_pago/{id}', 'BiopsiaDetailsController@prime
 //Citologia
 Route::post('/citologia-details/macro/{id}', 'CitologiaDetailsController@macro');
 Route::post('/citologia-details/micro/{id}', 'CitologiaDetailsController@micro');
+Route::post('/citologia-details/dxlab/{id}', 'CitologiaDetailsController@dxlab');
 Route::post('/citologia-details/preliminar/{id}', 'CitologiaDetailsController@preliminar');
 Route::post('/citologia-details/imagen/{id}', 'CitologiaDetailsController@imagen');
 Route::post('/citologia-details/abono/{id}', 'CitologiaDetailsController@abono');
