@@ -58,7 +58,7 @@
             
             <div class="form-group col-md-3">
                 <label class="control-label">Doctor</label>
-                <select class="chosen-select"  name="doctor">
+                <select class="chosen-select"  name="doctor" required>
                     <option selected disabled>Seleccione doctor</option>
                     @foreach ($doctores as $doctor)
                         <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>

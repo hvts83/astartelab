@@ -56,7 +56,7 @@
             </div>
             <div class="form-group col-md-3">
                 <label class="control-label">Doctor</label>
-                <select class="chosen-select"  name="doctor">
+                <select class="chosen-select"  name="doctor" required>
                     <option selected disabled>Seleccione doctor</option>
                     <?php $__currentLoopData = $doctores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($doctor->id); ?>"> <?php echo e($doctor->nombre); ?> </option>

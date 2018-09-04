@@ -284,7 +284,7 @@ class TablasController extends Controller
 
   public function informeBiopsia(Request $request){
     
-    $data['page_title'] = "Informe Biopsias";
+    $data['page_title'] = "Biopsias por informe";
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
 
@@ -325,18 +325,22 @@ class TablasController extends Controller
 
   public function biopsiaDoctor(Request $request){
     
-    $data['page_title'] = "Biopsias por Doctores";
+    $data['page_title'] = "Biopsias por Doctor";
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
+    $doctor = Doctor::find($request->doctor);
+
+    if($doctor != null){
+      $data['page_title'] .= ": " . $doctor->nombre;
+    }
 
     if( count($request->all()) > 0 ){
       $query = Biopsia::select('biopsias.*','doctores.nombre as doctor_name', 'pacientes.name as paciente_name')
       ->join('doctores', 'doctores.id', '=', 'doctor_id')
       ->join('pacientes', 'pacientes.id', '=', 'paciente_id');
       
-      if($request->has('doctor')){
-        $query->where('doctor_id', '=',  $request->doctor);
-      }
+      $query->where('doctor_id', '=',  $request->doctor);
+    
       if($request->has('paciente')){
         $query->where('paciente_id', '=', $request->paciente);
       }
@@ -407,18 +411,22 @@ class TablasController extends Controller
 
   public function citologiaDoctor(Request $request){
     
-    $data['page_title'] = "Informe de Biopsias por Doctores";
+    $data['page_title'] = "Citologia por Doctor";
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
+    $doctor = Doctor::find($request->doctor);
+
+    if($doctor != null){
+      $data['page_title'] .= ": " . $doctor->nombre;
+    }
 
     if( count($request->all()) > 0 ){
       $query = Citologia::select('citologia.*', 'doctores.nombre as doctor_name', 'pacientes.name as paciente_name')
       ->join('doctores', 'doctores.id', '=', 'doctor_id')
       ->join('pacientes', 'pacientes.id', '=', 'paciente_id');
       
-      if($request->has('doctor')){
-        $query->where('doctor_id', '=',  $request->doctor);
-      }
+      $query->where('doctor_id', '=',  $request->doctor);
+      
       if($request->has('paciente')){
         $query->where('paciente_id', '=', $request->paciente);
       }
