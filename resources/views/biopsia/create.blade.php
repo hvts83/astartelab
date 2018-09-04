@@ -104,7 +104,9 @@
                   <label class="control-label">Frases</label>
                   <select class="chosen-select form-control" data-placeholder="Selecciondiagnosticoses" id="select_macro">
                       @foreach ($frases as $frase)
-                        <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                        @if($frase->tipo == "B" )
+                          <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                        @endif
                       @endforeach
                   </select>
                 </div>
@@ -121,7 +123,9 @@
                   <label class="control-label">Frases</label>
                   <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
                       @foreach ($frases as $frase)
-                        <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                        @if($frase->tipo == "M")
+                          <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                        @endif
                       @endforeach
                     </select>
                   </div>

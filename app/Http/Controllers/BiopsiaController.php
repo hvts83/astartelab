@@ -47,8 +47,8 @@ class BiopsiaController extends Controller
     $data['doctores'] = Doctor::all();
     $data['pacientes'] = Paciente::all();
     $data['grupos'] = Grupo::all();
-    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
-    $data['frases'] = Frase::where('tipo', '=', 'B')->get();
+    $data['diagnosticos'] = Diagnostico::where('tipo', '!=', 'C')->get();
+    $data['frases'] = Frase::where('tipo', '!=', 'C')->get();
     return view('biopsia.create', $data);
   }
 
@@ -126,8 +126,8 @@ class BiopsiaController extends Controller
     $data['page_title']  = "Detalle " . $data['biopsia']->informe;
     $data['pacienteConsulta'] = Paciente::find($data['biopsia']->paciente_id);
     $data['precios'] = Precio::where('tipo', '=', 'B')->get();
-    $data['diagnosticos'] = Diagnostico::where('tipo', '=', 'B')->get();
-    $data['frases'] = Frase::where('tipo', '=', 'B')->get();
+    $data['diagnosticos'] = Diagnostico::where('tipo', '!=', 'C')->get();
+    $data['frases'] = Frase::where('tipo', '!=', 'C')->get();
     $data['pagos'] = General::getCondicionPago();
     $data['facturacion'] = General::getFacturacion();
     $data['biopsia']->recibido = General::formatoFecha( $data['biopsia']->recibido );

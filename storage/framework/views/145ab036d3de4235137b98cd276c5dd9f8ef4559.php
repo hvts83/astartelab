@@ -203,7 +203,9 @@
                         <label class="control-label">Frases</label>
                         <select class="chosen-select" data-placeholder="seleccione frases" id="select_macro" style="height: 24pt">
                           <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($frase->nombre); ?>" style="height: 24pt"> <?php echo e($frase->nombre); ?> </option>
+                            <?php if($frase->tipo == "B"): ?>
+                              <option value="<?php echo e($frase->nombre); ?>" style="height: 24pt"> <?php echo e($frase->nombre); ?> </option>
+                            <?php endif; ?>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                       </div>
@@ -226,7 +228,9 @@
                         <label class="control-label">Frases</label>
                         <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
                           <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if($frase->tipo == "M"): ?>
                             <option value="<?php echo e($frase->nombre); ?>"> <?php echo e($frase->nombre); ?> </option>
+                            <?php endif; ?>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                       </div>
