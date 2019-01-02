@@ -6,48 +6,39 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    body{ font-size: 12px; }
-    h3{ margin:0px; }
-    h5{ margin:0px; }
-    tr{ margin:0px; }
-    td{ margin:0px; }
-    p{ margin:0px; }  
+    body{ font-size: 14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif; }
+    h3{ margin:0px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    h5{ margin:0px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    table{font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    p{ margin:0px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    tr.spaceUnder>td {padding-bottom: 1em;}
   </style>
 </head>
 <body>
 
-    <table align="center" width="100%">
-        <tr>
-          <td  width="100px"><img src="{{ asset('img/astartelogobn.jpg') }}" height="100px" width="100px"/></td>
-          <td nowrrap align="center">
-            <h3>ASTARTE LABORATORIO DE PATOLOGIA</h3>
-            <h5>INSCRIPCI&Oacute;N C.S.S.P. N° 11</h5>
-            <h3>DR. SALVADOR LOPEZ HERNANDEZ</h3>
-            <h5>
-              MEDICO PATOLOGO - JVPM 1711<br>
-              PATOLOGIA GENERAL, PEDIATRICA Y NEONATAL <br>
-              CITOPATOLOGIA, CITOLOGIA POR ASPIRACION CON AGUJA FINA (CAAF)
-            </h5>
-            <p align="center">
-              23 Calle Poniente #1249, Colonia Layco, San Salvador<br>
-              Telefax: 2226-9229 E-mail: astartelaboratorio@gmail.com
-            </p>
-          </td>
-        </tr>
-      </table>
+  <table align="center" width="100%">
+    <tr>
+      <td  width="100px"><img src="{{ asset('img/astartelogobn.jpg') }}" height="100px" width="100px"/></td>
+       <td nowrrap align="center"><h3>ASTARTE LABORATORIO DE PATOLOGIA</h3>
+          <p align="center">INSCRIPCI&Oacute;N C.S.S.P. Nº11</p>
+          <p align="center">23 Calle Poniente #1249, Colonia Layco, San Salvador<br>
+           Telefax: 2226-9229 E-mail: astartelaboratorio@gmail.com</p>
+      </td>
+    </tr>
+  </table>
       <hr>
       <table>
           <tr>
-            <td>Informe:</td>
+            <td><strong>Informe:</strong></td>
             <td>{{$citologia->informe}}</td>
-            <td>Doctor(a): {{$citologia->doctor}}</td>
+            <td nowrap><strong>Doctor(a): </strong> {{$citologia->doctor}}</td>
           </tr>
           <tr>
-            <td>Paciente:</td>
+            <td><strong>Paciente :</strong></td>
             <td>{{$citologia->paciente}}</td>
           </tr>
           <tr>
-            <td>Sexo:</td>
+            <td><strong>Sexo: </strong></td>
             <td>
               @if($citologia->sexo == '1')
                 <p>M</p>
@@ -55,46 +46,47 @@
                 <p>F</p>
               @endIf
             </td>
-            <td>Edad: {{ $citologia->edad }} a&ntilde;os {{ $citologia->meses }} mesess</td>
+            <td><strong>Edad: </strong> {{ $citologia->edad }} a&ntilde;os {{ $citologia->meses }} mesess</td>
             <td> </td>
           </tr>
           <tr>
-            <td>Diagnostico:</td>
-            <td colspan="3">{{ $citologia->diagnostico }} </td>
+            <td valign="top"><strong>Diagnostico: </strong></td>
+            <td colspan="3">{!! nl2br(e($citologia->diagnostico)) !!}</td>
           </tr>
           <tr>
-            <td>Recibido:</td>
+            <td><strong>Recibido: </strong></td>
             <td>{{ $citologia->recibido }}</td>
-            <td>Entregado: {{ $citologia->entregado }}</td>
+            <td><strong>Entregado: </strong> {{ $citologia->entregado }}</td>
           </tr>
         </table>
         <hr>
-        
-        <p align="center">Informe Citopatologico</p>
-        
+
+        <p align="center"><strong> <u>Informe Citopatologico</u> </strong></p>
+        <p>&nbsp;</p>
+
         <table>
-          <tr>
-            <td>Micro:</td>
-            <td>{{ $citologia->micro }} </td>
+          <tr class="spaceUnder">
+            <td valign="top"><strong>Micro: </strong></td>
+            <td>{!! nl2br(e( $citologia->micro)) !!}</td>
           </tr>
-          <tr>
-            <td>Diagnostico:</td>
-            <td>{{ $citologia->dxlab }}</td>
+          <tr class="spaceUnder">
+            <td valign="top"><strong>Diagnostico Histopatologico: </strong></td>
+            <td>{!! nl2br(e($citologia->dxlab)) !!}</td>
           </tr>
-          <tr>
-            <td>Informe Preliminar:</td>
-            <td nowrap> {{ $citologia->preliminar }}</td>
-          </tr> 
-        </table>
-        <hr>
-        
-        <table>
-          <tr>
-            <td width="400px">Fin del Informe</td>
-            <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO - JVPM 1711 </p></td>
+          <tr class="spaceUnder">
+            <td valign="top"><strong>Informe Preliminar: </strong></td>
+            <td nowrap>{!! nl2br(e( $citologia->preliminar)) !!}</td>
           </tr>
         </table>
-<script type="text/javascript"> 
-      this.print(); 
-</script> 
+        <p>&nbsp;</p>
+
+        <table>
+          <tr>
+            <td width="400px"><strong>Fin del Informe</strong></td>
+            <td><p align="center"><strong>DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO - JVPM 1711</strong> </p></td>
+          </tr>
+        </table>
+<script type="text/javascript">
+      this.print();
+</script>
 </body>

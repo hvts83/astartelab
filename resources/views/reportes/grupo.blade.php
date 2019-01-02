@@ -74,8 +74,8 @@
                         <td>{{ $cgrupo->informe }}</td>
                         <td>{{ $cgrupo->doctor_name}}</td>
                         <td>{{ $cgrupo->grupo_name }}</td>
-                        <td>{{ $cgrupo->recibido }}</td>
-                        <td>{{ $cgrupo->entregado }}</td>
+                        <td>{{ date('d-m-Y', strtotime($cgrupo->recibido)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($cgrupo->entregado)) }}</td>
                     </tr>
                 @endforeach
                 </tbody>

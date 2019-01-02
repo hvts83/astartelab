@@ -111,6 +111,8 @@ class BiopsiaController extends Controller
    */
   public function edit($id)
   {
+    $data['doctores'] = Doctor::all();
+    $data['pacientes'] = Paciente::all();
     $data['biopsia'] =  Biopsia::selectRaw('biopsias.*, doctores.nombre as doctor, pacientes.name as paciente, grupos.nombre as grupo')
       ->join('doctores', 'biopsias.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'biopsias.paciente_id', '=', 'pacientes.id')
@@ -163,8 +165,14 @@ class BiopsiaController extends Controller
           }
         }
         $biopsia->diagnostico = $request->diagnostico;
+        $biopsia->doctor_id = $request->doctor_id;
+        $biopsia->paciente_id = $request->paciente_id;
         $biopsia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
         $biopsia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
+        $biopsia->macro = $request->macro;
+        $biopsia->micro = $request->micro;
+        $biopsia->dxlab = $request->dxlab;
+        $biopsia->preliminar = $request->preliminar;
         $biopsia->save();
     } catch (\Exception $e) {
       DB::rollback();
@@ -251,7 +259,7 @@ class BiopsiaController extends Controller
       ->where('biopsias.id', '=', $id)
       ->first();
     if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
-    $pdf = PDF::loadView('/biopsia/envelope', $data)->setPaper('DL');
+    $pdf = PDF::loadView('/biopsia/envelope', $data)->setPaper('DL', 'landscape');
     return $pdf->stream($data['biopsia']->informe . '-sobre' .'.pdf');
   }
 
@@ -265,5 +273,7 @@ class BiopsiaController extends Controller
     $pdf = PDF::loadView('/biopsia/select_print', $data);
     return $pdf->stream('reporte.pdf');
   }
+
+  
 
 }

@@ -73,7 +73,7 @@
                 <tbody>
                 @foreach ($cpagos as $key => $cpago)
                     <tr>
-                        <td>{{ $cpago->created_at }}</td>
+                        <td>{{ date('d-m-Y', strtotime($cpago->created_at)) }}</td>
                         <td>{{ $cpago->informe }}</td>
                         <td>{{ $cpago->tipo === 'B' ? 'Biopsia' : 'Citolog&iacute;a' }}</td>
                         <td>
@@ -149,6 +149,7 @@
             { extend: 'copyHtml5', footer: true },
             { extend: 'excelHtml5', footer: true },
             { extend: 'csvHtml5', footer: true },
+            'print',
             { extend: 'pdfHtml5', footer: true }
         ]
     });

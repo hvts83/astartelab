@@ -109,6 +109,8 @@ class CitologiaController extends Controller
    */
   public function edit($id)
   {
+    $data['doctores'] = Doctor::all();
+    $data['pacientes'] = Paciente::all();
     $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, grupos.nombre as grupo')
       ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
       ->join('pacientes', 'citologia.paciente_id', '=', 'pacientes.id')
@@ -160,8 +162,13 @@ class CitologiaController extends Controller
           }
         }
         $citologia->diagnostico = $request->diagnostico;
+        $citologia->doctor_id = $request->doctor_id;
+        $citologia->paciente_id = $request->paciente_id;
         $citologia->recibido = Carbon::createFromFormat('d-m-Y', $request->recibido);
         $citologia->entregado = Carbon::createFromFormat('d-m-Y', $request->entregado);
+        $citologia->micro = $request->micro;
+        $citologia->dxlab = $request->dxlab;
+        $citologia->preliminar = $request->preliminar;
         $citologia->save();
     } catch (\Exception $e) {
       DB::rollback();
@@ -235,7 +242,7 @@ class CitologiaController extends Controller
     return $pdf->stream( $data['citologia']->informe . '.pdf');
   }
 
-  
+
   public function envelope($id){
     $data['citologia'] =  Citologia::selectRaw('citologia.*, doctores.nombre as doctor, pacientes.name as paciente, pacientes.sexo as sexo, pacientes.edad as edad, pacientes.meses as meses, grupos.nombre as grupo')
       ->join('doctores', 'citologia.doctor_id', '=', 'doctores.id')
@@ -244,7 +251,7 @@ class CitologiaController extends Controller
       ->where('citologia.id', '=', $id)
       ->first();
     if ($data['citologia']  == null) { return redirect('citologias'); } //Verificación para evitar errores
-    $pdf = PDF::loadView('/citologia/envelope', $data)->setPaper('DL');
+    $pdf = PDF::loadView('/citologia/envelope', $data)->setPaper('DL', 'landscape');
     return $pdf->stream( $data['citologia']->informe . '-sobre'.'.pdf');
   }
 
@@ -258,5 +265,5 @@ class CitologiaController extends Controller
     $pdf = PDF::loadView('/citologia/select_print', $data);
     return $pdf->stream('reporte.pdf');
   }
-    
+
 }

@@ -63,8 +63,12 @@ Route::post('/citologia-details/primer_pago/{id}', 'CitologiaDetailsController@p
 //Reportes
 Route::get('/reportes/biopsia', 'TablasController@biopsia');
 Route::get('/reportes/citologia', 'TablasController@citologia');
+Route::get('/reportes/biopsia-esp', 'TablasController@biopsiaesp');
+Route::get('/reportes/citologia-esp', 'TablasController@citologiaesp');
 Route::get('/reportes/informe-biopsia', 'TablasController@informeBiopsia');
+Route::get('/reportes/informe-biopsia-sd', 'TablasController@informeBiopsiasd');
 Route::get('/reportes/biopsia-doctor', 'TablasController@biopsiaDoctor');
+Route::get('/reportes/informe-citologia-sd', 'TablasController@informeCitologiasd');
 Route::get('/reportes/informe-citologia', 'TablasController@informeCitologia');
 Route::get('/reportes/citologia-doctor', 'TablasController@citologiaDoctor');
 Route::get('/reportes/grupo', 'TablasController@grupo');
@@ -72,6 +76,8 @@ Route::get('/reportes/ingresos', 'TablasController@ingresos');
 Route::get('/reportes/pendientes', 'TablasController@pendientes');
 Route::get('/reportes/prepagados', 'TablasController@prepagados');
 Route::get('/reportes/control-diario', 'TablasController@controldiario');
+Route::get('/reportes/envelopesb', 'TablasController@envelopesb');
+Route::get('/reportes/envelopesc', 'TablasController@envelopesc');
 //Impresiones
 Route::get('/biopsia/{id}/pdf', 'BiopsiaController@pdf');
 Route::get('/biopsia/{id}/print', 'BiopsiaController@print');

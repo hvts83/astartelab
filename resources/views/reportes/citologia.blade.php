@@ -76,10 +76,12 @@
     @if( isset($citologias))
     <div class="row">
         <div class="ibox-content">
+            <form role="form" method="get" action="{{ url('/reportes/envelopesc') }}">
             <div class="table-responsive">
             <table id="tblcitologia" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th>Seleccionar</th>
                     <th>Informe</th>
                     <th>Paciente</th>
                     <th>Doctor</th>
@@ -91,11 +93,12 @@
                 <tbody>
                 @foreach ($citologias as $key => $citologia)
                     <tr>
+                        <th><input type="checkbox" name="id[]" value="{{ $citologia->id }}" ></th>
                         <td>{{ $citologia->informe }}</td>
                         <td>{{ $citologia->paciente_name }}</td>
                         <td>{{ $citologia->doctor_name}}</td>
-                        <td>{{ $citologia->recibido }}</td>
-                        <td>{{ $citologia->entregado }}</td>
+                        <td>{{ date('d-m-Y', strtotime($citologia->recibido)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($citologia->entregado)) }}</td>
                         <td>
                             <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/edit" ) }}">Ver detalle</a>
                         </td>
@@ -104,6 +107,11 @@
                 </tbody>
             </table>
             </div>
+            <div class="div-btn">
+                    <button type="submit" class="btn btn-primary" target="_blank"> Imprimir Sobres </button>
+                </form>
+                  </div>
+                </form>
         </div>
     </div>
     @endIf

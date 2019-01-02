@@ -44,7 +44,7 @@
                     <span class="input-group-addon">Hasta</span>
                     <input type="text" name="hasta" class="input-sm form-control" placeholder="Hasta C181-002">
                 </div>
-            </div>  
+            </div>
             <div class="form-group col-md-3">
                 <label class="control-label">Paciente</label>
                 <select class="chosen-select"  name="paciente">
@@ -54,7 +54,7 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
-            
+
             <div class="form-group col-md-3">
                 <label class="control-label">Doctor</label>
                 <select class="chosen-select"  name="doctor">
@@ -90,8 +90,8 @@
                     <tr>
                         <td><?php echo e($citologia->informe); ?></td>
                         <td><?php echo e($citologia->paciente_name); ?></td>
-                        <td> <?php echo e($citologia->diagnostico); ?> </td>
-                        <td><?php echo e($citologia->recibido); ?></td>
+                        <td> <?php echo e($citologia->dxlab); ?> </td>
+                        <td><?php echo e(date('d-m-Y', strtotime($citologia->recibido))); ?></td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>

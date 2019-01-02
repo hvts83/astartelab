@@ -6,13 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    body{font-size:12px;}
-    h3{ margin:0px;}
-    h5{ margin:0px;}
-    tr{ margin:0px;}
-    td{ margin:0px;}
-    p{ margin:0px; }  
-  </style>  
+    body{font-size:14px; margin:0px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    h3{ margin:0px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    h5{ margin:0px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    p{ margin:0px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    tr.spaceUnder>td {padding-bottom: 1em;}
+  </style>
 </head>
 <body>
 <p>&nbsp;</p>
@@ -44,8 +43,8 @@
         <td>Edad: {{ $biopsia->edad }} a&ntilde;os {{ $biopsia->meses }} meses</td>
       </tr>
       <tr>
-        <td>Diagnostico:</td>
-        <td colspan="3">{{ $biopsia->diagnostico }}</td>
+        <td valign="top">Diagnostico:</td>
+        <td colspan="3">{!! nl2br(e($biopsia->diagnostico)) !!}</td>
       </tr>
       <tr>
         <td>Recibido:</td>
@@ -54,37 +53,38 @@
       </tr>
     </table>
     <hr>
-    
-    <p align="center">Informe Histopatologico</p>
-  
+
+    <p align="center"><strong><u>Informe Histopatologico</u></strong></p>
+    <p>&nbsp;</p>
+
   <table>
-      <tr>
-        <td>Macro</td>
-        <td>{{ $biopsia->macro }}</td>
+      <tr class="spaceUnder">
+        <td valign="top"><strong>Macro</strong></td>
+        <td>{!! nl2br(e($biopsia->macro)) !!}</td>
       </tr>
-      <tr>
-        <td>Micro</td>
-        <td>{{ $biopsia->micro }}</td>
+      <tr class="spaceUnder">
+        <td valign="top"><strong>Micro</strong></td>
+        <td>{!! nl2br(e($biopsia->micro )) !!}</td>
       </tr>
-      <tr>
-        <td>Diagnostico</td>
-        <td>{{ $biopsia->dxlab }}</td>
+      <tr class="spaceUnder">
+        <td valign="top"><strong>Diagnostico</strong></td>
+        <td>{!! nl2br(e($biopsia->dxlab )) !!}</td>
       </tr>
-      <tr>
-        <td>Informe Preliminar:</td>
-        <td>{{ $biopsia->preliminar }}</td>
+      <tr class="spaceUnder">
+        <td valign="top"><strong>Informe Preliminar:</strong></td>
+        <td> {!! nl2br(e($biopsia->preliminar )) !!}</td>
       </tr>
     </table>
-    <hr>
+    <p>&nbsp;</p>
       <table>
         <tr>
           <td width="400px">Fin del Informe</td>
-          <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO - JVPM 1711 </p></td>
+          <td><p align="center"><strong>DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO - JVPM 1711</strong> </p></td>
         </tr>
       </table>
 
-<script type="text/javascript"> 
-      this.print(); 
-    </script> 
+<script type="text/javascript">
+      this.print();
+    </script>
 </body>
 </html>

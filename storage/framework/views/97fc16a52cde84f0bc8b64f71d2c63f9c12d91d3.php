@@ -75,10 +75,12 @@
     <?php if( isset($citologias)): ?>
     <div class="row">
         <div class="ibox-content">
+            <form role="form" method="get" action="<?php echo e(url('/reportes/envelopesc')); ?>">
             <div class="table-responsive">
             <table id="tblcitologia" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th>Seleccionar</th>
                     <th>Informe</th>
                     <th>Paciente</th>
                     <th>Doctor</th>
@@ -90,11 +92,12 @@
                 <tbody>
                 <?php $__currentLoopData = $citologias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $citologia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
+                        <th><input type="checkbox" name="id[]" value="<?php echo e($citologia->id); ?>" ></th>
                         <td><?php echo e($citologia->informe); ?></td>
                         <td><?php echo e($citologia->paciente_name); ?></td>
                         <td><?php echo e($citologia->doctor_name); ?></td>
-                        <td><?php echo e($citologia->recibido); ?></td>
-                        <td><?php echo e($citologia->entregado); ?></td>
+                        <td><?php echo e(date('d-m-Y', strtotime($citologia->recibido))); ?></td>
+                        <td><?php echo e(date('d-m-Y', strtotime($citologia->entregado))); ?></td>
                         <td>
                             <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/edit" )); ?>">Ver detalle</a>
                         </td>
@@ -103,6 +106,11 @@
                 </tbody>
             </table>
             </div>
+            <div class="div-btn">
+                    <button type="submit" class="btn btn-primary" target="_blank"> Imprimir Sobres </button>
+                </form>
+                  </div>
+                </form>
         </div>
     </div>
     <?php endif; ?>

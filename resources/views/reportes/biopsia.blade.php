@@ -75,10 +75,12 @@
     @if( isset($biopsias))
     <div class="row">
         <div class="ibox-content">
+            <form role="form" method="get" action="{{ url('/reportes/envelopesb') }}">
             <div class="table-responsive">
             <table id="tblbiopsia" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th>Seleccionar</th>
                     <th>Informe</th>
                     <th>Paciente</th>
                     <th>Doctor</th>
@@ -90,11 +92,12 @@
                 <tbody>
                 @foreach ($biopsias as $key => $biopsia)
                     <tr>
+                        <th><input type="checkbox" name="id[]" value="{{ $biopsia->id }}" ></th>
                         <td>{{ $biopsia->informe }}</td>
                         <td>{{ $biopsia->paciente_name }}</td>
                         <td>{{ $biopsia->doctor_name}}</td>
-                        <td>{{ $biopsia->recibido }}</td>
-                        <td>{{ $biopsia->entregado }}</td>
+                        <td>{{ date('d-m-Y', strtotime($biopsia->recibido)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($biopsia->entregado)) }}</td>
                         <td>
                             <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/edit" ) }}">Ver detalle</a>
                         </td>
@@ -103,6 +106,11 @@
                 </tbody>
             </table>
             </div>
+            <div class="div-btn">
+                    <button type="submit" class="btn btn-primary" target="_blank"> Imprimir Sobres </button>
+                </form>
+                  </div>
+                </form>
         </div>
     </div>
     @endIf

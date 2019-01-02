@@ -17,6 +17,7 @@
             <div class="col-md-4 form-group" id="data_3">
                 <label class="font-normal">Rango:</label>
                 <div class="input-daterange input-group">
+                    <span class="input-group-addon">Desde</span>
                     <input type="text" name="inicio" class="input-sm form-control">
                     <span class="input-group-addon">Hasta</span>
                     <input type="text" name="fin" class="input-sm form-control">
@@ -35,7 +36,7 @@
                 </div>
             </div>
             <div class="form-group col-md-12">
-                <button class="btn btn-primary">Enviar</button>
+                <button class="btn btn-primary">Buscar</button>
             </div>
         </form>
         </div>
@@ -60,7 +61,7 @@
                 <tbody>
                 <?php $__currentLoopData = $cpagos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $cpago): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                        <td><?php echo e($cpago->created_at); ?></td>
+                        <td> <?php echo e(date('d-m-Y', strtotime($cpago->created_at ))); ?> </td>
                         <td><?php echo e($cpago->informe); ?></td>
                         <td><?php echo e($cpago->tipo === 'B' ? 'Biopsia' : 'citologia'); ?></td>
                         <td>

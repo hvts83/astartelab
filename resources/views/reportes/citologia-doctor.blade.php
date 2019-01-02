@@ -45,7 +45,7 @@
                     <span class="input-group-addon">Hasta</span>
                     <input type="text" name="hasta" class="input-sm form-control" placeholder="Hasta C181-002">
                 </div>
-            </div>  
+            </div>
             <div class="form-group col-md-3">
                 <label class="control-label">Paciente</label>
                 <select class="chosen-select"  name="paciente">
@@ -55,7 +55,7 @@
                     @endforeach
                 </select>
             </div>
-            
+
             <div class="form-group col-md-3">
                 <label class="control-label">Doctor</label>
                 <select class="chosen-select"  name="doctor" required>
@@ -91,8 +91,8 @@
                     <tr>
                         <td>{{ $citologia->informe }}</td>
                         <td>{{ $citologia->paciente_name }}</td>
-                        <td>{{ $citologia->diagnostico }} </td>
-                        <td>{{ $citologia->recibido }}</td>
+                        <td>{{ $citologia->dxlab }} </td>
+                        <td>{{ date('d-m-Y', strtotime($citologia->recibido)) }}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -138,8 +138,24 @@
       "autoWidth": false,
       'dom': 'Bfrtip',
       'buttons': [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'csv', 'excel', 'pdf',
+            {
+            extend: 'print',
+             customize: function(win) {
+                $(win.document.body)
+                .css('font-size', '10pt');
+
+             $(win.document.body).find('table')
+             .addClass('compact')
+            .css('font-size', 'inherit');
+            },
+            exportOptions: {
+                columns: ':visible',
+                stripHtml: false
+            }
+            }
         ]
+
     });
 
      $('#data_1 .input-group.date').datepicker({

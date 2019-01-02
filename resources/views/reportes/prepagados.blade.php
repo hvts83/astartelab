@@ -62,7 +62,7 @@
                 <tbody>
                 @foreach ($cpagos as $key => $cpago)
                     <tr>
-                        <td>{{ $cpago->created_at }}</td>
+                        <td> {{ date('d-m-Y', strtotime($cpago->created_at )) }} </td>
                         <td>{{ $cpago->informe }}</td>
                         <td>{{ $cpago->tipo === 'B' ? 'Biopsia' : 'citologia' }}</td>
                         <td>

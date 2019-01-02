@@ -35,7 +35,7 @@
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="annio">
                 </div>
-            </div>    
+            </div>
             <div class="col-md-6 form-group">
                 <label class="font-normal">Entre</label>
                 <div class="input-daterange input-group">
@@ -44,7 +44,7 @@
                     <span class="input-group-addon">Hasta</span>
                     <input type="text" name="hasta" class="input-sm form-control" placeholder="Hasta B181-002">
                 </div>
-            </div>       
+            </div>
             <div class="form-group col-md-3">
                 <label class="control-label">Paciente</label>
                 <select class="chosen-select"  name="paciente">
@@ -91,8 +91,8 @@
                         <td><input type="checkbox" name="checkbox[]"></td>
                         <td><?php echo e($biopsia->informe); ?></td>
                         <td><?php echo e($biopsia->paciente_name); ?></td>
-                        <td><?php echo e($biopsia->diagnostico); ?> </td>
-                        <td><?php echo e($biopsia->recibido); ?></td>
+                        <td><?php echo e($biopsia->dxlab); ?> </td>
+                        <td><?php echo e(date('d-m-Y', strtotime($biopsia->recibido))); ?></td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
@@ -127,7 +127,7 @@
 	<script>
     //Datatable
     var tabla = $('#tblbiopsia').DataTable({
-      
+
       "paging": true,
       "language": {
             "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
@@ -139,9 +139,24 @@
       "autoWidth": false,
       'dom': 'Bfrtip',
       'buttons': [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'csv', 'excel', 'pdf',
+            {
+            extend: 'print',
+             customize: function(win) {
+                $(win.document.body)
+                .css('font-size', '10pt');
+
+             $(win.document.body).find('table')
+             .addClass('compact')
+            .css('font-size', 'inherit');
+            },
+            exportOptions: {
+                columns: ':visible',
+                stripHtml: false
+            }
+            }
         ]
-        
+
     });
 
      $('#data_1 .input-group.date').datepicker({
@@ -175,6 +190,12 @@
       width: "100%",
       no_results_text: "No se encontró resultados"
     });
+
+
+   
+
+
+    
   </script>
 <?php $__env->stopSection(); ?>
 

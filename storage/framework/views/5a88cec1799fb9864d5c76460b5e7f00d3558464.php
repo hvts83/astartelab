@@ -5,29 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+      body{ margin-top: 200px; margin-left:175px; font-size:14px; ;  font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    </style>
 </head>
 <body>
-
-    <table width="60%">
+    <table>
         <tr>
-            <td width="100px"><img src="<?php echo e(asset('img/astartelogobn.jpg')); ?>" height="100px" width="100px"/></td>
-            <td><p align="center">23 Calle Poniente #1249, Colonia Layco<br>San Salvador, Tel. 2226-9299</p></td>
+            <td width="125px"><img src="<?php echo e(asset('img/astartelogobn.jpg')); ?>" height="100px" width="100px"/></td>
+            <td><p align="center">23 Calle Poniente #1249, Colonia Layco<br>San Salvador, Tel. 2226-9229</p></td>
+        </tr>
+        <tr>
+          <td width="125px"></td>
+          <td> <hr> <p><strong>Dr(a) </strong> <?php echo e($citologia->doctor); ?></p>
+            <hr>
+<p><?php echo e($citologia->paciente); ?></p></td>
         </tr>
     </table>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p align="center"><i><strong>Nuestra Educaci&oacute;n e Investigaci&oacute;n  al Servicio de su Salud</strong></i></p>
 
-<p>Dr(a) <?php echo e($citologia->doctor); ?></p>
-<p><?php echo e($citologia->paciente); ?></p> 
-
-<script type="text/javascript"> 
-      this.print(); 
-</script
-
+<script type="text/javascript">
+    this.print();
+</script>
 </body>
 </html>
-
-
-
-
-
-
-

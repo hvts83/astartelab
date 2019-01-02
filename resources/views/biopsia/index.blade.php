@@ -24,7 +24,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="ibox-content">
-      <form role="form" method="get" action="{{ url('/biopsia/show') }}">
+      <form role="form" method="get" action="{{ url('/biopsia/show2') }}">
       <div class="table-responsive">
           <table id="tblbiopsia" class="table table-bordered table-striped">
             <thead>
@@ -45,8 +45,8 @@
                   <td>{{ $biopsia->informe }}</td>
                   <td>{{ $biopsia->paciente_name }}</td>
                   <td>{{ $biopsia->doctor_name}}</td>
-                  <td>{{ $biopsia->recibido }}</td>
-                  <td>{{ $biopsia->entregado }}</td>
+                  <td>{{ date('d-m-Y', strtotime($biopsia->recibido)) }} </td>
+                  <td>{{ date('d-m-Y', strtotime($biopsia->entregado)) }}</td>
                   <td>
                     <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/edit" ) }}">Ver detalle</a>
                     <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/pdf" ) }}">PDF</a>
@@ -60,7 +60,7 @@
           </table>
         </div>
         <div class="div-btn">
-          <button type="submit" class="btn btn-primary"> Imprimir </button>
+          <button type="submit" class="btn btn-primary" target="_blank"> Imprimir Reportes </button>
           <a href="{{ url('/biopsia/create') }}" class="btn btn-primary pull-right">Nueva Biopsia</a>
         </div>
       </form>

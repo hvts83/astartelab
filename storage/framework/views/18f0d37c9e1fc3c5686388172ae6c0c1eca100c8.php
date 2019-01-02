@@ -61,7 +61,7 @@
                 <tbody>
                 <?php $__currentLoopData = $cpagos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $cpago): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                        <td><?php echo e($cpago->created_at); ?></td>
+                        <td><?php echo e(date('d-m-Y', strtotime($cpago->created_at))); ?></td>
                         <td><?php echo e($cpago->informe); ?></td>
                         <td><?php echo e($cpago->tipo === 'B' ? 'Biopsia' : 'Citolog&iacute;a'); ?></td>
                         <td>

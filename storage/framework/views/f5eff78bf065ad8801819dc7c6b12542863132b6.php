@@ -50,17 +50,15 @@
                 <div class="col-lg-6">
                 <div class="form-group" id="edad">
                     <label class="font-normal">Edad</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><input type="text" name="edad" class="form-control">
+                   <input type="text" name="edad" class="form-control">
                     </div>
                 </div>
             </div>
             <div class="col-lg-6"> 
                 <div class="form-group" id="meses">
                     <label class="font-normal">Meses</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><input type="text" name="meses" class="form-control">
-                    </div>
+                    <input type="text" name="meses" class="form-control">
+                  
                 </div>
             </div>
             </div>

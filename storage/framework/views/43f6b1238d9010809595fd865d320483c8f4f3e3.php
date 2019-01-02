@@ -74,11 +74,12 @@
     <?php if( isset($biopsias)): ?>
     <div class="row">
         <div class="ibox-content">
+            <form role="form" method="get" action="<?php echo e(url('/reportes/envelopesb')); ?>">
             <div class="table-responsive">
             <table id="tblbiopsia" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th><input type="checkbox" name="checkbox[]"></th>
+                    <th>Seleccionar</th>
                     <th>Informe</th>
                     <th>Paciente</th>
                     <th>Doctor</th>
@@ -90,12 +91,12 @@
                 <tbody>
                 <?php $__currentLoopData = $biopsias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $biopsia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                        <td><input type="checkbox" name="checkbox[]"></td>
+                        <th><input type="checkbox" name="id[]" value="<?php echo e($biopsia->id); ?>" ></th>
                         <td><?php echo e($biopsia->informe); ?></td>
                         <td><?php echo e($biopsia->paciente_name); ?></td>
                         <td><?php echo e($biopsia->doctor_name); ?></td>
-                        <td><?php echo e($biopsia->recibido); ?></td>
-                        <td><?php echo e($biopsia->entregado); ?></td>
+                        <td><?php echo e(date('d-m-Y', strtotime($biopsia->recibido))); ?></td>
+                        <td><?php echo e(date('d-m-Y', strtotime($biopsia->entregado))); ?></td>
                         <td>
                             <a class="btn btn-default" href="<?php echo e(url('/biopsia/' .  $biopsia->id . "/edit" )); ?>">Ver detalle</a>
                         </td>
@@ -104,6 +105,11 @@
                 </tbody>
             </table>
             </div>
+            <div class="div-btn">
+                    <button type="submit" class="btn btn-primary" target="_blank"> Imprimir Sobres </button>
+                </form>
+                  </div>
+                </form>
         </div>
     </div>
     <?php endif; ?>

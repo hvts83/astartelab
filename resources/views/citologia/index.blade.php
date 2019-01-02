@@ -44,8 +44,8 @@
                 <td>{{ $citologia->informe }}</td>
                 <td>{{ $citologia->paciente_name }}</td>
                 <td>{{ $citologia->doctor_name}}</td>
-                <td>{{ $citologia->recibido }}</td>
-                <td>{{ $citologia->entregado }}</td>
+                <td>{{ date('d-m-Y', strtotime($citologia->recibido)) }}</td>
+                <td>{{ date('d-m-Y', strtotime($citologia->recibido)) }}</td>
                 <td>
                   <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/edit" ) }}">Ver detalle</a>
                   <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/pdf" ) }}">PDF</a>
@@ -60,7 +60,7 @@
         </table>
       </div>
       <div class="div-btn">
-        <button type="submit" class="btn btn-primary"> Imprimir </button>
+        <button type="submit" class="btn btn-primary"> Imprimir Reportes</button>
         <a href="{{ url('/citologia/create') }}" class="btn btn-primary pull-right">Nueva Citología</a>
       </div>
       </form>

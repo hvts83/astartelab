@@ -43,8 +43,8 @@
                 <td><?php echo e($citologia->informe); ?></td>
                 <td><?php echo e($citologia->paciente_name); ?></td>
                 <td><?php echo e($citologia->doctor_name); ?></td>
-                <td><?php echo e($citologia->recibido); ?></td>
-                <td><?php echo e($citologia->entregado); ?></td>
+                <td><?php echo e(date('d-m-Y', strtotime($citologia->recibido))); ?></td>
+                <td><?php echo e(date('d-m-Y', strtotime($citologia->recibido))); ?></td>
                 <td>
                   <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/edit" )); ?>">Ver detalle</a>
                   <a class="btn btn-default" href="<?php echo e(url('/citologia/' .  $citologia->id . "/pdf" )); ?>">PDF</a>
@@ -59,7 +59,7 @@
         </table>
       </div>
       <div class="div-btn">
-        <button type="submit" class="btn btn-primary"> Imprimir </button>
+        <button type="submit" class="btn btn-primary"> Imprimir Reportes</button>
         <a href="<?php echo e(url('/citologia/create')); ?>" class="btn btn-primary pull-right">Nueva Citología</a>
       </div>
       </form>

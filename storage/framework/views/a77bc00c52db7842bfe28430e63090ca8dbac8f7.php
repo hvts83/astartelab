@@ -6,100 +6,89 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    body{ font-size: 12px; }
-    h3{ margin:0px; }
-    h5{ margin:0px; }
-    tr{ margin:0px; }
-    td{ margin:0px; }
-    p{ margin:0px; }  
+    body{ font-size: 14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    h3{ margin:0px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    h5{margin:0px;  font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    p{font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    table{font-family: Calibri,Candara,Segoe,Segoe UI,Optima, Arial,sans-serif;}
+    tr.spaceUnder>td {padding-bottom: 1em;}
   </style>
 </head>
 <body>
 
-<table align="center" width="100%">
-  <tr>
-    <td  width="100px"><img src="<?php echo e(asset('img/astartelogobn.jpg')); ?>" height="100px" width="100px"/></td>
-    <td nowrrap align="center">
-      <h3>ASTARTE LABORATORIO DE PATOLOGIA</h3>
-      <h5>INSCRIPCI&Oacute;N C.S.S.P. N° 11</h5>
-      <h3>DR. SALVADOR LOPEZ HERNANDEZ</h3>
-      <h5>
-        MEDICO PATOLOGO - JVPM 1711<br>
-        PATOLOGIA GENERAL, PEDIATRICA Y NEONATAL <br>
-        CITOPATOLOGIA, CITOLOGIA POR ASPIRACION CON AGUJA FINA (CAAF)
-      </h5>
-      <p align="center">
-        23 Calle Poniente #1249, Colonia Layco, San Salvador<br>
-        Telefax: 2226-9229 E-mail: astartelaboratorio@gmail.com
-      </p>
-    </td>
-  </tr>
-</table>
-<hr>
-<table>
+  <table align="center" width="100%">
     <tr>
-      <td>Informe:</td>
-      <td><?php echo e($citologia->informe); ?></td>
-      <td>Doctor(a):</td>
-      <td><?php echo e($citologia->doctor); ?></td>
-    </tr>
-    <tr>
-      <td>Paciente:</td>
-      <td><?php echo e($citologia->paciente); ?></td>
-    </tr>
-    <tr>
-      <td>Sexo:</td>
-      <td>
-        <?php if($citologia->sexo == '1'): ?>
-          <p>M</p>
-        <?php else: ?>
-          <p>F</p>
-        <?php endif; ?>
+      <td  width="100px"><img src="<?php echo e(asset('img/astartelogobn.jpg')); ?>" height="100px" width="100px"/></td>
+       <td nowrrap align="center"><h3>ASTARTE LABORATORIO DE PATOLOGIA</h3>
+          <p align="center">INSCRIPCI&Oacute;N C.S.S.P. Nº11</p>
+          <p align="center">23 Calle Poniente #1249, Colonia Layco, San Salvador<br>
+           Telefax: 2226-9229 E-mail: astartelaboratorio@gmail.com</p>
       </td>
-      <td>Edad:</td>
-      <td><?php echo e($citologia->edad); ?></td>
-    </tr>
-    <tr>
-      <td>Diagnostico:</td>
-      <td><?php echo e($citologia->diagnostico); ?> </td>
-    </tr>
-    <tr>
-      <td>Recibido:</td>
-      <td><?php echo e($citologia->recibido); ?></td>
-      <td></td>
-      <td></td>
-      <td>Entregado: </td>
-      <td><?php echo e($citologia->entregado); ?></td>
     </tr>
   </table>
-  <hr>
-  
-  <p align="center">Informe Citolopatologico</p>
-  
-  <table>
-    <tr>
-      <td>Micro:</td>
-      <td><?php echo e($citologia->micro); ?> </td>
-    </tr>
-    <tr>
-      <td>Diagnostico:</td>
-      <td><?php echo e($citologia->preliminar); ?></td>
-    </tr>
-    <tr>
-      <td>Informe Preliminar:</td>
-      <td nowrap> </td>
-    </tr> 
-  </table>
-  <hr>
-  
-  <table>
-    <tr>
-      <td width="400px">Fin del Informe</td>
-      <td><p align="center">DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO - JVPM 1711 </p></td>
-    </tr>
-  </table>
-  <script type="text/javascript"> 
-        this.print(); 
-  </script> 
-  </body>
+      <hr>
+      <table>
+          <tr>
+            <td><strong>Informe:</strong></td>
+            <td><?php echo e($citologia->informe); ?></td>
+            <td nowrap><strong>Doctor(a): </strong> <?php echo e($citologia->doctor); ?></td>
+          </tr>
+          <tr>
+            <td><strong>Paciente :</strong></td>
+            <td nowrap><?php echo e($citologia->paciente); ?></td>
+          </tr>
+          <tr>
+            <td><strong>Sexo: </strong></td>
+            <td>
+              <?php if($citologia->sexo == '1'): ?>
+                <p>M</p>
+              <?php else: ?>
+                <p>F</p>
+              <?php endif; ?>
+            </td>
+            <td><strong>Edad: </strong> <?php echo e($citologia->edad); ?> a&ntilde;os <?php echo e($citologia->meses); ?> mesess</td>
+            <td> </td>
+          </tr>
+          <tr>
+            <td valign="top"><strong>Diagnostico: </strong></td>
+            <td colspan="3"><?php echo nl2br(e($citologia->diagnostico)); ?></td>
+          </tr>
+          <tr>
+            <td><strong>Recibido: </strong></td>
+            <td><?php echo e($citologia->recibido); ?></td>
+            <td><strong>Entregado: </strong> <?php echo e($citologia->entregado); ?></td>
+          </tr>
+        </table>
+        <hr>
 
+        <p align="center"><strong> <u>Informe Citopatologico</u> </strong></p>
+        <p>&nbsp;</p>
+
+        <table>
+         
+          <tr class="spaceUnder">
+            <td valign="top" width="100px"><strong>Micro:</strong></td>
+            <td><?php echo nl2br(e($citologia->micro  )); ?></td>
+          </tr>
+          <tr class="spaceUnder">
+            <td valign="top" width="100px"><strong>Diagnostico <br> Citopatologico:</strong></td>
+            <td><?php echo nl2br(e($citologia->dxlab )); ?></td>
+          </tr>
+          <tr class="spaceUnder">
+            <td valign="top" width="100px"><strong>Informe <br> Preliminar:</strong></td>
+            <td> <?php echo nl2br(e($citologia->preliminar)); ?></td>
+          </tr>
+        </table>
+        <p>&nbsp;</p>
+          <table>
+
+        <table>
+          <tr>
+            <td width="400px"><strong>Fin del Informe</strong></td>
+            <td><p align="center"><strong>DR. SALVADOR LOPEZ HERNANDEZ <br>MEDICO PATOLOGO - JVPM 1711</strong> </p></td>
+          </tr>
+        </table>
+  <script type="text/javascript">
+        this.print();
+  </script>
+  </body>
