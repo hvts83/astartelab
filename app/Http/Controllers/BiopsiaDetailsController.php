@@ -158,6 +158,7 @@ class BiopsiaDetailsController extends Controller
       'precio_id' => 'required',
       'estado_pago' => 'required',
       'facturacion' => 'required',
+      'precio' => 'required'
       ]);
 
     $biopsia = Biopsia::find($id);
@@ -175,16 +176,16 @@ class BiopsiaDetailsController extends Controller
       $ct->estado_pago = $biopsia->estado_pago;
       switch ($request->estado_pago) {
         case 'PP':
-          $this->pagoDoctor( $biopsia->doctor_id, $precioPagar->monto);
-          $ct->monto = $precioPagar->monto;
+          $this->pagoDoctor( $biopsia->doctor_id, $request->precio);
+          $ct->monto = $request->precio;
           $ct->saldo = 0;
           break;
         case 'AC':
-          $ct->monto = $precioPagar->monto;
+          $ct->monto = $request->precio;
           $ct->saldo = 0;
           break;
       }
-      $ct->total = $precioPagar->monto;
+      $ct->total = $request->precio;
       $ct->informe = $biopsia->informe;
       $ct->facturacion = $request->facturacion;
       $ct->save();

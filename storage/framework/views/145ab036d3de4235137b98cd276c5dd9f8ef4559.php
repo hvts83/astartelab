@@ -207,12 +207,6 @@
                   }
                 }
               ?>
-              <table class="table">
-                <tr>
-                  <td><strong>Total</strong></td>
-                  <td><?php echo e($totalPagar); ?></td>
-                </tr>
-              </table>
             </div>
             <div class="row">
               <table class="table">
@@ -222,7 +216,6 @@
                     <th>Tipo</th>
                     <th>Facturación</th>
                     <th>Monto pagado</th>
-                    <th>Saldo</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -239,7 +232,6 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </td>
                       <td><?php echo e($detp->monto); ?></td>
-                      <td><?php echo e($detp->saldo); ?></td>
                     </tr>
                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <tbody>
@@ -250,19 +242,27 @@
               <form role="form" method="post" action="<?php echo e(url('/biopsia-details/primer_pago/'. $biopsia->id )); ?>">
                 <?php echo e(csrf_field()); ?>
 
-                  <div class="form-group col-md-4">
-                      <label class="control-label">Precio</label>
+                  <div class="form-group col-md-6">
+                      <label class="control-label">Precio estimado</label>
                       <div class="input-group m-b">
                         <span class="input-group-addon">$</span>
                         <select  class="form-control"  name="precio_id">
-                          <option disabled selected>Seleccione precio</option>
+                          <option disabled selected>Seleccione precio estimado</option>
                           <?php $__currentLoopData = $precios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $precio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($precio->id); ?>"> <?php echo e($precio->nombre . ' - $' . $precio->monto); ?> </option>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                       </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
+                      <label class="control-label">Precio</label>
+                      <div class="input-group m-b">
+                        <span class="input-group-addon">$</span>
+                        <input type="number" placeholder="$" class="form-control" name="precio" step="0.01" min="0.01">
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
                       <label class="control-label">Condición de pago</label>
                       <select class="form-control m-b" name="estado_pago">
                         <option disabled selected>Seleccione condición</option>
@@ -273,7 +273,7 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                       <label class="control-label">Facturación</label>
                       <select class="form-control m-b" name="facturacion">
                         <option disabled selected>Seleccione facturación</option>
@@ -282,7 +282,9 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Pagar</button>
+                    <div class="col-md-12">
+                      <button type="submit" class="btn btn-primary">Pagar</button>
+                    </div>
               </form>
             <?php endif; ?>
         </div>

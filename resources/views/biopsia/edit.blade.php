@@ -208,12 +208,6 @@
                   }
                 }
               @endphp
-              <table class="table">
-                <tr>
-                  <td><strong>Total</strong></td>
-                  <td>{{ $totalPagar  }}</td>
-                </tr>
-              </table>
             </div>
             <div class="row">
               <table class="table">
@@ -223,7 +217,6 @@
                     <th>Tipo</th>
                     <th>Facturación</th>
                     <th>Monto pagado</th>
-                    <th>Saldo</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -239,7 +232,6 @@
                         @endforeach
                       </td>
                       <td>{{ $detp->monto }}</td>
-                      <td>{{ $detp->saldo }}</td>
                     </tr>
                   @endforeach
                 <tbody>
@@ -249,19 +241,27 @@
             @if ($biopsia->estado_pago == 'PE')
               <form role="form" method="post" action="{{ url('/biopsia-details/primer_pago/'. $biopsia->id ) }}">
                 {{ csrf_field() }}
-                  <div class="form-group col-md-4">
-                      <label class="control-label">Precio</label>
+                  <div class="form-group col-md-6">
+                      <label class="control-label">Precio estimado</label>
                       <div class="input-group m-b">
                         <span class="input-group-addon">$</span>
                         <select  class="form-control"  name="precio_id">
-                          <option disabled selected>Seleccione precio</option>
+                          <option disabled selected>Seleccione precio estimado</option>
                           @foreach ($precios as $precio)
                             <option value="{{ $precio->id }}"> {{ $precio->nombre . ' - $' . $precio->monto }} </option>
                           @endforeach
                         </select>
                       </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
+                      <label class="control-label">Precio</label>
+                      <div class="input-group m-b">
+                        <span class="input-group-addon">$</span>
+                        <input type="number" placeholder="$" class="form-control" name="precio" step="0.01" min="0.01">
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
                       <label class="control-label">Condición de pago</label>
                       <select class="form-control m-b" name="estado_pago">
                         <option disabled selected>Seleccione condición</option>
@@ -272,7 +272,7 @@
                         @endforeach
                       </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                       <label class="control-label">Facturación</label>
                       <select class="form-control m-b" name="facturacion">
                         <option disabled selected>Seleccione facturación</option>
@@ -281,7 +281,9 @@
                         @endforeach
                       </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Pagar</button>
+                    <div class="col-md-12">
+                      <button type="submit" class="btn btn-primary">Pagar</button>
+                    </div>
               </form>
             @endif
         </div>

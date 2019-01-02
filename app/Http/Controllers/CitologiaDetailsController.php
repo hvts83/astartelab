@@ -145,6 +145,7 @@ class CitologiaDetailsController extends Controller
       'precio_id' => 'required',
       'estado_pago' => 'required',
       'facturacion' => 'required',
+      'precio' => 'required'
       ]);
 
     $citologia = Citologia::find($id);
@@ -162,16 +163,16 @@ class CitologiaDetailsController extends Controller
       $ct->estado_pago = $citologia->estado_pago;
       switch ($request->estado_pago) {
         case 'PP':
-          $this->pagoDoctor( $citologia->doctor_id, $precioPagar->monto);
-          $ct->monto = $precioPagar->monto;
+          $this->pagoDoctor( $citologia->doctor_id, $request->precio);
+          $ct->monto = $request->precio;
           $ct->saldo = 0;
           break;
         case 'AC':
-          $ct->monto = $precioPagar->monto;
+          $ct->monto = $request->precio;
           $ct->saldo = 0;
           break;
       }
-      $ct->total = $precioPagar->monto;
+      $ct->total = $request->precio;
       $ct->informe = $citologia->informe;
       $ct->facturacion = $request->facturacion;
       $ct->save();
