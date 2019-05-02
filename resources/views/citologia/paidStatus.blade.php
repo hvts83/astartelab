@@ -3,7 +3,7 @@
 @section ('title') {{ $page_title }} @stop
 
 @section('breadcrumb')
-<li><a href="{{ url('pagos/biopsia/lista-pago') }}">Ver biopsias</a></li>
+<li><a href="{{ url('pagos/citologia/lista-pago') }}">Ver citologias</a></li>
 <li class="active"> <strong>{{ $page_title }}</strong> </li>
 @endsection
 
@@ -14,7 +14,7 @@
     <div class="row">
       <div class="col-xs-4"> <i class="fa fa-medkit fa-5x"></i> </div>
       <div class="col-xs-8 text-right"> <span> Detalle de informe </span>
-        <h2 class="font-bold"> {{$biopsia->informe}} </h2>
+        <h2 class="font-bold"> {{$citologia->informe}} </h2>
       </div>
     </div>
   </div>
@@ -29,69 +29,66 @@
       </ul>
     </div>
     @endif
-        <div class="panel-body">
-          @if($biopsia->precio_id != null)
-            <div class="row">
-              @php
-                foreach ($precios as $precio) {
-                  if ($precio->id == $biopsia->precio_id) {
-                    $totalPagar = $precio->monto;
+            <div class="panel-body">
+              @if($citologia->precio_id != null)
+              <div class="row">
+                @php
+                  foreach ($precios as $precio) {
+                    if ($precio->id == $citologia->precio_id) {
+                      $totalPagar = $precio->monto;
+                    }
                   }
-                }
-              @endphp
-            </div>
-            <div class="row">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Fecha pago</th>
-                    <th>Tipo</th>
-                    <th>Facturación</th>
-                    <th>Monto pagado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach ($detalle_pago as $detp)
+                @endphp
+              </div>
+              <div class="row">
+                <table class="table">
+                  <thead>
                     <tr>
-                      <td>{{ $detp->created_at }}</td>
-                      <td>{{ $detp->estado_pago }}</td>
-                      <td>
-                        @foreach ($facturacion as $factu)
-                          @if ($factu['value'] == $detp->facturacion)
-                            {{  $factu['text'] }}
-                          @endif
-                        @endforeach
-                      </td>
-                      <td>{{ $detp->monto }}</td>
+                      <th>Fecha pago</th>
+                      <th>Facturación</th>
+                      <th>Monto pagado</th>
                     </tr>
-                  @endforeach
-                <tbody>
-              </table>
-            </div>
-            @endIf
-            @if ($biopsia->estado_pago == 'PE')
-              <form role="form" method="post" action="{{ url('/biopsia-details/primer_pago/'. $biopsia->id ) }}">
-                {{ csrf_field() }}
-                  <div class="form-group col-md-6">
-                      <label class="control-label">Precio estimado</label>
-                      <div class="input-group m-b">
-                        <span class="input-group-addon">$</span>
-                        <select  class="form-control"  name="precio_id">
-                          <option disabled selected>Seleccione precio estimado</option>
-                          @foreach ($precios as $precio)
-                            <option value="{{ $precio->id }}"> {{ $precio->nombre . ' - $' . $precio->monto }} </option>
+                  </thead>
+                  <tbody>
+                    @foreach ($detalle_pago as $detp)
+                      <tr>
+                        <td>{{ $detp->created_at }}</td>
+                        <td>
+                          @foreach ($facturacion as $factu)
+                            @if ($factu['value'] == $detp->facturacion)
+                              {{  $factu['text'] }}
+                            @endif
                           @endforeach
-                        </select>
-                      </div>
+                        </td>
+                        <td>{{ $detp->monto }}</td>
+                      </tr>
+                    @endforeach
+                  <tbody>
+                </table>
+              </div>
+              @endIf
+              @if ($citologia->estado_pago == 'PE')
+              <form role="form" method="post" action="{{ url('/citologia-details/primer_pago/'. $citologia->id ) }}">
+                {{ csrf_field() }}
+                <div class="form-group col-md-6">
+                    <label class="control-label">Precio estimado</label>
+                    <div class="input-group m-b">
+                      <span class="input-group-addon">$</span>
+                      <select  class="form-control"  name="precio_id">
+                        <option disabled selected>Seleccione precio estimado</option>
+                        @foreach ($precios as $precio)
+                          <option value="{{ $precio->id }}"> {{ $precio->nombre . ' - $' . $precio->monto }} </option>
+                        @endforeach
+                      </select>
                     </div>
-                    <div class="form-group col-md-6">
-                      <label class="control-label">Precio</label>
-                      <div class="input-group m-b">
-                        <span class="input-group-addon">$</span>
-                        <input type="number" placeholder="$" class="form-control" name="precio" step="0.01" min="0.01">
-                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="control-label">Precio</label>
+                    <div class="input-group m-b">
+                      <span class="input-group-addon">$</span>
+                      <input type="number" placeholder="$" class="form-control" name="precio" step="0.01" min="0.01">
                     </div>
-
+                  </div>
                     <div class="form-group col-md-6">
                       <label class="control-label">Condición de pago</label>
                       <select class="form-control m-b" name="estado_pago">
@@ -116,8 +113,9 @@
                       <button type="submit" class="btn btn-primary">Pagar</button>
                     </div>
               </form>
-            @endif
-    </div>
+              @endif
+          </div>
+
   </div>
 </div>
 @endsection

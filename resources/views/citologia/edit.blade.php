@@ -44,7 +44,6 @@
 
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#tab-1">Datos de consulta</a></li>
-            <li class=""><a data-toggle="tab" href="#tab-2">Pago</a></li>
             <li class=""><a data-toggle="tab" href="#tab-3">Imagenes</a></li>
         </ul>
         <div class="tab-content">
@@ -162,95 +161,7 @@
                   </form>
                 </div>
             </div>
-            <div id="tab-2" class="tab-pane">
-              <div class="panel-body">
-                @if($citologia->precio_id != null)
-                <div class="row">
-                  @php
-                    foreach ($precios as $precio) {
-                      if ($precio->id == $citologia->precio_id) {
-                        $totalPagar = $precio->monto;
-                      }
-                    }
-                  @endphp
-                </div>
-                <div class="row">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Fecha pago</th>
-                        <th>Facturación</th>
-                        <th>Monto pagado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($detalle_pago as $detp)
-                        <tr>
-                          <td>{{ $detp->created_at }}</td>
-                          <td>
-                            @foreach ($facturacion as $factu)
-                              @if ($factu['value'] == $detp->facturacion)
-                                {{  $factu['text'] }}
-                              @endif
-                            @endforeach
-                          </td>
-                          <td>{{ $detp->monto }}</td>
-                        </tr>
-                      @endforeach
-                    <tbody>
-                  </table>
-                </div>
-                @endIf
-                @if ($citologia->estado_pago == 'PE')
-                <form role="form" method="post" action="{{ url('/citologia-details/primer_pago/'. $citologia->id ) }}">
-                  {{ csrf_field() }}
-                  <div class="form-group col-md-6">
-                      <label class="control-label">Precio estimado</label>
-                      <div class="input-group m-b">
-                        <span class="input-group-addon">$</span>
-                        <select  class="form-control"  name="precio_id">
-                          <option disabled selected>Seleccione precio estimado</option>
-                          @foreach ($precios as $precio)
-                            <option value="{{ $precio->id }}"> {{ $precio->nombre . ' - $' . $precio->monto }} </option>
-                          @endforeach
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="control-label">Precio</label>
-                      <div class="input-group m-b">
-                        <span class="input-group-addon">$</span>
-                        <input type="number" placeholder="$" class="form-control" name="precio" step="0.01" min="0.01">
-                      </div>
-                    </div>
-                      <div class="form-group col-md-6">
-                        <label class="control-label">Condición de pago</label>
-                        <select class="form-control m-b" name="estado_pago">
-                          <option disabled selected>Seleccione condición</option>
-                          @foreach ($pagos as $pago)
-                            @if($pago['value'] !== 'PE') 
-                            <option value="{{ $pago['value'] }}"> {{  $pago['text'] }} </option>
-                            @endif
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label class="control-label">Facturación</label>
-                        <select class="form-control m-b" name="facturacion">
-                          <option disabled selected>Seleccione facturación</option>
-                          @foreach ($facturacion as $factu)
-                            <option value="{{ $factu['value'] }}"> {{  $factu['text'] }} </option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary">Pagar</button>
-                      </div>
-                </form>
-                @endif
-              </div>
-            </div>
-
+            
             <div id="tab-3" class="tab-pane">
               <div class="panel-body">
                 <div class="row">

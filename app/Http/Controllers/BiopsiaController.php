@@ -187,7 +187,6 @@ class BiopsiaController extends Controller
 
   public function paidStatus($id){
     $data['biopsia'] =  Biopsia::where('biopsias.id', '=', $id)->first();
-    if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
     $data['detalle_pago'] = Consulta_transacciones::where([
       ['tipo', '=', 'B'],
       ['consulta', '=', $id]

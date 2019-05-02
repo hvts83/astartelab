@@ -178,6 +178,24 @@ class CitologiaController extends Controller
      return redirect('citologia/'. $id . "/edit");
   }
 
+  public function paidList(){
+    $data['page_title'] = "Ver citologias";
+    $data['citologias'] = Citologia::get();
+    return view('citologia.listapago')->with($data);
+  }
+
+  public function paidStatus($id){
+    $data['citologia'] =  Citologia::where('id', '=', $id)->first();
+    $data['detalle_pago'] = Consulta_transacciones::where([
+      ['tipo', '=', 'C'],
+      ['consulta', '=', $id]
+    ])->orderBy('created_at', 'DESC')->get();
+    $data['page_title']  = "Estado de pago de " . $data['citologia']->informe;
+    $data['precios'] = Precio::where('tipo', '=', 'C')->get();
+    $data['pagos'] = General::getCondicionPago();
+    $data['facturacion'] = General::getFacturacion();
+    return view('citologia.paidStatus', $data);
+  }
 
    /**
    * Show the form for editing the specified resource.

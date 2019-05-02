@@ -181,7 +181,7 @@ class CitologiaDetailsController extends Controller
       throw $e;
     }
     DB::commit();
-    return redirect('citologia/'. $id . "/edit");
+    return redirect('pagos/citologia/'. $id . "/estado-pago");
   }
 
   protected function pagoDoctor($doctor_id, $monto){

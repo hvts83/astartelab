@@ -194,7 +194,7 @@ class BiopsiaDetailsController extends Controller
       throw $e;
     }
     DB::commit();
-    return redirect('biopsia/'. $id . "/edit");
+    return redirect('pagos/biopsia/'. $id . "/estado-pago");
   }
 
   protected function pagoDoctor($doctor_id, $monto){

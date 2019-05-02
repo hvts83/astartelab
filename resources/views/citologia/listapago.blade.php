@@ -3,7 +3,7 @@
 @section ('title') {{ $page_title }} @stop
 
 @section('breadcrumb')
-  <li class="active">Biopsias</li>
+  <li class="active">Citologias</li>
 @endsection
 
 @section ('content')
@@ -18,7 +18,7 @@
   <div class="row">
     <div class="ibox-content">
       <div class="table-responsive">
-          <table id="tblbiopsia" class="table table-bordered table-striped">
+          <table id="tblcitologia" class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th>Informe</th>
@@ -29,15 +29,15 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($biopsias as $key => $biopsia)
+              @foreach ($citologias as $key => $citologia)
                 <tr>
-                  <td>{{ $biopsia->informe }}</td>
-                  <td>{{ $biopsia->estado_pago }}</td>
-                  <td>{{ date('d-m-Y', strtotime($biopsia->recibido)) }} </td>
-                  <td>{{ date('d-m-Y', strtotime($biopsia->entregado)) }}</td>
+                  <td>{{ $citologia->informe }}</td>
+                  <td>{{ $citologia->estado_pago }}</td>
+                  <td>{{ date('d-m-Y', strtotime($citologia->recibido)) }} </td>
+                  <td>{{ date('d-m-Y', strtotime($citologia->entregado)) }}</td>
                   <td>
-                      <a class="btn btn-default" href="{{ url('/biopsia/' .  $biopsia->id . "/edit" ) }}">Ver detalle</a>
-                    <a class="btn btn-default" href="{{ url('/pagos/biopsia/' .  $biopsia->id . "/estado-pago" ) }}">Ver pagos</a>
+                      <a class="btn btn-default" href="{{ url('/citologia/' .  $citologia->id . "/edit" ) }}">Ver detalle</a>
+                    <a class="btn btn-default" href="{{ url('/pagos/citologia/' .  $citologia->id . "/estado-pago" ) }}">Ver pagos</a>
                   </td>
                 </tr>
               @endforeach
@@ -57,7 +57,7 @@
 	<script src="{{ asset('js/dataTables/datatables.min.js')}}"></script>
 	<script>
     //Datatable
-    var tabla = $('#tblbiopsia').DataTable({
+    var tabla = $('#tblcitologia').DataTable({
       "paging": true,
       "language": {
             "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
