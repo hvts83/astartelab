@@ -128,11 +128,8 @@ class BiopsiaController extends Controller
     ])->orderBy('created_at', 'DESC')->get();
     $data['page_title']  = "Detalle " . $data['biopsia']->informe;
     $data['pacienteConsulta'] = Paciente::find($data['biopsia']->paciente_id);
-    $data['precios'] = Precio::where('tipo', '=', 'B')->get();
     $data['diagnosticos'] = Diagnostico::where('tipo', '!=', 'C')->get();
     $data['frases'] = Frase::where('tipo', '!=', 'C')->get();
-    $data['pagos'] = General::getCondicionPago();
-    $data['facturacion'] = General::getFacturacion();
     $data['biopsia']->recibido = General::formatoFecha( $data['biopsia']->recibido );
     $data['biopsia']->entregado = General::formatoFecha( $data['biopsia']->entregado );
     return view('biopsia.edit', $data);
@@ -180,6 +177,26 @@ class BiopsiaController extends Controller
     }
     DB::commit();
      return redirect('biopsia/'. $id . "/edit");
+  }
+
+  public function paidList(){
+    $data['page_title'] = "Ver biopsias";
+    $data['biopsias'] = Biopsia::get();
+    return view('biopsia.listapago')->with($data);
+  }
+
+  public function paidStatus($id){
+    $data['biopsia'] =  Biopsia::where('biopsias.id', '=', $id)->first();
+    if ($data['biopsia']  == null) { return redirect('biopsias'); } //Verificación para evitar errores
+    $data['detalle_pago'] = Consulta_transacciones::where([
+      ['tipo', '=', 'B'],
+      ['consulta', '=', $id]
+    ])->orderBy('created_at', 'DESC')->get();
+    $data['page_title']  = "Estado de pago de " . $data['biopsia']->informe;
+    $data['precios'] = Precio::where('tipo', '=', 'B')->get();
+    $data['pagos'] = General::getCondicionPago();
+    $data['facturacion'] = General::getFacturacion();
+    return view('biopsia.paidStatus', $data);
   }
 
   /**

@@ -51,6 +51,7 @@ Route::post('/biopsia-details/imagen/delete/{id}', 'BiopsiaDetailsController@ima
 Route::post('/biopsia-details/abono/{id}', 'BiopsiaDetailsController@abono');
 Route::get('/biopsia-details/send/{id}', 'BiopsiaDetailsController@send');
 Route::post('/biopsia-details/primer_pago/{id}', 'BiopsiaDetailsController@primer_pago');
+
 //Citologia
 Route::post('/citologia-details/macro/{id}', 'CitologiaDetailsController@macro');
 Route::post('/citologia-details/micro/{id}', 'CitologiaDetailsController@micro');
@@ -89,3 +90,9 @@ Route::get('/citologia/{id}/print', 'CitologiaController@print');
 Route::get('/citologia/{id}/sm', 'CitologiaController@sm');
 Route::get('/citologia/{id}/envelope', 'CitologiaController@envelope');
 Route::get('/citologia/show', 'CitologiaController@show');
+
+//Pagos
+Route::get('/pagos/biopsia/lista-pago', 'BiopsiaController@paidList');
+Route::get('/pagos/biopsia/{id}/estado-pago', 'BiopsiaController@paidStatus');
+Route::get('/pagos/citologia/lista-pago', 'CitologiaController@paidList');
+Route::get('/pagos/citologia/{id}/estado-pago', 'CitologiaController@paidStatus');
