@@ -38,164 +38,232 @@
       <li class=""><a data-toggle="tab" href="#tab-3">Inmunohistoquimica</a></li>
     </ul>
     <div class="tab-content">
+      @if($biopsia->estado_pago != "PE")
       <div id="tab-1" class="tab-pane active">
-        <div class="panel-body">
-          <h2>Datos Generales</h2>
           <div class="panel-body">
-            <form role="form" method="post" action="{{ url('/biopsia/'. $biopsia->id ) }}">
-              {{ csrf_field() }}
-              <input name="_method" type="hidden" value="PUT">
-              <div class="form-group col-md-12">
-                <label class="font-normal">Codigo de Informe</label>
-                <input type="text" name="informe" class="form-control" value="{{$biopsia->informe}}">
-              </div>
-              <div class="form-group col-md-6" id="fecha_nacimiento">
-                <label class="font-normal">Recibido</label>
-                <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <input type="text" name="recibido" class="form-control" value="{{ $biopsia->recibido }}">
+            <h2>Datos Generales</h2>
+            <div class="panel-body">
+                <div class="form-group col-md-12">
+                    <label class="font-normal">Codigo de Informe</label>
+                    <input type="text" readonly class="form-control" value="{{$biopsia->informe}}">
+                  </div>
+                  <div class="form-group col-md-6" id="fecha_nacimiento">
+                    <label class="font-normal">Recibido</label>
+                    <input type="text" readonly class="form-control" value="{{ $biopsia->recibido }}">
+                  </div>
+                  <div class="form-group col-md-6" id="fecha_nacimiento">
+                    <label class="font-normal">Entregado</label>
+                    <input type="text" readonly class="form-control" value="{{ $biopsia->entregado }}">
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label class="control-label">Doctor</label>
+                    <select class="chosen-select"  name="doctor_id">
+                      <option selected value="{{$biopsia->doctor_id}}"> {{$biopsia->doctor}} </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="control-label">Grupo</label>
+                    <input type="text" class="form-control" readonly value="{{$biopsia->grupo}}">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="control-label">Paciente</label>
+                    <select class="chosen-select"  name="paciente_id">
+                      <option selected value="{{$biopsia->paciente_id }}">{{$biopsia->paciente}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="control-label">Diagnóstico</label>
+                      <div class="form-group">
+                        <textarea class="form-control" rows="5" readonly> {{$biopsia->diagnostico}} </textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <hr>
+                    <h2>Reporte Macro</h2>
+                    <hr>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="5" readonly>{{ $biopsia->macro }}</textarea>
+                    </div>
+                    <hr>
+                    <h2>Reporte Micro</h2>
+                    <hr>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="5" readonly>{{ $biopsia->micro }}</textarea>
+                    </div>
+                    <h2>Diagnostico Lab</h2>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="5" readonly>{{ $biopsia->dxlab }}</textarea>
+                    </div>
+                    <h2>Informe Preliminar</h2>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="5" readonly>{{ $biopsia->preliminar }}</textarea>
+                    </div>
+                  </div>
+            </div>
+          </div>
+      </div>
+      @else
+        <div id="tab-1" class="tab-pane active">
+          <div class="panel-body">
+            <h2>Datos Generales</h2>
+            <div class="panel-body">
+              <form role="form" method="post" action="{{ url('/biopsia/'. $biopsia->id ) }}">
+                {{ csrf_field() }}
+                <input name="_method" type="hidden" value="PUT">
+                <div class="form-group col-md-12">
+                  <label class="font-normal">Codigo de Informe</label>
+                  <input type="text" name="informe" class="form-control" value="{{$biopsia->informe}}">
                 </div>
-              </div>
-              <div class="form-group col-md-6" id="fecha_nacimiento">
-                <label class="font-normal">Entregado</label>
-                <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <input type="text" name="entregado" class="form-control" value="{{ $biopsia->entregado }}">
+                <div class="form-group col-md-6" id="fecha_nacimiento">
+                  <label class="font-normal">Recibido</label>
+                  <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="recibido" class="form-control" value="{{ $biopsia->recibido }}">
+                  </div>
                 </div>
-              </div>
-              <div class="form-group col-md-12">
-                <label class="control-label">Doctor</label>
-                <select class="chosen-select"  name="doctor_id">
-                  <option selected value="{{$biopsia->doctor_id}}"> {{$biopsia->doctor}} </option>
-                  
-            @foreach ($doctores as $doctor)
-                
-                  <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
-                  
-            @endforeach
-          
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label class="control-label">Grupo</label>
-                <input type="text" class="form-control" readonly value="{{$biopsia->grupo}}">
-              </div>
-              <div class="form-group col-md-6">
-                <label class="control-label">Paciente</label>
-                <select class="chosen-select"  name="paciente_id">
-                  <option selected value="{{$biopsia->paciente_id }}">{{$biopsia->paciente}}</option>
-                  
-            @foreach ($pacientes as $paciente)
-              
-                  <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
-                  
-            @endforeach
-          
-                </select>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Diagnóstico</label>
-                  <select class="chosen-select form-control" data-placeholder="Seleccione diagnóstico" id="select_diagnostico_id">
+                <div class="form-group col-md-6" id="fecha_nacimiento">
+                  <label class="font-normal">Entregado</label>
+                  <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="entregado" class="form-control" value="{{ $biopsia->entregado }}">
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <label class="control-label">Doctor</label>
+                  <select class="chosen-select"  name="doctor_id">
+                    <option selected value="{{$biopsia->doctor_id}}"> {{$biopsia->doctor}} </option>
                     
+              @foreach ($doctores as $doctor)
+                  
+                    <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
+                    
+              @endforeach
+            
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="control-label">Grupo</label>
+                  <input type="text" class="form-control" readonly value="{{$biopsia->grupo}}">
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="control-label">Paciente</label>
+                  <select class="chosen-select"  name="paciente_id">
+                    <option selected value="{{$biopsia->paciente_id }}">{{$biopsia->paciente}}</option>
+                    
+              @foreach ($pacientes as $paciente)
+                
+                    <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
+                    
+              @endforeach
+            
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Diagnóstico</label>
+                    <select class="chosen-select form-control" data-placeholder="Seleccione diagnóstico" id="select_diagnostico_id">
+                      
+                  @foreach ($diagnosticos as $diagnostico)
+                    
+                      <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                      
+                  @endforeach
+                
+                    </select>
+                  </div>
+                  <button type="button" id="add_diagnostico_id" class="btn btn-primary">Agregar</button>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="5" id="diagnostico_id" name="diagnostico"> {{$biopsia->diagnostico}} </textarea>
+                  </div>
+                </div>
+                <hr>
+                <h2>Reporte Macro</h2>
+                <hr>
+                <div class="form-group">
+                  <label class="control-label">Frases</label>
+                  <select class="chosen-select" data-placeholder="seleccione frases" id="select_macro" style="height: 24pt">
+                    
+              @foreach ($frases as $frase)
+                @if($frase->tipo == "B")
+                  
+                    <option value="{{ $frase->nombre }}" style="height: 24pt"> {{  $frase->nombre }} </option>
+                    
+                @endif
+              @endforeach
+            
+                  </select>
+                </div>
+                <button type="button" id="add_macro" class="btn btn-primary">Agregar</button>
+                <div class="form-group">
+                  <textarea class="form-control" rows="5" id="macro" name="macro">{{ $biopsia->macro }}</textarea>
+                </div>
+                <hr>
+                <h2>Reporte Micro</h2>
+                <hr>
+                <div class="form-group">
+                  <label class="control-label">Frases</label>
+                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
+                    
+              @foreach ($frases as $frase)
+                @if($frase->tipo == "M")
+                
+                    <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                    
+                @endif
+              @endforeach
+            
+                  </select>
+                </div>
+                <button type="button" id="add_micro" class="btn btn-primary">Agregar</button>
+                <div class="form-group">
+                  <textarea class="form-control" rows="5" id="micro" name="micro">{{ $biopsia->micro }}</textarea>
+                </div>
+                <h2>Diagnostico Lab</h2>
+                <div class="form-group">
+                  <label class="control-label">Diagnóstico Lab</label>
+                  <div class="input-group">
+                    <select class="chosen-select" data-placeholder="Seleccione frases" id="select_dxlab">
+                      
                 @foreach ($diagnosticos as $diagnostico)
                   
-                    <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
-                    
+                      <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                      
                 @endforeach
               
-                  </select>
+                    </select>
+                  </div>
                 </div>
-                <button type="button" id="add_diagnostico_id" class="btn btn-primary">Agregar</button>
+                <button type="button" id="add_dxlab" class="btn btn-primary">Agregar</button>
                 <div class="form-group">
-                  <textarea class="form-control" rows="5" id="diagnostico_id" name="diagnostico"> {{$biopsia->diagnostico}} </textarea>
+                  <textarea class="form-control" rows="5" id="dxlab" name="dxlab">{{ $biopsia->dxlab }}</textarea>
                 </div>
-              </div>
-              <hr>
-              <h2>Reporte Macro</h2>
-              <hr>
-              <div class="form-group">
-                <label class="control-label">Frases</label>
-                <select class="chosen-select" data-placeholder="seleccione frases" id="select_macro" style="height: 24pt">
+                <h2>Informe Preliminar</h2>
+                <div class="form-group">
+                  <label class="control-label">Diagnóstico Preliminar</label>
+                  <div class="input-group">
+                    <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
+                      
+                @foreach ($diagnosticos as $diagnostico)
                   
-            @foreach ($frases as $frase)
-              @if($frase->tipo == "B")
-                
-                  <option value="{{ $frase->nombre }}" style="height: 24pt"> {{  $frase->nombre }} </option>
-                  
-              @endif
-            @endforeach
-          
-                </select>
-              </div>
-              <button type="button" id="add_macro" class="btn btn-primary">Agregar</button>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" id="macro" name="macro">{{ $biopsia->macro }}</textarea>
-              </div>
-              <hr>
-              <h2>Reporte Micro</h2>
-              <hr>
-              <div class="form-group">
-                <label class="control-label">Frases</label>
-                <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
-                  
-            @foreach ($frases as $frase)
-              @if($frase->tipo == "M")
+                      <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                      
+                @endforeach
               
-                  <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
-                  
-              @endif
-            @endforeach
-          
-                </select>
-              </div>
-              <button type="button" id="add_micro" class="btn btn-primary">Agregar</button>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" id="micro" name="micro">{{ $biopsia->micro }}</textarea>
-              </div>
-              <h2>Diagnostico Lab</h2>
-              <div class="form-group">
-                <label class="control-label">Diagnóstico Lab</label>
-                <div class="input-group">
-                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_dxlab">
-                    
-              @foreach ($diagnosticos as $diagnostico)
-                
-                    <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
-                    
-              @endforeach
-            
-                  </select>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <button type="button" id="add_dxlab" class="btn btn-primary">Agregar</button>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" id="dxlab" name="dxlab">{{ $biopsia->dxlab }}</textarea>
-              </div>
-              <h2>Informe Preliminar</h2>
-              <div class="form-group">
-                <label class="control-label">Diagnóstico Preliminar</label>
-                <div class="input-group">
-                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
-                    
-              @foreach ($diagnosticos as $diagnostico)
-                
-                    <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
-                    
-              @endforeach
-            
-                  </select>
+                <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button>
+                <div class="form-group">
+                  <textarea class="form-control" rows="5" id="preliminar" name="preliminar">{{ $biopsia->preliminar }}</textarea>
                 </div>
-              </div>
-              <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" id="preliminar" name="preliminar">{{ $biopsia->preliminar }}</textarea>
-              </div>
-              <div class="div-btn">
-                <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
-                <a href="{{ url('biopsias/') }}" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a> </div>
-            </form>
+                <div class="div-btn">
+                  <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
+                  <a href="{{ url('biopsias/') }}" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a> </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      @endif
       <div id="tab-3" class="tab-pane">
         <div class="panel-body">
           <div class="row">

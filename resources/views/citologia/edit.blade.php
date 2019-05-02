@@ -47,121 +47,184 @@
             <li class=""><a data-toggle="tab" href="#tab-3">Imagenes</a></li>
         </ul>
         <div class="tab-content">
+            @if($citologia->estado_pago != "PE")
             <div id="tab-1" class="tab-pane active">
                 <div class="panel-body">
-                  <form role="form" method="post" action="{{ url('/citologia/'. $citologia->id ) }}">
-                       {{ csrf_field() }}
-                       <input name="_method" type="hidden" value="PUT">
-                       <div class="form-group col-md-6">
+                      <div class="form-group col-md-6">
                           <label class="font-normal">Codigo de Informe</label>
-                          <input type="text" name="informe" class="form-control" value="{{$citologia->informe}}">
+                          <input type="text" readonly class="form-control" value="{{$citologia->informe}}">
                       </div>
-                       <div class="form-group col-md-6" id="fecha_nacimiento">
-                           <label class="font-normal">Recibido</label>
-                           <div class="input-group date">
-                               <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="recibido" class="form-control" value="{{ $citologia->recibido }}">
-                           </div>
-                       </div>
-                       <div class="form-group col-md-6" id="fecha_nacimiento">
-                           <label class="font-normal">Entregado</label>
-                           <div class="input-group date">
-                               <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="entregado" class="form-control" value="{{ $citologia->entregado }}">
-                           </div>
-                       </div>
-                       <div class="form-group col-md-12">
+                      <div class="form-group col-md-6" id="fecha_nacimiento">
+                          <label class="font-normal">Recibido</label>
+                          <input type="text" readonly class="form-control" value="{{ $citologia->recibido }}">
+                      </div>
+                      <div class="form-group col-md-6" id="fecha_nacimiento">
+                          <label class="font-normal">Entregado</label>
+                          <input type="text" readonly class="form-control" value="{{ $citologia->entregado }}">
+                      </div>
+                      <div class="form-group col-md-12">
                         <label class="control-label">Doctor</label>
                         <select class="chosen-select"  name="doctor_id">
                         <option selected value="{{ $citologia->doctor_id }}">{{ $citologia->doctor }}</option>
-                          @foreach ($doctores as $doctor)
-                              <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
-                          @endforeach
                         </select>
                       </div>
                       <div class="form-group col-md-6">
-                         <label class="control-label">Grupo</label>
-                         <input type="text" class="form-control" readonly value="{{$citologia->grupo}}">
-                       </div>
+                        <label class="control-label">Grupo</label>
+                        <input type="text" class="form-control" readonly value="{{$citologia->grupo}}">
+                      </div>
 
-                       <div class="form-group col-md-6">
+                      <div class="form-group col-md-6">
                         <label class="control-label">Paciente</label>
                         <select class="chosen-select"  name="paciente_id">
-                        <option selected value="{{ $citologia->paciente_id}}">{{ $citologia->paciente }}</option>
-                          @foreach ($pacientes as $paciente)
-                            <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
-                          @endforeach
+                          <option selected value="{{ $citologia->paciente_id}}">{{ $citologia->paciente }}</option>
                         </select>
                       </div>
 
 
-                       <div class="col-md-12">
+                      <div class="col-md-12">
                           <div class="form-group">
                             <label class="control-label">Diagnóstico</label>
-                            <select class="chosen-select form-control" data-placeholder="Seleccione diagnóstico" id="select_diagnostico_id">
+                          </div>
+                          <div class="form-group">
+                              <textarea class="form-control" rows="5" readonly> {{$citologia->diagnostico}} </textarea>
+                          </div>
+                      </div>
+
+                      <div class="col-md-12">
+                        <h3>Reporte Micro</h3>
+                        <div class="form-group">
+                          <textarea class="form-control" rows="5" readonly>{{ $citologia->micro }}</textarea>
+                        </div>
+  
+                        <h3>Diagnostico Lab</h3>
+                        <div class="form-group">
+                          <textarea class="form-control" rows="5" readonly>{{ $citologia->dxlab }}</textarea>
+                        </div>
+  
+                        <h3>Reporte Preliminar</h3>
+                        <div class="form-group">
+                          <textarea class="form-control" rows="5" readonly>{{ $citologia->preliminar }}</textarea>
+                        </div>
+                      </div>
+
+                </div>
+            </div>
+            @else
+              <div id="tab-1" class="tab-pane active">
+                  <div class="panel-body">
+                    <form role="form" method="post" action="{{ url('/citologia/'. $citologia->id ) }}">
+                        {{ csrf_field() }}
+                        <input name="_method" type="hidden" value="PUT">
+                        <div class="form-group col-md-6">
+                            <label class="font-normal">Codigo de Informe</label>
+                            <input type="text" name="informe" class="form-control" value="{{$citologia->informe}}">
+                        </div>
+                        <div class="form-group col-md-6" id="fecha_nacimiento">
+                            <label class="font-normal">Recibido</label>
+                            <div class="input-group date">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="recibido" class="form-control" value="{{ $citologia->recibido }}">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" id="fecha_nacimiento">
+                            <label class="font-normal">Entregado</label>
+                            <div class="input-group date">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="entregado" class="form-control" value="{{ $citologia->entregado }}">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                          <label class="control-label">Doctor</label>
+                          <select class="chosen-select"  name="doctor_id">
+                          <option selected value="{{ $citologia->doctor_id }}">{{ $citologia->doctor }}</option>
+                            @foreach ($doctores as $doctor)
+                                <option value="{{ $doctor->id }}"> {{  $doctor->nombre }} </option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="control-label">Grupo</label>
+                          <input type="text" class="form-control" readonly value="{{$citologia->grupo}}">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                          <label class="control-label">Paciente</label>
+                          <select class="chosen-select"  name="paciente_id">
+                          <option selected value="{{ $citologia->paciente_id}}">{{ $citologia->paciente }}</option>
+                            @foreach ($pacientes as $paciente)
+                              <option value="{{ $paciente->id }}"> {{  $paciente->name }} </option>
+                            @endforeach
+                          </select>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="control-label">Diagnóstico</label>
+                              <select class="chosen-select form-control" data-placeholder="Seleccione diagnóstico" id="select_diagnostico_id">
+                                @foreach ($diagnosticos as $diagnostico)
+                                  <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                                @endforeach
+                              </select>
+                            </div>
+                            <button type="button" id="add_diagnostico_id" class="btn btn-primary">Agregar</button>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="5" id="diagnostico_id" name="diagnostico"> {{$citologia->diagnostico}} </textarea>
+                            </div>
+                        </div>
+
+                        <h3>Reporte Micro</h3>
+                        <div class="form-group">
+                          <label class="control-label">Frases</label>
+                          <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
+                            @foreach ($frases as $frase)
+                              <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <button type="button" id="add_micro" class="btn btn-primary">Agregar</button>
+                        <div class="form-group">
+                          <textarea class="form-control" rows="5" id="micro" name="micro">{{ $citologia->micro }}</textarea>
+                        </div>
+
+                        <h3>Diagnostico Lab</h3>
+                        <div class="form-group">
+                          <label class="control-label">Diagnóstico</label>
+                          <div class="input-group">
+                            <select class="chosen-select" data-placeholder="Seleccione frases" id="select_dxlab">
                               @foreach ($diagnosticos as $diagnostico)
                                 <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
                               @endforeach
                             </select>
                           </div>
-                          <button type="button" id="add_diagnostico_id" class="btn btn-primary">Agregar</button>
-                          <div class="form-group">
-                              <textarea class="form-control" rows="5" id="diagnostico_id" name="diagnostico"> {{$citologia->diagnostico}} </textarea>
+                        </div>
+                        <button type="button" id="add_dxlab" class="btn btn-primary">Agregar</button>
+                        <div class="form-group">
+                          <textarea class="form-control" rows="5" id="dxlab" name="dxlab">{{ $citologia->dxlab }}</textarea>
+                        </div>
+
+                        <h3>Reporte Preliminar</h3>
+                        <div class="form-group">
+                          <label class="control-label">Diagnóstico</label>
+                          <div class="input-group">
+                            <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
+                              @foreach ($diagnosticos as $diagnostico)
+                                <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
+                              @endforeach
+                            </select>
                           </div>
-                      </div>
-
-                      <h3>Reporte Micro</h3>
-                      <div class="form-group">
-                        <label class="control-label">Frases</label>
-                        <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
-                          @foreach ($frases as $frase)
-                            <option value="{{ $frase->nombre }}"> {{  $frase->nombre }} </option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <button type="button" id="add_micro" class="btn btn-primary">Agregar</button>
-                      <div class="form-group">
-                        <textarea class="form-control" rows="5" id="micro" name="micro">{{ $citologia->micro }}</textarea>
-                      </div>
-
-                      <h3>Diagnostico Lab</h3>
-                      <div class="form-group">
-                        <label class="control-label">Diagnóstico</label>
-                        <div class="input-group">
-                          <select class="chosen-select" data-placeholder="Seleccione frases" id="select_dxlab">
-                            @foreach ($diagnosticos as $diagnostico)
-                              <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
-                            @endforeach
-                          </select>
                         </div>
-                      </div>
-                      <button type="button" id="add_dxlab" class="btn btn-primary">Agregar</button>
-                      <div class="form-group">
-                        <textarea class="form-control" rows="5" id="dxlab" name="dxlab">{{ $citologia->dxlab }}</textarea>
-                      </div>
-
-                      <h3>Reporte Preliminar</h3>
-                      <div class="form-group">
-                        <label class="control-label">Diagnóstico</label>
-                        <div class="input-group">
-                          <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
-                            @foreach ($diagnosticos as $diagnostico)
-                              <option value="{{ $diagnostico->nombre }}"> {{  $diagnostico->nombre }} </option>
-                            @endforeach
-                          </select>
+                        <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button>
+                        <div class="form-group">
+                          <textarea class="form-control" rows="5" id="preliminar" name="preliminar">{{ $citologia->preliminar }}</textarea>
                         </div>
-                      </div>
-                      <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button>
-                      <div class="form-group">
-                        <textarea class="form-control" rows="5" id="preliminar" name="preliminar">{{ $citologia->preliminar }}</textarea>
-                      </div>
 
 
-                      <div class="col-md-12">
-                          <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
-                      </div>
-                  </form>
-                </div>
-            </div>
-            
+                        <div class="col-md-12">
+                            <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
+                        </div>
+                    </form>
+                  </div>
+              </div>
+            @endif
             <div id="tab-3" class="tab-pane">
               <div class="panel-body">
                 <div class="row">

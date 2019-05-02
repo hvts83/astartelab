@@ -36,165 +36,233 @@
       <li class=""><a data-toggle="tab" href="#tab-3">Inmunohistoquimica</a></li>
     </ul>
     <div class="tab-content">
+      <?php if($biopsia->estado_pago != "PE"): ?>
       <div id="tab-1" class="tab-pane active">
-        <div class="panel-body">
-          <h2>Datos Generales</h2>
           <div class="panel-body">
-            <form role="form" method="post" action="<?php echo e(url('/biopsia/'. $biopsia->id )); ?>">
-              <?php echo e(csrf_field()); ?>
+            <h2>Datos Generales</h2>
+            <div class="panel-body">
+                <div class="form-group col-md-12">
+                    <label class="font-normal">Codigo de Informe</label>
+                    <input type="text" readonly class="form-control" value="<?php echo e($biopsia->informe); ?>">
+                  </div>
+                  <div class="form-group col-md-6" id="fecha_nacimiento">
+                    <label class="font-normal">Recibido</label>
+                    <input type="text" readonly class="form-control" value="<?php echo e($biopsia->recibido); ?>">
+                  </div>
+                  <div class="form-group col-md-6" id="fecha_nacimiento">
+                    <label class="font-normal">Entregado</label>
+                    <input type="text" readonly class="form-control" value="<?php echo e($biopsia->entregado); ?>">
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label class="control-label">Doctor</label>
+                    <select class="chosen-select"  name="doctor_id">
+                      <option selected value="<?php echo e($biopsia->doctor_id); ?>"> <?php echo e($biopsia->doctor); ?> </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="control-label">Grupo</label>
+                    <input type="text" class="form-control" readonly value="<?php echo e($biopsia->grupo); ?>">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="control-label">Paciente</label>
+                    <select class="chosen-select"  name="paciente_id">
+                      <option selected value="<?php echo e($biopsia->paciente_id); ?>"><?php echo e($biopsia->paciente); ?></option>
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="control-label">Diagnóstico</label>
+                      <div class="form-group">
+                        <textarea class="form-control" rows="5" readonly> <?php echo e($biopsia->diagnostico); ?> </textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <hr>
+                    <h2>Reporte Macro</h2>
+                    <hr>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="5" readonly><?php echo e($biopsia->macro); ?></textarea>
+                    </div>
+                    <hr>
+                    <h2>Reporte Micro</h2>
+                    <hr>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="5" readonly><?php echo e($biopsia->micro); ?></textarea>
+                    </div>
+                    <h2>Diagnostico Lab</h2>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="5" readonly><?php echo e($biopsia->dxlab); ?></textarea>
+                    </div>
+                    <h2>Informe Preliminar</h2>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="5" readonly><?php echo e($biopsia->preliminar); ?></textarea>
+                    </div>
+                  </div>
+            </div>
+          </div>
+      </div>
+      <?php else: ?>
+        <div id="tab-1" class="tab-pane active">
+          <div class="panel-body">
+            <h2>Datos Generales</h2>
+            <div class="panel-body">
+              <form role="form" method="post" action="<?php echo e(url('/biopsia/'. $biopsia->id )); ?>">
+                <?php echo e(csrf_field()); ?>
 
-              <input name="_method" type="hidden" value="PUT">
-              <div class="form-group col-md-12">
-                <label class="font-normal">Codigo de Informe</label>
-                <input type="text" name="informe" class="form-control" value="<?php echo e($biopsia->informe); ?>">
-              </div>
-              <div class="form-group col-md-6" id="fecha_nacimiento">
-                <label class="font-normal">Recibido</label>
-                <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <input type="text" name="recibido" class="form-control" value="<?php echo e($biopsia->recibido); ?>">
+                <input name="_method" type="hidden" value="PUT">
+                <div class="form-group col-md-12">
+                  <label class="font-normal">Codigo de Informe</label>
+                  <input type="text" name="informe" class="form-control" value="<?php echo e($biopsia->informe); ?>">
                 </div>
-              </div>
-              <div class="form-group col-md-6" id="fecha_nacimiento">
-                <label class="font-normal">Entregado</label>
-                <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <input type="text" name="entregado" class="form-control" value="<?php echo e($biopsia->entregado); ?>">
+                <div class="form-group col-md-6" id="fecha_nacimiento">
+                  <label class="font-normal">Recibido</label>
+                  <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="recibido" class="form-control" value="<?php echo e($biopsia->recibido); ?>">
+                  </div>
                 </div>
-              </div>
-              <div class="form-group col-md-12">
-                <label class="control-label">Doctor</label>
-                <select class="chosen-select"  name="doctor_id">
-                  <option selected value="<?php echo e($biopsia->doctor_id); ?>"> <?php echo e($biopsia->doctor); ?> </option>
-                  
-            <?php $__currentLoopData = $doctores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                
-                  <option value="<?php echo e($doctor->id); ?>"> <?php echo e($doctor->nombre); ?> </option>
-                  
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-          
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label class="control-label">Grupo</label>
-                <input type="text" class="form-control" readonly value="<?php echo e($biopsia->grupo); ?>">
-              </div>
-              <div class="form-group col-md-6">
-                <label class="control-label">Paciente</label>
-                <select class="chosen-select"  name="paciente_id">
-                  <option selected value="<?php echo e($biopsia->paciente_id); ?>"><?php echo e($biopsia->paciente); ?></option>
-                  
-            <?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-              
-                  <option value="<?php echo e($paciente->id); ?>"> <?php echo e($paciente->name); ?> </option>
-                  
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-          
-                </select>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Diagnóstico</label>
-                  <select class="chosen-select form-control" data-placeholder="Seleccione diagnóstico" id="select_diagnostico_id">
+                <div class="form-group col-md-6" id="fecha_nacimiento">
+                  <label class="font-normal">Entregado</label>
+                  <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="entregado" class="form-control" value="<?php echo e($biopsia->entregado); ?>">
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <label class="control-label">Doctor</label>
+                  <select class="chosen-select"  name="doctor_id">
+                    <option selected value="<?php echo e($biopsia->doctor_id); ?>"> <?php echo e($biopsia->doctor); ?> </option>
                     
+              <?php $__currentLoopData = $doctores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                  
+                    <option value="<?php echo e($doctor->id); ?>"> <?php echo e($doctor->nombre); ?> </option>
+                    
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="control-label">Grupo</label>
+                  <input type="text" class="form-control" readonly value="<?php echo e($biopsia->grupo); ?>">
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="control-label">Paciente</label>
+                  <select class="chosen-select"  name="paciente_id">
+                    <option selected value="<?php echo e($biopsia->paciente_id); ?>"><?php echo e($biopsia->paciente); ?></option>
+                    
+              <?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                
+                    <option value="<?php echo e($paciente->id); ?>"> <?php echo e($paciente->name); ?> </option>
+                    
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Diagnóstico</label>
+                    <select class="chosen-select form-control" data-placeholder="Seleccione diagnóstico" id="select_diagnostico_id">
+                      
+                  <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    
+                      <option value="<?php echo e($diagnostico->nombre); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
+                      
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                
+                    </select>
+                  </div>
+                  <button type="button" id="add_diagnostico_id" class="btn btn-primary">Agregar</button>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="5" id="diagnostico_id" name="diagnostico"> <?php echo e($biopsia->diagnostico); ?> </textarea>
+                  </div>
+                </div>
+                <hr>
+                <h2>Reporte Macro</h2>
+                <hr>
+                <div class="form-group">
+                  <label class="control-label">Frases</label>
+                  <select class="chosen-select" data-placeholder="seleccione frases" id="select_macro" style="height: 24pt">
+                    
+              <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($frase->tipo == "B"): ?>
+                  
+                    <option value="<?php echo e($frase->nombre); ?>" style="height: 24pt"> <?php echo e($frase->nombre); ?> </option>
+                    
+                <?php endif; ?>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            
+                  </select>
+                </div>
+                <button type="button" id="add_macro" class="btn btn-primary">Agregar</button>
+                <div class="form-group">
+                  <textarea class="form-control" rows="5" id="macro" name="macro"><?php echo e($biopsia->macro); ?></textarea>
+                </div>
+                <hr>
+                <h2>Reporte Micro</h2>
+                <hr>
+                <div class="form-group">
+                  <label class="control-label">Frases</label>
+                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
+                    
+              <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($frase->tipo == "M"): ?>
+                
+                    <option value="<?php echo e($frase->nombre); ?>"> <?php echo e($frase->nombre); ?> </option>
+                    
+                <?php endif; ?>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            
+                  </select>
+                </div>
+                <button type="button" id="add_micro" class="btn btn-primary">Agregar</button>
+                <div class="form-group">
+                  <textarea class="form-control" rows="5" id="micro" name="micro"><?php echo e($biopsia->micro); ?></textarea>
+                </div>
+                <h2>Diagnostico Lab</h2>
+                <div class="form-group">
+                  <label class="control-label">Diagnóstico Lab</label>
+                  <div class="input-group">
+                    <select class="chosen-select" data-placeholder="Seleccione frases" id="select_dxlab">
+                      
                 <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   
-                    <option value="<?php echo e($diagnostico->nombre); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
-                    
+                      <option value="<?php echo e($diagnostico->nombre); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
+                      
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               
-                  </select>
+                    </select>
+                  </div>
                 </div>
-                <button type="button" id="add_diagnostico_id" class="btn btn-primary">Agregar</button>
+                <button type="button" id="add_dxlab" class="btn btn-primary">Agregar</button>
                 <div class="form-group">
-                  <textarea class="form-control" rows="5" id="diagnostico_id" name="diagnostico"> <?php echo e($biopsia->diagnostico); ?> </textarea>
+                  <textarea class="form-control" rows="5" id="dxlab" name="dxlab"><?php echo e($biopsia->dxlab); ?></textarea>
                 </div>
-              </div>
-              <hr>
-              <h2>Reporte Macro</h2>
-              <hr>
-              <div class="form-group">
-                <label class="control-label">Frases</label>
-                <select class="chosen-select" data-placeholder="seleccione frases" id="select_macro" style="height: 24pt">
+                <h2>Informe Preliminar</h2>
+                <div class="form-group">
+                  <label class="control-label">Diagnóstico Preliminar</label>
+                  <div class="input-group">
+                    <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
+                      
+                <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   
-            <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-              <?php if($frase->tipo == "B"): ?>
-                
-                  <option value="<?php echo e($frase->nombre); ?>" style="height: 24pt"> <?php echo e($frase->nombre); ?> </option>
-                  
-              <?php endif; ?>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-          
-                </select>
-              </div>
-              <button type="button" id="add_macro" class="btn btn-primary">Agregar</button>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" id="macro" name="macro"><?php echo e($biopsia->macro); ?></textarea>
-              </div>
-              <hr>
-              <h2>Reporte Micro</h2>
-              <hr>
-              <div class="form-group">
-                <label class="control-label">Frases</label>
-                <select class="chosen-select" data-placeholder="Seleccione frases" id="select_micro">
-                  
-            <?php $__currentLoopData = $frases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-              <?php if($frase->tipo == "M"): ?>
+                      <option value="<?php echo e($diagnostico->nombre); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
+                      
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               
-                  <option value="<?php echo e($frase->nombre); ?>"> <?php echo e($frase->nombre); ?> </option>
-                  
-              <?php endif; ?>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-          
-                </select>
-              </div>
-              <button type="button" id="add_micro" class="btn btn-primary">Agregar</button>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" id="micro" name="micro"><?php echo e($biopsia->micro); ?></textarea>
-              </div>
-              <h2>Diagnostico Lab</h2>
-              <div class="form-group">
-                <label class="control-label">Diagnóstico Lab</label>
-                <div class="input-group">
-                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_dxlab">
-                    
-              <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                
-                    <option value="<?php echo e($diagnostico->nombre); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
-                    
-              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            
-                  </select>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <button type="button" id="add_dxlab" class="btn btn-primary">Agregar</button>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" id="dxlab" name="dxlab"><?php echo e($biopsia->dxlab); ?></textarea>
-              </div>
-              <h2>Informe Preliminar</h2>
-              <div class="form-group">
-                <label class="control-label">Diagnóstico Preliminar</label>
-                <div class="input-group">
-                  <select class="chosen-select" data-placeholder="Seleccione frases" id="select_preliminar">
-                    
-              <?php $__currentLoopData = $diagnosticos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                
-                    <option value="<?php echo e($diagnostico->nombre); ?>"> <?php echo e($diagnostico->nombre); ?> </option>
-                    
-              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            
-                  </select>
+                <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button>
+                <div class="form-group">
+                  <textarea class="form-control" rows="5" id="preliminar" name="preliminar"><?php echo e($biopsia->preliminar); ?></textarea>
                 </div>
-              </div>
-              <button type="button" id="add_preliminar" class="btn btn-primary">Agregar</button>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" id="preliminar" name="preliminar"><?php echo e($biopsia->preliminar); ?></textarea>
-              </div>
-              <div class="div-btn">
-                <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
-                <a href="<?php echo e(url('biopsias/')); ?>" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a> </div>
-            </form>
+                <div class="div-btn">
+                  <button class="btn btn-primary m-t-n-xs pull-right" type="submit"><strong>Guardar</strong></button>
+                  <a href="<?php echo e(url('biopsias/')); ?>" class="btn m-t-n-xs pull-right"><strong>Cancelar</strong></a> </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      <?php endif; ?>
       <div id="tab-3" class="tab-pane">
         <div class="panel-body">
           <div class="row">
